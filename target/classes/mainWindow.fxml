@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Label?>
+<BorderPane fx:id="mainBorderPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="sample.Controller">
+    <top>
+        <HBox>
+            <Button fx:id="newPaymentButton" onAction="#newPayment" text="Новый платеж">
+                <HBox.margin>
+                    <Insets right="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="newPaymentBasedButton" onAction="#newPaymentBased" text="Новый на основе выделенного">
+                <HBox.margin>
+                    <Insets right="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="editPaymentButton" onAction="#editPayment" text="Редактировать выделен.">
+                <HBox.margin>
+                    <Insets right="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="deletePaymentButton" onAction="#deletePayment" text="Удалить выделенный">
+                <HBox.margin>
+                    <Insets right="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="toDocButton" text="Выделенный платеж в .doc-файл" onAction="#toDoc">
+                <HBox.margin>
+                    <Insets right="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="tariffsButton" text="Тарифы" onAction="#tariffsDialog"/>
+            <padding>
+                <Insets bottom="10.0" left="10" top="10.0"/>
+            </padding>
+        </HBox>
+    </top>
+    <left>
+        <ListView fx:id="paymentsListView" onKeyReleased="#handleKeyPressed"/>
+    </left>
+    <center>
+        <TextArea fx:id="paymentTextArea" wrapText="true" VBox.vgrow="ALWAYS" editable="false"/>
+    </center>
+    <bottom>
+        <Label text="© 2018 - 2019 Vilhelm Skrypkar. All rights reserved"/>
+    </bottom>
+</BorderPane>

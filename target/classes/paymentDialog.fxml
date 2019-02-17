@@ -1,0 +1,239 @@
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.geometry.Insets?>
+<DialogPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="sample.PaymentDialogController">
+    <content>
+        <BorderPane>
+            <top>
+                <VBox alignment="CENTER">
+                    <GridPane vgap="10" hgap="10"
+                              alignment="CENTER">
+                        <Label text="Месяц (число от 1 до 12):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="monthField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <Label text="Год:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                        <TextField fx:id="yearField" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                        <padding>
+                            <Insets bottom="10"/>
+                        </padding>
+                    </GridPane>
+                    <Separator/>
+                </VBox>
+            </top>
+            <center>
+                <HBox>
+                    <VBox>
+                        <VBox alignment="CENTER">
+
+                            <!--Electricity-->
+
+                            <Label text="Электричество">
+                                <padding>
+                                    <Insets bottom="10" top="10"/>
+                                </padding>
+                            </Label>
+                            <GridPane vgap="10" hgap="10">
+                                <Label text="1-й тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <TextField fx:id="electroTariff1Field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                <Label text="1-й предел:" GridPane.rowIndex="0" GridPane.columnIndex="2"
+                                       GridPane.halignment="RIGHT"/>
+                                <TextField fx:id="electroLimit1Field" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                                <Label text="2-й тариф:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <TextField fx:id="electroTariff2Field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                <Label text="2-й предел:" GridPane.rowIndex="1" GridPane.columnIndex="2"
+                                       GridPane.halignment="RIGHT"/>
+                                <TextField fx:id="electroLimit2Field" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+
+                                <Label text="3-й тариф:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <TextField fx:id="electroTariff3Field" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <Label text="3-й предел:" GridPane.rowIndex="2" GridPane.columnIndex="2"
+                                       GridPane.halignment="RIGHT"/>
+                                <TextField fx:id="electroLimit3Field" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                                <Label text="4-й тариф:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <TextField fx:id="electroTariff4Field" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                                <Label text="4-й предел:" GridPane.rowIndex="3" GridPane.columnIndex="2"
+                                       GridPane.halignment="RIGHT"/>
+                                <Label text="∞" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+
+                                <Label text="Нач. показания:" GridPane.rowIndex="4" GridPane.columnIndex="0"
+                                       GridPane.halignment="RIGHT"/>
+                                <TextField fx:id="electroStartField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                                <Label text="Конеч. показания:" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                                <TextField fx:id="electroEndField" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+
+                                <Label text="Платеж:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                <fx:define>
+                                    <ToggleGroup fx:id="eletroToggleGroup"/>
+                                </fx:define>
+                                <RadioButton fx:id="electroByCounter" text="по счетчику"
+                                             toggleGroup="$eletroToggleGroup" selected="true"
+                                             GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                                <RadioButton fx:id="electroBySet" toggleGroup="$eletroToggleGroup" GridPane.rowIndex="6"
+                                             GridPane.columnIndex="1">
+                                    <graphic>
+                                        <TextField fx:id="electroMustPayField" onMouseClicked="#electroSetInField"/>
+                                    </graphic>
+                                </RadioButton>
+                            </GridPane>
+                            <padding>
+                                <Insets bottom="10"/>
+                            </padding>
+                        </VBox>
+                        <padding>
+                            <Insets right="10"/>
+                        </padding>
+                        <Separator/>
+
+                        <!--Water-->
+
+                        <VBox alignment="CENTER">
+                            <Label text="Вода">
+                                <padding>
+                                    <Insets bottom="10" top="10"/>
+                                </padding>
+                            </Label>
+                            <GridPane vgap="10" hgap="10">
+                                <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <TextField fx:id="waterTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                <Label text="Нач. показания:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <TextField fx:id="waterStartField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                <Label text="Конеч. показания:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                                <TextField fx:id="waterEndField" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                                <Label text="Платеж:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <fx:define>
+                                    <ToggleGroup fx:id="waterToggleGroup"/>
+                                </fx:define>
+                                <RadioButton fx:id="waterByCounter" text="по счетчику" toggleGroup="$waterToggleGroup"
+                                             selected="true"
+                                             GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <RadioButton fx:id="waterBySet" toggleGroup="$waterToggleGroup" GridPane.rowIndex="3"
+                                             GridPane.columnIndex="1">
+                                    <graphic>
+                                        <TextField fx:id="waterMustPayField" onMouseClicked="#waterSetInField"/>
+                                    </graphic>
+                                </RadioButton>
+                            </GridPane>
+                        </VBox>
+                    </VBox>
+
+                    <Separator orientation="VERTICAL"/>
+
+                    <VBox>
+
+                        <!--Flat-->
+
+                        <VBox alignment="CENTER">
+                            <Label text="Квартплата">
+                                <padding>
+                                    <Insets bottom="10" top="10"/>
+                                </padding>
+                            </Label>
+                            <GridPane vgap="10" hgap="10">
+                                <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <TextField fx:id="flatTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                <Label text="Платеж:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <fx:define>
+                                    <ToggleGroup fx:id="flatToggleGroup"/>
+                                </fx:define>
+                                <RadioButton fx:id="flatByTariff" text="по тарифу" toggleGroup="$flatToggleGroup"
+                                             selected="true"
+                                             GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <RadioButton fx:id="flatBySet" toggleGroup="$flatToggleGroup" GridPane.rowIndex="3"
+                                             GridPane.columnIndex="1">
+                                    <graphic>
+                                        <TextField fx:id="flatMustPayField" onMouseClicked="#flatSetInField"/>
+                                    </graphic>
+                                </RadioButton>
+                            </GridPane>
+                            <padding>
+                                <Insets bottom="10"/>
+                            </padding>
+                        </VBox>
+                        <Separator/>
+
+                        <!--Heating-->
+
+                        <VBox alignment="CENTER">
+                            <Label text="Отопление">
+                                <padding>
+                                    <Insets bottom="10" top="10"/>
+                                </padding>
+                            </Label>
+                            <GridPane vgap="10" hgap="10">
+                                <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <TextField fx:id="heatingTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                <Label text="Платеж:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <fx:define>
+                                    <ToggleGroup fx:id="heatingToggleGroup"/>
+                                </fx:define>
+                                <RadioButton fx:id="heatingByTariff" text="по тарифу" toggleGroup="$heatingToggleGroup"
+                                             selected="true"
+                                             GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <RadioButton fx:id="heatingBySet" toggleGroup="$heatingToggleGroup"
+                                             GridPane.rowIndex="3"
+                                             GridPane.columnIndex="1">
+                                    <graphic>
+                                        <TextField fx:id="heatingMustPayField" onMouseClicked="#heatingSetInField"/>
+                                    </graphic>
+                                </RadioButton>
+                            </GridPane>
+                            <padding>
+                                <Insets bottom="10"/>
+                            </padding>
+                        </VBox>
+                        <Separator/>
+
+                        <!--Garbage-->
+
+                        <VBox alignment="CENTER">
+                            <Label text="Вывоз мусора">
+                                <padding>
+                                    <Insets bottom="10" top="10"/>
+                                </padding>
+                            </Label>
+                            <GridPane vgap="10" hgap="10">
+                                <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <TextField fx:id="garbageTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                <Label text="Платеж:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <fx:define>
+                                    <ToggleGroup fx:id="garbageToggleGroup"/>
+                                </fx:define>
+                                <RadioButton fx:id="garbageByTariff" text="по тарифу" toggleGroup="$garbageToggleGroup"
+                                             selected="true"
+                                             GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <RadioButton fx:id="garbageBySet" toggleGroup="$garbageToggleGroup"
+                                             GridPane.rowIndex="3"
+                                             GridPane.columnIndex="1">
+                                    <graphic>
+                                        <TextField fx:id="garbageMustPayField" onMouseClicked="#garbageSetInField"/>
+                                    </graphic>
+                                </RadioButton>
+                            </GridPane>
+                        </VBox>
+                        <padding>
+                            <Insets left="10"/>
+                        </padding>
+
+                    </VBox>
+                </HBox>
+            </center>
+        </BorderPane>
+    </content>
+</DialogPane>

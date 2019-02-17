@@ -1,0 +1,4 @@
+--patch-module
+Events=_
+--add-reads
+Events=ALL-UNNAMED
