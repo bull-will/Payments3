@@ -273,8 +273,8 @@ public class Controller {
             return;
         }
         Alert alert = Alerts.alertConfirmation(getAlertText("deletePaymentConfirmTitle"),
-                getAlertText("deletePaymentConfirmHeader"),
-                getAlertText("deletePaymentConfirmMessage") + " " + paymentToDelete.getName());
+                (getAlertText("deletePaymentConfirmHeader") + " " + paymentToDelete.getName()),
+                getAlertText("deletePaymentConfirmMessage"));
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
