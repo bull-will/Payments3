@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
+import static sample.TextDeliverer.getAlertText;
+
 public class PaymentDialogController {
 
     @FXML
@@ -275,9 +277,8 @@ public class PaymentDialogController {
 
         if (someFieldsProcessedWrong) {
 
-            Alerts.alertInfo("Платеж(и) обработан(ы) неправильно",
-                    "Значения в одном (или нескольких) полях ввода платежей некорректны.\n" +
-                            "Все неправильные значения заменены значением 0");
+            Alerts.alertInfo(getAlertText("paymentDialogControllerProcessingErrorTitle"),
+                    getAlertText("paymentDialogControllerProcessingErrorMessage"));
         }
     }
 

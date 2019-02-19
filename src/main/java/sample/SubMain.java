@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import static sample.TextDeliverer.getText;
+
 /* This SubMain class extending Application is invoked from the Main class
 because a Main class intended to be packed into an executable jar must not extends another classes */
 
@@ -14,7 +16,7 @@ public class SubMain extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("mainWindow.fxml"));
-        primaryStage.setTitle("Платежи");
+        primaryStage.setTitle(getText("mainWindowTitle"));
         primaryStage.setScene(new Scene(root, 900, 475));
         primaryStage.show();
 

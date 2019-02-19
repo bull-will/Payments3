@@ -1,21 +1,21 @@
 package sample;
 
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
 
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Optional;
+
+import static sample.TextDeliverer.getAlertText;
+import static sample.TextDeliverer.getText;
 
 public class Controller {
     @FXML
@@ -36,7 +36,6 @@ public class Controller {
     @FXML
     private ContextMenu listContextMenu;
 
-
     public void initialize() {
 
         paymentsDataSource = new PaymentsDataSource();
@@ -49,17 +48,17 @@ public class Controller {
 
         /* Creating a context menu for the list in the window */
         listContextMenu = new ContextMenu();
-        MenuItem editMenuItem = new MenuItem("Редактировать");
+        MenuItem editMenuItem = new MenuItem(getText("editPaymentMenuItem"));
         editMenuItem.setOnAction((ActionEvent actionEvent) -> {
             editPayment(paymentsListView.getSelectionModel().getSelectedItem());
 
         });
-        MenuItem newPaymenBasedMenuItem = new MenuItem("Новый платеж на основе выделенного");
+        MenuItem newPaymenBasedMenuItem = new MenuItem(getText("newPaymentBasedMenuItem"));
         newPaymenBasedMenuItem.setOnAction((ActionEvent actionEvent) -> {
             newPaymentBased(paymentsListView.getSelectionModel().getSelectedItem());
 
         });
-        MenuItem deleteMenuItem = new MenuItem("Удалить");
+        MenuItem deleteMenuItem = new MenuItem(getText("deletePaymentMenuItem"));
         deleteMenuItem.setOnAction((ActionEvent actionEvent) -> {
             deletePayment(paymentsListView.getSelectionModel().getSelectedItem());
 
@@ -68,7 +67,7 @@ public class Controller {
 
         /* Some necessary  configuring of the list view */
         paymentsListView.getSelectionModel().selectedItemProperty().addListener(
-                (ObservableValue<? extends PaymentMarker> observable, PaymentMarker oldМalue, PaymentMarker newValue) ->
+                (ObservableValue<? extends PaymentMarker> observable, PaymentMarker oldValue, PaymentMarker newValue) ->
                 {
                     if (newValue != null) {
                         PaymentMarker item = paymentsListView.getSelectionModel().getSelectedItem();
@@ -159,9 +158,8 @@ public class Controller {
         if (selectedPaymentMarker != null) {
             newPaymentBased(selectedPaymentMarker);
         } else {
-            Alerts.alertInfo("Нет выбранного платежа",
-                    "Вы хотите создать платеж на основании выделенного,\n" +
-                            "но ничего не выделено");
+            Alerts.alertInfo(getAlertText("noChosenBasePaymentTitle"),
+                    getAlertText("noChosenBasePaymentMessage"));
         }
     }
 
@@ -173,9 +171,8 @@ public class Controller {
             Payment basePaymentWithIncrementedID = basePaymentFromDB.cloneIncrementId();
             newPayment(basePaymentWithIncrementedID, true);
         } else {
-            Alerts.alertInfo("Ошибка выбраного платежа",
-                    "Вы хотите создать новый платеж на основании выделенного,\n" +
-                            "но полные данные выбранного платежа отсутствуют в базе данных");
+            Alerts.alertInfo(getAlertText("noChosenBasePaymentInDBTitle"),
+                    getAlertText("noChosenBasePaymentInDBMessage"));
         }
     }
 
@@ -197,16 +194,16 @@ public class Controller {
 
         Dialog dialog = new Dialog();
         dialog.initOwner(mainBorderPane.getScene().getWindow());
-        dialog.setTitle("Данные платежа");
-        dialog.setHeaderText(editPaymentOrNot ? "Редактирование платежа" : "Новый платеж");
+        dialog.setTitle(getText("processPaymentTitle"));
+        dialog.setHeaderText(editPaymentOrNot ? getText("processPaymentEdit") : getText("processPaymentNew"));
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getClassLoader().getResource("paymentDialog.fxml"));
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
 //            System.out.println("Couldn't load the dialog");
-            Alerts.alertInfo("Ошибка диалога", "Не удалось загрузить диалог обработки платежа");
-            e.printStackTrace();
+            Alerts.alertInfo(getAlertText("paymentProcessingDialogError"),
+                    getAlertText("paymentProcessingDialogErrorMessage"));
             return null;
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
@@ -227,9 +224,8 @@ public class Controller {
                 return null; // This line is actually redundant because it returns null later anyways
             }
         } else {
-            Alerts.alertInfo("Ошибка обработки платежа",
-                    "Не получен никакой результат из окна диалога обработки платежа.\n" +
-                            "Ни \"ОК\", ни \"Отмена\", ничего.");
+            Alerts.alertInfo(getAlertText("paymentProcessingDialogNoResultTitle"),
+                    getAlertText("paymentProcessingDialogNoResultMessage"));
         }
         return null;
     }
@@ -240,8 +236,8 @@ public class Controller {
         if (selectedPaymentMarker != null) {
             editPayment(selectedPaymentMarker);
         } else {
-            Alerts.alertInfo("Нет выбранного платежа",
-                    "Нечего редактировать, нет выделенного платежа");
+            Alerts.alertInfo(getAlertText("noSelectedPaymentTitle"),
+                    getAlertText("noSelectedPaymentMessage"));
         }
     }
 
@@ -253,6 +249,7 @@ public class Controller {
             paymentsDataSource.storePayment(editedPayment, true);
             marker.setName(editedPayment.getName());
             marker.setFullDescription(editedPayment.getFullDescription());
+            paymentsListView.refresh();
             paymentTextArea.setText(marker.getFullDescription());
         }
     }
@@ -263,7 +260,7 @@ public class Controller {
         PaymentMarker selectedPaymentMarker = paymentsListView.getSelectionModel().getSelectedItem();
         if (selectedPaymentMarker == null) {
             if (paymentMarkers.isEmpty()) {
-                Alerts.alertInfo("Нечего удалить", "Платеж для удаления не выбран");
+                Alerts.alertInfo(getAlertText("noSelectedPaymentToDeleteTitle"), getAlertText("noSelectedPaymentToDeleteMessage"));
                 return;
             }
         } else deletePayment(selectedPaymentMarker);
@@ -271,22 +268,20 @@ public class Controller {
 
     private void deletePayment(PaymentMarker paymentToDelete) {
         if (paymentToDelete == null) {
-            Alerts.alertInfo("Ошибка при удалении платежа",
-                    "При выборе платежа для удаления произошла ошибка,\n" +
-                            "ничего не удалено");
+            Alerts.alertInfo(getAlertText("deletePaymentErrorTitle"),
+                    getAlertText("deletePaymentErrorMessage"));
             return;
         }
-        Alert alert = Alerts.alertConfirmation("Удаление платежа",
-                "Удаление платежа: " + paymentToDelete.getName(),
-                "Нажмите ОК чтобы удалить или Cancel чтобы отменить");
+        Alert alert = Alerts.alertConfirmation(getAlertText("deletePaymentConfirmTitle"),
+                getAlertText("deletePaymentConfirmHeader"),
+                getAlertText("deletePaymentConfirmMessage") + " " + paymentToDelete.getName());
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 paymentsDataSource.deletePayment(paymentToDelete.getId(), true);
             } catch (SQLException e) {
-                Alerts.alertInfo("Ошибка при удалении платежа",
-                        "Произошла ошибка при удалении платежа из базы данных\n" +
-                                "Может быть, платеж удален, а может быть, и нет");
+                Alerts.alertInfo(getAlertText("deletePaymentFromDBErrorTitle"),
+                        getAlertText("deletePaymentFromDBErrorMessage"));
                 return;
             }
             paymentMarkers.remove(paymentToDelete);
@@ -305,15 +300,15 @@ public class Controller {
     public void tariffsDialog(ActionEvent actionEvent) {
         Dialog dialog = new Dialog();
         dialog.initOwner(mainBorderPane.getScene().getWindow());
-        dialog.setTitle("Тарифы");
-        dialog.setHeaderText("Посмотрите или отредактируйте тарифы");
+        dialog.setTitle(getText("tariffsTitle"));
+        dialog.setHeaderText(getText("tariffsHeader"));
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getClassLoader().getResource("tariffsDialog.fxml"));
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
 //            System.out.println("Couldn't load the dialog");
-            Alerts.alertInfo("Ошибка диалога", "Не удалось загрузить диалог обработки платежа");
+            Alerts.alertInfo(getAlertText("tariffsDialogErrorTitle"), getAlertText("tariffsDialogErrorMessage"));
             e.printStackTrace();
             return;
         }
@@ -345,8 +340,8 @@ public class Controller {
     public void toDoc(ActionEvent actionEvent) throws IOException {
         PaymentMarker paymentToDoc = paymentsListView.getSelectionModel().getSelectedItem();
         if (paymentToDoc == null) {
-            Alerts.alertInfo("Не выбран платеж", "Вы хотите вывести выделенный платеж в .doc-файл,\n" +
-                    "но ничего не выделено");
+            Alerts.alertInfo(getAlertText("noPaymentToDocSelectedTitle"),
+                    getAlertText("noPaymentToDocSelectedMessage"));
             return;
         }
 
@@ -359,18 +354,20 @@ public class Controller {
         /* And now let's fill the file with contents */
         try {
             writeLinesToFile(paymentToDoc, dataOut);
-            Alerts.alertInfo("Записано в .doc-файл",
-                    "Платеж записан в .doc-файл " + outPutFileToPrint.getPath());
+            Alerts.alertInfo(getAlertText("paymentWrittenToDocTitle"),
+                    getAlertText("paymentWrittenToDocMessage") + " " + outPutFileToPrint);
         } catch (IOException e) {
-            Alerts.alertInfo("Ошибка записи в .doc",
-                    "Запсиать данные платежа в .doc-файл почему-то не удалось");
+            Alerts.alertInfo(getAlertText("writingToDocErrorTitle"),
+                    getAlertText("writingToDocErrorMessage"));
         }
     }
 
-    static File makeOutPutFile(String paymentName) throws IOException {
-        /* This method sets a directory, a name and an extension for output file */
-        String workingDir = System.getProperty("user.dir"); // Files will be stored in the project directory
-        String dirForGeneratedFiles = workingDir + "\\Платежи\\"; // setting a directory for generated files
+    /* This method sets a directory, a name and an extension for output file */
+    File makeOutPutFile(String paymentName) throws IOException {
+        String workingDir = System.getProperty("user.dir"); // Files will be stored in the project folder
+
+        /* setting a directory for generated files */
+        String dirForGeneratedFiles = workingDir + "\\" + getText("nameForPaymentsInDocDirectory") + "\\";
         if (!new File(dirForGeneratedFiles).exists()) {
             new File(dirForGeneratedFiles).mkdir();
         }

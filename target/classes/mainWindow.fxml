@@ -51,6 +51,6 @@
         <TextArea fx:id="paymentTextArea" wrapText="true" VBox.vgrow="ALWAYS" editable="false"/>
     </center>
     <bottom>
-        <Label text="© 2018 - 2019 Vilhelm Skrypkar. All rights reserved"/>
+        <Label text="© 2018 - 2019 Vilhelm Skrypkar. All rights reserved."/>
     </bottom>
 </BorderPane>

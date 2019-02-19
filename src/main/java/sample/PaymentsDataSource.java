@@ -9,6 +9,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static sample.TextDeliverer.getAlertText;
+
 /* The payments database contains the single table with all the stored payments and the full set of their fields
  * Payment markers are used for economizing database connection resources by retrieving only the part of payments fields
  * from the limited set of the database columns by the query to the payment markers view.
@@ -89,8 +91,8 @@ public class PaymentsDataSource {
                     ("src" + File.separator + "main" + File.separator + "resources" + File.separator + DB_NAME);
             connectionString = "jdbc:sqlite:" + dbFile;
         } catch (IOException e) {
-            Alerts.alertInfo("Ошибка обработки файла базы данных платежей",
-                    "Не удалось получить путь файла базы данных тарифов");
+            Alerts.alertInfo(getAlertText("paymentsDataSourcePathErrorTitle"),
+                    getAlertText("paymentsDataSourcePathErrorMessage"));
             e.printStackTrace();
         }
         compileStringCreateTable();
@@ -111,9 +113,8 @@ public class PaymentsDataSource {
                     ", " + FULL_DESCRIPTION + " AS " + FULL_DESCRIPTION +
                     " FROM " + TABLE_PAYMENTS);
         } catch (SQLException e) {
-            Alerts.alertInfo("Ошибка доступа к базе данных",
-                    "Ошибка при подключении к базе данных\n" +
-                            "(При попытке создания таблицы платежей initializePaymentsDBTable() )");
+            Alerts.alertInfo(getAlertText("paymentsDataSourceDBConnectionErrorTitle"),
+                    getAlertText("paymentsDataSourceDBConnectionErrorMessage"));
         } finally {
             if (openAndClose) {
                 close();
@@ -143,8 +144,8 @@ public class PaymentsDataSource {
             results.close();
             return paymentMarkers;
         } catch (SQLException e) {
-            Alerts.alertInfo("Ошибка базы данных", "Ошибка при попытке считывания маркеров платежей\n" +
-                    "в список маркеров");
+            Alerts.alertInfo(getAlertText("paymentsDataSourceDBPaymentMarkersErrorTitle"),
+                    getAlertText("paymentsDataSourceDBPaymentMarkersErrorMessage"));
             return null;
         } finally {
             close();
@@ -157,8 +158,8 @@ public class PaymentsDataSource {
 
     public void storePayment(Payment payment, boolean openAndClose) {
         if (payment == null) {
-            Alerts.alertInfo("Ошибка сохранения платежа",
-                    "Для сохранения в базе данных был передан не платеж, а null");
+            Alerts.alertInfo(getAlertText("paymentsDataSourceNullForStoringTitle"),
+                    getAlertText( "paymentsDataSourceNullForStoringMessage"));
             return;
         }
         if (openAndClose) {
@@ -182,8 +183,8 @@ public class PaymentsDataSource {
             }
         } catch (SQLException e) {
 //            e.printStackTrace();
-            Alerts.alertInfo("Ошибка записи в базу данных",
-                    "Ошибка при добавлении платежа в базу данных");
+            Alerts.alertInfo(getAlertText("paymentsDataSourceStoringToDBErrorTitle"),
+                    getAlertText("paymentsDataSourceStoringToDBErrorMessage"));
         } finally {
             if (openAndClose) {
                 close();
@@ -262,17 +263,16 @@ public class PaymentsDataSource {
 //// for info and handmade debugging TODO comment that line
             }
         } catch (SQLException e) {
-            Alerts.alertInfo("Ошибка чтения из базы данных",
-                    "Ошибка при выдаче выбранного платежа из базы данных");
+            Alerts.alertInfo(getAlertText("paymentsDataSourceReadingSQLExceptionTitle"),
+                    getAlertText(    "paymentsDataSourceReadingSQLExceptionMessage"));
         } finally {
             if (openAndClose) {
                 close();
             }
         }
         if (payment == null) {
-            Alerts.alertInfo("Ошибка чтения из базы данных",
-                    "Для выдачи был получен маркер платежа,\n" +
-                            "но из базы данных не был получен платеж");
+            Alerts.alertInfo(getAlertText("paymentsDataSourceNullPaymentFromDBTitle"),
+                    getAlertText( "paymentsDataSourceNullPaymentFromDBMessage"));
         }
         return payment;
     }
@@ -443,15 +443,15 @@ public class PaymentsDataSource {
             conn = DriverManager.getConnection(connectionString);
         } catch (SQLException e) {
 //            System.out.println("Exception when opening connection in PaymentsDataSource");
-            Alerts.alertInfo("Ошибка доступа к базе данных",
-                    "Ошибка при создании подключения к базе данных");
+            Alerts.alertInfo(getAlertText("paymentsDataSourceConnectingToDBErrorTitle"),
+                    getAlertText("paymentsDataSourceConnectingToDBErrorMessage"));
         }
         try {
             statement = conn.createStatement();
         } catch (SQLException e) {
 //            System.out.println("Exception when creating a Statement in PaymentsDataSource");
-            Alerts.alertInfo("Ошибка доступа к базе данных",
-                    "Ошибка при создании Statement после подключения к базе данных");
+            Alerts.alertInfo(getAlertText("paymentsDataSourceSQLStatementErrorTitle"),
+                    getAlertText( "paymentsDataSourceSQLStatementErrorMessage"));
         }
     }
 
@@ -467,8 +467,8 @@ public class PaymentsDataSource {
         } catch (SQLException e) {
 //            System.out.println("Exception when closing connection in PaymentsDataSource");
             /* We shouldn't actualy care about exceptions when closing the connection and the statement, but still */
-            Alerts.alertInfo("Ошибка доступа к базе данных",
-                    "Ошибка при закрытии соединения с базой данных");
+            Alerts.alertInfo(getAlertText(getAlertText("paymentsDataSourceClosingDBErrorTitle")),
+                    getAlertText("paymentsDataSourceClosingDBErrorMessage"));
         }
     }
 

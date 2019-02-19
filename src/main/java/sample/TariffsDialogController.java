@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import static sample.TextDeliverer.getAlertText;
+
 public class TariffsDialogController {
 
     @FXML
@@ -130,9 +132,8 @@ public class TariffsDialogController {
         }
 
         if (someFieldsProcessedWrong) {
-            Alerts.alertInfo("Тариф(ы) обработан(ы) неправильно",
-                    "Значения в одном (или нескольких) полях ввода тарифов некорректны.\n" +
-                    "Все неправильные значения заменены значением 0");
+            Alerts.alertInfo(getAlertText("tariffsNumbersProcessedWrongTitle"),
+                    getAlertText("tariffsNumbersProcessedWrongMessage"));
         }
     }
 

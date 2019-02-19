@@ -3,6 +3,8 @@ package sample;
 import java.io.*;
 import java.util.Properties;
 
+import static sample.TextDeliverer.getAlertText;
+
 public class TariffsData {
 
     private static String TARIFFS_FILE;
@@ -57,9 +59,8 @@ public class TariffsData {
                     "classes"+File.separator+"tariffs.properties" :
                     ("src"+File.separator+"main"+File.separator+"resources"+File.separator+"tariffs.properties"));
         } catch (IOException e) {
-            Alerts.alertInfo("Ошибка обработки файла тарифов",
-                    "Не удалось получить путь файла тарифов\n" +
-                            "Загружены тарифы по умолчанию");
+            Alerts.alertInfo(getAlertText("tariffsDataTariffsFileIOExceptionTitle"),
+                    getAlertText("tariffsDataTariffsFileIOExceptionMessage"));
             e.printStackTrace();
         }
         this.electroTariff1 = electroTariff1Original;
@@ -99,22 +100,16 @@ public class TariffsData {
             this.garbageTariff = Double.parseDouble(tariffs.getProperty(GARBAGE_TARIFF));
 
         } catch (FileNotFoundException fnfe) {
-            Alerts.alertInfo("Тарифы не найдены", "Файл тарифов не найден\n" +
-                    "(Если это первый запуск, то всё в порядке)" +
-                    "Загружены тарифы по умолчанию");
-            fnfe.printStackTrace();
+            Alerts.alertInfo(getAlertText("tariffsNotFoundTitle"), getAlertText("tariffsNotFoundMessage"));
+//            fnfe.printStackTrace();
         } catch (IOException ioe) {
-            Alerts.alertInfo("Проблема чтения тарифов",
-                    "Во время загрузки произошла какая-то ошибка ввода-вывода.\n" +
-                            "Новые тарифы не загружены или загружены не полностью.\n" +
-                            "Часть тарифов может быть заменена тарифами по умолчанию");
-            ioe.printStackTrace();
+            Alerts.alertInfo(getAlertText("tariffsDataLoadTariffsErrorTitle"),
+                    getAlertText("tariffsDataLoadTariffsErrorMessage"));
+//            ioe.printStackTrace();
         } catch (NumberFormatException e) {
 //            e.printStackTrace();
-            Alerts.alertInfo("Ошибка загрузки введенных значений",
-                    "Ошибка формата данных сохраненных тарифов.\n" +
-                            "Новые тарифы не загружены или загружены не полностью.\n" +
-                            "Часть тарифов может быть заменена тарифами по умолчанию");
+            Alerts.alertInfo(getAlertText("tariffsDataNumbersProcessionErrorTitle"),
+                    getAlertText("tariffsDataNumbersProcessionErrorMessage"));
         }
     }
 
@@ -147,19 +142,15 @@ public class TariffsData {
             prop.store(output, null);
 
         } catch (IOException io) {
-            Alerts.alertInfo("Проблема записи/сохранения тарифов",
-                    "Во время записи произошла какая-то ошибка ввода-вывода.\n" +
-                            "Тарифы не изменены");
-            io.printStackTrace();
+            Alerts.alertInfo(getAlertText("tariffsDataSaveTariffsErrorTitle"),
+                    getAlertText("tariffsDataSaveTariffsErrorMessage"));
         } finally {
             if (output != null) {
                 try {
                     output.close();
                 } catch (IOException e) {
-                    Alerts.alertInfo("Проблема записи/сохранения тарифов",
-                            "При попытке закрытия потока вывода произошла какая-то ошибка ввода-вывода.\n" +
-                                    "Тарифы не изменены");
-                    e.printStackTrace();
+                    Alerts.alertInfo(getAlertText("tariffsDataCloseTariffsErrorTitle"),
+                            getAlertText("tariffsDataCloseTariffsErrorMessage"));
                 }
             }
 
