@@ -79,7 +79,7 @@ public class Controller {
         /* Binding the list of payment markers to the list view in the main window*/
         paymentsListView.setItems(paymentMarkers);
         paymentsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        paymentsListView.getSelectionModel().selectFirst();
+        paymentsListView.getSelectionModel().selectLast();
 
         /* Setting a cell factory for the list view */
         paymentsListView.setCellFactory((ListView<PaymentMarker> paymentListView) -> {
@@ -286,8 +286,8 @@ public class Controller {
             }
             paymentMarkers.remove(paymentToDelete);
 //            paymentTextArea.clear();
-            paymentsListView.refresh();
             if (!paymentMarkers.isEmpty()) {
+                paymentsListView.refresh();
                 paymentsListView.getSelectionModel().selectLast();
                 PaymentMarker selectedPaymentMarker = paymentsListView.getSelectionModel().getSelectedItem();
                 paymentTextArea.setText(selectedPaymentMarker.getFullDescription());
