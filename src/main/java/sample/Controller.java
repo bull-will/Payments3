@@ -464,9 +464,9 @@ public class Controller {
             }
         };
         Thread thread = new Thread(storePaymentTask);
+        thread.start();
         Alerts.alertInfo(getAlertText("paymentStoredTitle"),
                 getAlertText("paymentStoredMessage") + " " + payment.getName());
-        thread.start();
     }
 
     private void deletePaymentFromDB(PaymentMarker paymentMarker, boolean openAndClose) {
@@ -477,9 +477,9 @@ public class Controller {
                 return null;
             }
         };
-        Alerts.alertInfo(getAlertText("paymentDeletedTitle"),
-                getAlertText("paymentDeletedMessage") + " " + paymentMarker.getName());
         Thread thread = new Thread(deletePaymentTask);
         thread.start();
+        Alerts.alertInfo(getAlertText("paymentDeletedTitle"),
+                getAlertText("paymentDeletedMessage") + " " + paymentMarker.getName());
     }
 }
