@@ -280,8 +280,8 @@ public class Payment {
     }
 
 
-    public Payment cloneIncrementId() {
-        Payment clone = new Payment(this.id + 1);
+    public Payment cloneWithId(int id) {
+        Payment clone = new Payment(id);
 
         clone.name = this.name;
         clone.fullDescription = this.fullDescription;

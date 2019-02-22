@@ -28,7 +28,7 @@ class TextDeliverer {
 
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Ошибка доступа к файлу текстов программі");
+            alert.setTitle("Ошибка доступа к файлу текстов программы");
             alert.setHeaderText(null);
             alert.setContentText("Не удалось получить доступ к файлу с текстами");
             alert.showAndWait();

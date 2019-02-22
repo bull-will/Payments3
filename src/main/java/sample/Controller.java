@@ -11,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import java.io.*;
-import java.sql.SQLException;
 import java.util.Optional;
 
 import static sample.TextDeliverer.getAlertText;
@@ -46,7 +45,9 @@ public class Controller {
 
         paymentsDataSource = PaymentsDataSource.getInstance();
 
-        /* Initializing the payments database and table, with task and multithreading */
+        /* Initializing the payments database and table, with task and multithreading,
+         * and then this method invokes filling the list view of payments
+         * with previously obtained payment markers */
         initializeDBTable();
 
         tariffsData = new TariffsData();
@@ -55,7 +56,7 @@ public class Controller {
         /* Payments markers of all the stored payments are collected into a list
         by the query to the payments database, with task and multithreading.
         Payment markers will be set into the list view in the program window */
-        setPaymentMarkers();
+//        getPaymentMarkers();
 
         /* Creating a context menu for the list in the window */
         listContextMenu = new ContextMenu();
@@ -87,10 +88,6 @@ public class Controller {
                 }
         );
 
-        /* Filling the list view of payments with previously obtained payment markers */
-        paymentsListView.setItems(paymentMarkers);
-        paymentsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        paymentsListView.getSelectionModel().selectLast();
 
         /* Setting a cell factory for the list view */
         paymentsListView.setCellFactory((ListView<PaymentMarker> paymentListView) -> {
@@ -178,8 +175,9 @@ public class Controller {
         /* Obtaining the payment corresponding the selected marker from the database
          * to be the basis for the new payment. Also cloning it цшер штскуьутештп its id by one */
         Payment basePaymentFromDB = getPaymentFromDB(marker.getId(), true);
+        int lastId = paymentMarkers.get(paymentMarkers.size()-1).getId();
         if (basePaymentFromDB != null) {
-            Payment basePaymentWithIncrementedID = basePaymentFromDB.cloneIncrementId();
+            Payment basePaymentWithIncrementedID = basePaymentFromDB.cloneWithId(lastId + 1);
             newPayment(basePaymentWithIncrementedID, true);
         } else {
             Alerts.alertInfo(getAlertText("noChosenBasePaymentInDBTitle"),
@@ -192,7 +190,7 @@ public class Controller {
         Payment newPayment = processPaymentWithDialog(basePayment, false, based);
         /* Storing the processed payment and the new payment marker */
         if (newPayment != null) {
-            storePayment(newPayment, true);
+            storePaymentToDB(newPayment, true);
             PaymentMarker newPaymentMarker = new PaymentMarker
                     (newPayment.getId(), newPayment.getName(), newPayment.getFullDescription());
             paymentMarkers.add(newPaymentMarker);
@@ -258,7 +256,7 @@ public class Controller {
         Payment paymentToBeEdited = getPaymentFromDB(marker.getId(), true);
         Payment editedPayment = processPaymentWithDialog(paymentToBeEdited, true, true);
         if (editedPayment != null) {
-            storePayment(editedPayment, true);
+            storePaymentToDB(editedPayment, true);
             marker.setName(editedPayment.getName());
             marker.setFullDescription(editedPayment.getFullDescription());
             paymentsListView.refresh();
@@ -288,7 +286,7 @@ public class Controller {
                 getAlertText("deletePaymentConfirmMessage"));
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            deletePaymentFromDB(paymentToDelete.getId(), true);
+            deletePaymentFromDB(paymentToDelete, true);
             paymentMarkers.remove(paymentToDelete);
 //            paymentTextArea.clear();
             paymentsListView.refresh();
@@ -412,14 +410,21 @@ public class Controller {
     }
 
     /* Next multithreading methods operate payment data source making database queries */
+
     private void initializeDBTable() {
         Task<Object> initializeTableTask = new Task<Object>(){
             @Override
             protected Object call() {
                 PaymentsDataSource.getInstance().initializePaymentsDBTable(true);
+                paymentMarkers = paymentsDataSource.getPaymentMarkers(true);
                 return null;
             }
         };
+        initializeTableTask.setOnSucceeded(e -> {
+            paymentsListView.setItems(paymentMarkers);
+            paymentsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            paymentsListView.getSelectionModel().selectLast();
+        });
         Thread thread = new Thread(initializeTableTask);
         thread.start();
         try {
@@ -428,18 +433,6 @@ public class Controller {
             Alerts.alertInfo(getAlertText("initDBTableThreadInterruptedTitle"),
                     getAlertText("initDBTableThreadInterruptedMessage"));
         }
-    }
-
-    private void setPaymentMarkers() {
-        Task<Object> getPaymentMarkersTask = new Task<Object>(){
-            @Override
-            protected Object call() {
-                paymentMarkers = paymentsDataSource.getPaymentMarkers(true);
-                return null;
-            }
-        };
-        Thread thread = new Thread(getPaymentMarkersTask);
-        thread.start();
     }
 
     private Payment getPaymentFromDB(int id, boolean openAndClose) {
@@ -462,7 +455,7 @@ public class Controller {
         return paymentFromDB;
     }
 
-    private void storePayment(Payment payment, boolean openAndClose) {
+    private void storePaymentToDB(Payment payment, boolean openAndClose) {
         Task<Object> storePaymentTask = new Task<Object>(){
             @Override
             protected Object call() {
@@ -471,18 +464,22 @@ public class Controller {
             }
         };
         Thread thread = new Thread(storePaymentTask);
+        Alerts.alertInfo(getAlertText("paymentStoredTitle"),
+                getAlertText("paymentStoredMessage") + " " + payment.getName());
         thread.start();
     }
 
-    private void deletePaymentFromDB(int id, boolean openAndClose) {
-        Task<Object> storePaymentTask = new Task<Object>(){
+    private void deletePaymentFromDB(PaymentMarker paymentMarker, boolean openAndClose) {
+        Task<Object> deletePaymentTask = new Task<Object>(){
             @Override
             protected Object call() {
-                paymentsDataSource.deletePayment(id, openAndClose);
+                paymentsDataSource.deletePayment(paymentMarker.getId(), openAndClose);
                 return null;
             }
         };
-        Thread thread = new Thread(storePaymentTask);
+        Alerts.alertInfo(getAlertText("paymentDeletedTitle"),
+                getAlertText("paymentDeletedMessage") + " " + paymentMarker.getName());
+        Thread thread = new Thread(deletePaymentTask);
         thread.start();
     }
 }

@@ -38,6 +38,10 @@
     <entry key="initDBTableThreadInterruptedMessage">Ошибка потока, в котором происходила\nинициализация таблицы базы данных</entry>
     <entry key="getPaymentThreadInterruptedTitle">Ошибка потока</entry>
     <entry key="getPaymentThreadInterruptedMessage">Ошибка потока, в котором происходило\nполучение платежа из базы данных</entry>
+    <entry key="paymentStoredTitle">Платеж сохранен</entry>
+    <entry key="paymentStoredMessage">В базу данных успешно сохранен платеж</entry>
+    <entry key="paymentDeletedTitle">Платеж удален</entry>
+    <entry key="paymentDeletedMessage">Из базы данных удален платеж</entry>
     <entry key="paymentDialogControllerProcessingErrorTitle">Платеж(и) обработан(ы) неправильно</entry>
     <entry key="paymentDialogControllerProcessingErrorMessage">Значения в одном (или нескольких) полях ввода платежей некорректны.\nВсе неправильные значения заменены значением 0</entry>
     <entry key="paymentsDataSourcePathErrorTitle">Ошибка обработки файла базы данных платежей</entry>
