@@ -6,8 +6,6 @@ import javafx.collections.ObservableList;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static sample.TextDeliverer.getAlertText;
 
@@ -23,10 +21,12 @@ public class PaymentsDataSource {
 
     private Connection conn;
 
+    private static PaymentsDataSource instance = new PaymentsDataSource();
+
     private Statement statement;
     public static final String DB_NAME = "payments.db";
-    private String connectionString;
-    private String dbFile;
+    static private String connectionString;
+    static private String dbFile;
 
     /* The statement for creating a payments table in the database */
     private static String createTableStatement;
@@ -79,7 +79,7 @@ public class PaymentsDataSource {
     public static final String PAYMENT_FOR_GARBAGE = "paymentForGarbage";
     public static final String TOTAL = "total";
 
-    public PaymentsDataSource() {
+    static {
         try {
             /* This is kind of a crutch for making this code usable both from intellij idea and from the executable jar.
              * The file path of the payments database is selected by means of checking if the working directory path
@@ -96,6 +96,15 @@ public class PaymentsDataSource {
             e.printStackTrace();
         }
         compileStringCreateTable();
+
+    }
+
+    /* A singleton's anti-reproduction construction */
+    private PaymentsDataSource() {
+    }
+
+    public static PaymentsDataSource getInstance() {
+        return instance;
     }
 
     public void initializePaymentsDBTable(boolean openAndClose) {
@@ -126,14 +135,16 @@ public class PaymentsDataSource {
     // of the payments stored in the database. Names and full descriptions of markers are shown in the list view
     // in the program window.
     // In case of SQLException it returns null
-    public ObservableList<PaymentMarker> getPaymentMarkers() {
+    public ObservableList<PaymentMarker> getPaymentMarkers(boolean openAndClose) {
         PaymentMarker paymentMarker;
         ResultSet results;
 
         ObservableList<PaymentMarker> paymentMarkers = FXCollections.observableArrayList();
         // This list will be returned from this method only if no SQLException occur, itherwise null will be returned instead
 
-        open();
+        if (openAndClose) {
+            open();
+        }
         try {
             results = statement.executeQuery("SELECT * FROM " + VIEW_NAME);
             while (results.next()) {
@@ -148,7 +159,9 @@ public class PaymentsDataSource {
                     getAlertText("paymentsDataSourceDBPaymentMarkersErrorMessage"));
             return null;
         } finally {
-            close();
+            if (openAndClose) {
+                close();
+            }
         }
     }
     /* This method receives a payment and either inserts a new entry into the payments database table
@@ -277,7 +290,7 @@ public class PaymentsDataSource {
         return payment;
     }
 
-    public void deletePayment(int id, boolean openAndClose) throws SQLException {
+    public void deletePayment(int id, boolean openAndClose) {
         if (openAndClose) {
             open();
         }
@@ -286,7 +299,8 @@ public class PaymentsDataSource {
         try {
             statement.execute(deleteStatement);
         } catch (SQLException e) {
-            throw e; // let's throw in to the invoker method.
+            Alerts.alertInfo(getAlertText("deletePaymentFromDBErrorTitle"),
+                    getAlertText("deletePaymentFromDBErrorMessage"));
         } finally {
             if (openAndClose) {
                 close();

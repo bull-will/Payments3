@@ -1,4 +1,5 @@
 ﻿.idea/
 out/
 Платежи/
+failLogs/
 *.iml

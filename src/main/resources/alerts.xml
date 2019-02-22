@@ -34,6 +34,10 @@
     <entry key="writingToDocErrorMessage">Записать данные платежа в .doc-файл почему-то не удалось</entry>
     <entry key="gettingWindowsTextErrorTitle">Ошибка текстовой части</entry>
     <entry key="gettingWindowsTextErrorMessage">Произошла ошибка загрузки текста для окна программы\n(текст не найден)</entry>
+    <entry key="initDBTableThreadInterruptedTitle">Ошибка потока</entry>
+    <entry key="initDBTableThreadInterruptedMessage">Ошибка потока, в котором происходила\nинициализация таблицы базы данных</entry>
+    <entry key="getPaymentThreadInterruptedTitle">Ошибка потока</entry>
+    <entry key="getPaymentThreadInterruptedMessage">Ошибка потока, в котором происходило\nполучение платежа из базы данных</entry>
     <entry key="paymentDialogControllerProcessingErrorTitle">Платеж(и) обработан(ы) неправильно</entry>
     <entry key="paymentDialogControllerProcessingErrorMessage">Значения в одном (или нескольких) полях ввода платежей некорректны.\nВсе неправильные значения заменены значением 0</entry>
     <entry key="paymentsDataSourcePathErrorTitle">Ошибка обработки файла базы данных платежей</entry>

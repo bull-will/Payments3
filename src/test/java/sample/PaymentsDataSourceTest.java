@@ -17,7 +17,7 @@ public class PaymentsDataSourceTest {
 
     @Before
     public void setUp() throws Exception {
-        paymentsDataSource = new PaymentsDataSource();
+        paymentsDataSource = PaymentsDataSource.getInstance();
         paymentsDataSource.open();
         paymentsDataSource.initializePaymentsDBTable(false);
 
