@@ -2,4 +2,5 @@
 out/
 Платежи/
 failLogs/
+resources\backup/
 *.iml
