@@ -26,9 +26,15 @@ public class TariffsDialogController {
     @FXML
     private TextField waterTariffField;
     @FXML
-    private TextField flatTariffField;
+    private TextField hotWaterTariffField;
     @FXML
     private TextField heatingTariffField;
+    @FXML
+    private TextField gasTariffField;
+    @FXML
+    private TextField sewageTariffField;
+    @FXML
+    private TextField flatTariffField;
     @FXML
     private TextField garbageTariffField;
 
@@ -39,9 +45,12 @@ public class TariffsDialogController {
     private double electroTariff3;
     private int electroLimit3;
     private double electroTariff4;
-
-    private double heatingTariff;
+    
     private double waterTariff;
+    private double hotWaterTariff;
+    private double heatingTariff;
+    private double gasTariff;
+    private double sewageTariff;
     private double flatTariff;
     private double garbageTariff;
 
@@ -54,14 +63,16 @@ public class TariffsDialogController {
         electroTariff4Field.setText(String.valueOf(tariffsData.electroTariff4));
         electroLimit1Field.setText(String.valueOf(tariffsData.electroLimit1));
         electroLimit2Field.setText(String.valueOf(tariffsData.electroLimit2));
-        electroLimit3Field.setText(String.valueOf(tariffsData.electroLimit3));
-
+        electroLimit3Field.setText(String.valueOf(tariffsData.electroLimit3));        
         waterTariffField.setText(String.valueOf(tariffsData.waterTariff));
-        flatTariffField.setText(String.valueOf(tariffsData.flatTariff));
+        hotWaterTariffField.setText(String.valueOf(tariffsData.hotWaterTariff));
         heatingTariffField.setText(String.valueOf(tariffsData.heatingTariff));
+        gasTariffField.setText(String.valueOf(tariffsData.gasTariff));
+        sewageTariffField.setText(String.valueOf(tariffsData.sewageTariff));
+        flatTariffField.setText(String.valueOf(tariffsData.flatTariff));
         garbageTariffField.setText(String.valueOf(tariffsData.garbageTariff));
     }
-
+    
     public void obtainNumbersFromTextFields() {
         try {
             electroTariff1 = Double.parseDouble(electroTariff1Field.getText());
@@ -70,7 +81,6 @@ public class TariffsDialogController {
             someFieldsProcessedWrong = true;
         }
         try {
-            int trial = (int) 0.5;
             electroLimit1 = Integer.parseInt(electroLimit1Field.getText());
         } catch (Exception e) {
             electroLimit1 = 0;
@@ -113,9 +123,27 @@ public class TariffsDialogController {
             someFieldsProcessedWrong = true;
         }
         try {
+            hotWaterTariff = Double.parseDouble(hotWaterTariffField.getText());
+        } catch (Exception e) {
+            hotWaterTariff = 0;
+            someFieldsProcessedWrong = true;
+        }
+        try {
             heatingTariff = Double.parseDouble(heatingTariffField.getText());
         } catch (Exception e) {
             heatingTariff = 0;
+            someFieldsProcessedWrong = true;
+        }
+        try {
+            gasTariff = Double.parseDouble(gasTariffField.getText());
+        } catch (Exception e) {
+            gasTariff = 0;
+            someFieldsProcessedWrong = true;
+        }
+        try {
+            sewageTariff = Double.parseDouble(sewageTariffField.getText());
+        } catch (Exception e) {
+            sewageTariff = 0;
             someFieldsProcessedWrong = true;
         }
         try {
@@ -147,8 +175,11 @@ public class TariffsDialogController {
         tariffsData.electroTariff3 = electroTariff3;
         tariffsData.electroLimit3 = electroLimit3;
         tariffsData.electroTariff4 = electroTariff4;
-        tariffsData.heatingTariff = heatingTariff;
         tariffsData.waterTariff = waterTariff;
+        tariffsData.hotWaterTariff = hotWaterTariff;
+        tariffsData.heatingTariff = heatingTariff;
+        tariffsData.gasTariff = gasTariff;
+        tariffsData.sewageTariff = sewageTariff;
         tariffsData.flatTariff = flatTariff;
         tariffsData.garbageTariff = garbageTariff;
 

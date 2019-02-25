@@ -38,7 +38,12 @@
                     <Insets right="10.0"/>
                 </HBox.margin>
             </Button>
-            <Button fx:id="tariffsButton" text="Тарифы" onAction="#tariffsDialog"/>
+            <Button fx:id="tariffsButton" text="Тарифы" onAction="#tariffsDialog">
+                <HBox.margin>
+                    <Insets right="10.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="helpButton" text="Помощь" onAction="#help"/>
             <padding>
                 <Insets bottom="10.0" left="10" top="10.0"/>
             </padding>
@@ -51,6 +56,6 @@
         <TextArea fx:id="paymentTextArea" wrapText="true" VBox.vgrow="ALWAYS" editable="false"/>
     </center>
     <bottom>
-        <Label text="© 2018 - 2019 Vilhelm Skrypkar. All rights reserved."/>
+        <Label text="© 2018 - 2019 Vilhelm Skrypkar."/>
     </bottom>
 </BorderPane>

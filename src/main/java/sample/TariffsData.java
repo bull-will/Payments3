@@ -17,8 +17,11 @@ public class TariffsData {
     private static final String ELECTRO_TARIFF_3 = "electro_tariff_3";
     private static final String ELECTRO_LIMIT_3 = "electro_limit_3";
     private static final String ELECTRO_TARIFF_4 = "electro_tariff_4";
-    private static final String HEATING_TARIFF = "heating_tariff";
     private static final String WATER_TARIFF = "water_tariff";
+    private static final String HOT_WATER_TARIFF = "hot_water_tariff";
+    private static final String HEATING_TARIFF = "heating_tariff";
+    private static final String GAS_TARIFF = "gas_tariff";
+    private static final String SEWAGE_TARIFF = "sewage_tariff";
     private static final String FLAT_TARIFF = "flat_tariff";
     private static final String GARBAGE_TARIFF = "garbage_tariff";
 
@@ -30,8 +33,11 @@ public class TariffsData {
     double electroTariff3;
     int electroLimit3;
     double electroTariff4;
-    double heatingTariff;
     double waterTariff;
+    double hotWaterTariff;
+    double heatingTariff;
+    double gasTariff;
+    double sewageTariff;
     double flatTariff;
     double garbageTariff;
 
@@ -42,8 +48,11 @@ public class TariffsData {
     private final double electroTariff3Original = 0.8388;
     private final int electroLimit3Original = 800;
     private final double electroTariff4Original = 2.6808;
-    private final double heatingTariffOriginal = 270.11;
     private final double waterTariffOriginal = 14.0;
+    private final double hotWaterTariffOriginal = 0.0;
+    private final double heatingTariffOriginal = 270.11;
+    private final double gasTariffOriginal = 0.0;
+    private final double sewageTariffOriginal = 0.0;
     private final double flatTariffOriginal = 197.0;
     private final double garbageTariffOriginal = 22.0;
 
@@ -56,8 +65,8 @@ public class TariffsData {
              * tariffs file for the jar file in the *target\classes subdirectory.
              * If the path doesn't end with *\target it means the program works from the ides project */
             TARIFFS_FILE = (new File(".").getCanonicalPath().endsWith("target") ?
-                    "classes"+File.separator+"tariffs.properties" :
-                    ("src"+File.separator+"main"+File.separator+"resources"+File.separator+"tariffs.properties"));
+                    "classes"+File.separator+ "tariffs.properties" :
+                    ("src"+File.separator+"main"+File.separator+"resources"+File.separator+ "tariffs.properties"));
         } catch (IOException e) {
             Alerts.alertInfo(getAlertText("tariffsDataTariffsFileIOExceptionTitle"),
                     getAlertText("tariffsDataTariffsFileIOExceptionMessage"));
@@ -70,8 +79,11 @@ public class TariffsData {
         this.electroTariff3 = electroTariff3Original;
         this.electroLimit3 = electroLimit3Original;
         this.electroTariff4 = electroTariff4Original;
-        this.heatingTariff = heatingTariffOriginal;
         this.waterTariff = waterTariffOriginal;
+        this.hotWaterTariff = hotWaterTariffOriginal;
+        this.heatingTariff = heatingTariffOriginal;
+        this.gasTariff = gasTariffOriginal;
+        this.sewageTariff = sewageTariffOriginal;
         this.flatTariff = flatTariffOriginal;
         this.garbageTariff = garbageTariffOriginal;
     }
@@ -94,8 +106,11 @@ public class TariffsData {
             this.electroTariff3 = Double.parseDouble(tariffs.getProperty(ELECTRO_TARIFF_3));
             this.electroLimit3 = Integer.parseInt(tariffs.getProperty(ELECTRO_LIMIT_3));
             this.electroTariff4 = Double.parseDouble(tariffs.getProperty(ELECTRO_TARIFF_4));
-            this.heatingTariff = Double.parseDouble(tariffs.getProperty(HEATING_TARIFF));
             this.waterTariff = Double.parseDouble(tariffs.getProperty(WATER_TARIFF));
+            this.hotWaterTariff = Double.parseDouble(tariffs.getProperty(HOT_WATER_TARIFF));
+            this.heatingTariff = Double.parseDouble(tariffs.getProperty(HEATING_TARIFF));
+            this.gasTariff = Double.parseDouble(tariffs.getProperty(GAS_TARIFF));
+            this.sewageTariff = Double.parseDouble(tariffs.getProperty(SEWAGE_TARIFF));
             this.flatTariff = Double.parseDouble(tariffs.getProperty(FLAT_TARIFF));
             this.garbageTariff = Double.parseDouble(tariffs.getProperty(GARBAGE_TARIFF));
 
@@ -133,8 +148,11 @@ public class TariffsData {
             prop.setProperty(ELECTRO_TARIFF_3, String.valueOf(electroTariff3));
             prop.setProperty(ELECTRO_LIMIT_3, String.valueOf(electroLimit3));
             prop.setProperty(ELECTRO_TARIFF_4, String.valueOf(electroTariff4));
-            prop.setProperty(HEATING_TARIFF, String.valueOf(heatingTariff));
             prop.setProperty(WATER_TARIFF, String.valueOf(waterTariff));
+            prop.setProperty(HOT_WATER_TARIFF, String.valueOf(hotWaterTariff));
+            prop.setProperty(HEATING_TARIFF, String.valueOf(heatingTariff));
+            prop.setProperty(GAS_TARIFF, String.valueOf(gasTariff));
+            prop.setProperty(SEWAGE_TARIFF, String.valueOf(sewageTariff));
             prop.setProperty(FLAT_TARIFF, String.valueOf(flatTariff));
             prop.setProperty(GARBAGE_TARIFF, String.valueOf(garbageTariff));
 
@@ -166,8 +184,11 @@ public class TariffsData {
         electroTariff3 = electroTariff3Original;
         electroLimit3 = electroLimit3Original;
         electroTariff4 = electroTariff4Original;
-        heatingTariff = heatingTariffOriginal;
         waterTariff = waterTariffOriginal;
+        hotWaterTariff = hotWaterTariffOriginal;
+        heatingTariff = heatingTariffOriginal;
+        gasTariff = gasTariffOriginal;
+        sewageTariff = sewageTariffOriginal;
         flatTariff = flatTariffOriginal;
         garbageTariff = garbageTariffOriginal;
     }

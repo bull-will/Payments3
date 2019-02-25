@@ -25,7 +25,7 @@ public class PaymentsDataSourceTest {
 
         testPayment2 = new Payment(2, 2002, 2, 1, 100, 3, 4);
         testPayment2.payForEverything();
-        testPayment2.buidFullDescription();
+        testPayment2.buildFullDescription();
     }
 
     @Test

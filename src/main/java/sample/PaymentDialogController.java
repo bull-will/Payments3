@@ -44,13 +44,41 @@ public class PaymentDialogController {
     @FXML
     private TextField waterMustPayField;
     @FXML
-    private TextField flatTariffField;
+    private TextField hotWaterTariffField;
     @FXML
-    private TextField flatMustPayField;
+    private TextField hotWaterStartField;
+    @FXML
+    private TextField hotWaterEndField;
+    @FXML
+    private TextField hotWaterMustPayField;
     @FXML
     private TextField heatingTariffField;
     @FXML
+    private TextField heatingStartField;
+    @FXML
+    private TextField heatingEndField;
+    @FXML
     private TextField heatingMustPayField;
+    @FXML
+    private TextField gasTariffField;
+    @FXML
+    private TextField gasStartField;
+    @FXML
+    private TextField gasEndField;
+    @FXML
+    private TextField gasMustPayField;
+    @FXML
+    private TextField sewageTariffField;
+    @FXML
+    private TextField sewageStartField;
+    @FXML
+    private TextField sewageEndField;
+    @FXML
+    private TextField sewageMustPayField;
+    @FXML
+    private TextField flatTariffField;
+    @FXML
+    private TextField flatMustPayField;
     @FXML
     private TextField garbageTariffField;
     @FXML
@@ -59,19 +87,43 @@ public class PaymentDialogController {
     @FXML
     RadioButton electroByCounter;
     @FXML
+    RadioButton electroByTariff;
+    @FXML
     RadioButton electroBySet;
     @FXML
     RadioButton waterByCounter;
     @FXML
+    RadioButton waterByTariff;
+    @FXML
     RadioButton waterBySet;
     @FXML
-    RadioButton flatByTariff;
+    RadioButton hotWaterByCounter;
     @FXML
-    RadioButton flatBySet;
+    RadioButton hotWaterByTariff;
+    @FXML
+    RadioButton hotWaterBySet;
+    @FXML
+    RadioButton heatingByCounter;
     @FXML
     RadioButton heatingByTariff;
     @FXML
     RadioButton heatingBySet;
+    @FXML
+    RadioButton gasByCounter;
+    @FXML
+    RadioButton gasByTariff;
+    @FXML
+    RadioButton gasBySet;
+    @FXML
+    RadioButton sewageByCounter;
+    @FXML
+    RadioButton sewageByTariff;
+    @FXML
+    RadioButton sewageBySet;
+    @FXML
+    RadioButton flatByTariff;
+    @FXML
+    RadioButton flatBySet;
     @FXML
     RadioButton garbageByTariff;
     @FXML
@@ -87,14 +139,20 @@ public class PaymentDialogController {
     private int electroLimit3;
     private double electroTariff4;
 
-    private double heatingTariff;
     private double waterTariff;
+    private double hotWaterTariff;
+    private double heatingTariff;
+    private double gasTariff;
+    private double sewageTariff;
     private double flatTariff;
     private double garbageTariff;
 
     private double electroMustPay;
-    private double heatingMustPay;
     private double waterMustPay;
+    private double hotWaterMustPay;
+    private double heatingMustPay;
+    private double gasMustPay;
+    private double sewageMustPay;
     private double flatMustPay;
     private double garbageMustPay;
 
@@ -105,21 +163,32 @@ public class PaymentDialogController {
     private int electroEnd;
     private int waterStart;
     private int waterEnd;
+    private int hotWaterStart;
+    private int hotWaterEnd;
+    private int heatingStart;
+    private int heatingEnd;
+    private int gasStart;
+    private int gasEnd;
+    private int sewageStart;
+    private int sewageEnd;
+
     private boolean someFieldsProcessedWrong = false;
 
     /* switching radio buttons in the dialog window
     according to whether the stuff is supposed to be payd by the tariff or by the random set amount of money*/
+    @FXML
     public void electroSetInField(MouseEvent mouseEvent) {
         electroBySet.setSelected(true);
     }
 
+    @FXML
     public void waterSetInField(MouseEvent mouseEvent) {
         waterBySet.setSelected(true);
     }
 
     @FXML
-    public void flatSetInField(MouseEvent mouseEvent) {
-        flatBySet.setSelected(true);
+    public void hotWaterSetInField(MouseEvent mouseEvent) {
+        hotWaterBySet.setSelected(true);
     }
 
     @FXML
@@ -128,158 +197,100 @@ public class PaymentDialogController {
     }
 
     @FXML
+    public void gasSetInField(MouseEvent mouseEvent) {
+        gasBySet.setSelected(true);
+    }
+
+    @FXML
+    public void sewageSetInField(MouseEvent mouseEvent) {
+        sewageBySet.setSelected(true);
+    }
+
+    @FXML
+    public void flatSetInField(MouseEvent mouseEvent) {
+        flatBySet.setSelected(true);
+    }
+
+    @FXML
     public void garbageSetInField(MouseEvent mouseEvent) {
         garbageBySet.setSelected(true);
     }
 
-
     /* Obtaining what was in the textfields of the payment dialog, either pre-filled or manually entered */
     public void obtainNumbersFromTextFields() {
-        try {
-            year = Integer.parseInt(yearField.getText());
-        } catch (Exception e) {
-            year = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            month = Integer.parseInt(monthField.getText());
-        } catch (Exception e) {
-            month = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroTariff1 = Double.parseDouble(electroTariff1Field.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroTariff1 = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroLimit1 = Integer.parseInt(electroLimit1Field.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroLimit1 = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroTariff2 = Double.parseDouble(electroTariff2Field.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroTariff2 = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroLimit2 = Integer.parseInt(electroLimit2Field.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroLimit2 = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroTariff3 = Double.parseDouble(electroTariff3Field.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroTariff3 = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroLimit3 = Integer.parseInt(electroLimit3Field.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroLimit3 = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroTariff4 = Double.parseDouble(electroTariff4Field.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroTariff4 = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroStart = Integer.parseInt(electroStartField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroStart = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            electroEnd = Integer.parseInt(electroEndField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroEnd = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            waterTariff = Double.parseDouble(waterTariffField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            waterTariff = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            waterStart = Integer.parseInt(waterStartField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            waterStart = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            waterEnd = Integer.parseInt(waterEndField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            waterEnd = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            heatingTariff = Double.parseDouble(heatingTariffField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            heatingTariff = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            flatTariff = Double.parseDouble(flatTariffField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            flatTariff = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            garbageTariff = Double.parseDouble(garbageTariffField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            garbageTariff = 0;
-            someFieldsProcessedWrong = true;
-        }
-
-
-        try {
-            if (electroBySet.isSelected())
-                electroMustPay = Double.parseDouble(electroMustPayField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            electroMustPay = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            if (waterBySet.isSelected())
-                waterMustPay = Double.parseDouble(waterMustPayField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            waterMustPay = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            if (flatBySet.isSelected())
-                flatMustPay = Double.parseDouble(flatMustPayField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            flatMustPay = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            if (heatingBySet.isSelected())
-                heatingMustPay = Double.parseDouble(heatingMustPayField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            heatingMustPay = 0;
-            someFieldsProcessedWrong = true;
-        }
-        try {
-            if (garbageBySet.isSelected())
-                garbageMustPay = Double.parseDouble(garbageMustPayField.getText().replace(',', '.'));
-        } catch (Exception e) {
-            garbageMustPay = 0;
-            someFieldsProcessedWrong = true;
-        }
+        year = obtainIntFromFields(yearField);
+        month = obtainIntFromFields(monthField);
+        electroTariff1 = obtainDoubleFromFields(electroTariff1Field);
+        electroLimit1 = obtainIntFromFields(electroLimit1Field);
+        electroTariff2 = obtainDoubleFromFields(electroTariff2Field);
+        electroLimit2 = obtainIntFromFields(electroLimit2Field);
+        electroTariff3 = obtainDoubleFromFields(electroTariff3Field);
+        electroLimit3 = obtainIntFromFields(electroLimit3Field);
+        electroTariff4 = obtainDoubleFromFields(electroTariff4Field);
+        electroStart = obtainIntFromFields(electroStartField);
+        electroEnd = obtainIntFromFields(electroEndField);
+        waterTariff = obtainDoubleFromFields(waterTariffField);
+        waterStart = obtainIntFromFields(waterStartField);
+        waterEnd = obtainIntFromFields(waterEndField);
+        hotWaterTariff = obtainDoubleFromFields(hotWaterTariffField);
+        hotWaterStart = obtainIntFromFields(hotWaterStartField);
+        hotWaterEnd = obtainIntFromFields(hotWaterEndField);
+        heatingTariff = obtainDoubleFromFields(heatingTariffField);
+        heatingStart = obtainIntFromFields(heatingStartField);
+        heatingEnd = obtainIntFromFields(heatingEndField);
+        gasTariff = obtainDoubleFromFields(gasTariffField);
+        gasStart = obtainIntFromFields(gasStartField);
+        gasEnd = obtainIntFromFields(gasEndField);
+        sewageTariff = obtainDoubleFromFields(sewageTariffField);
+        sewageStart = obtainIntFromFields(sewageStartField);
+        sewageEnd = obtainIntFromFields(sewageEndField);
+        flatTariff = obtainDoubleFromFields(flatTariffField);
+        garbageTariff = obtainDoubleFromFields(garbageTariffField);
+        electroMustPay = obtainSetPayment(electroBySet, electroMustPayField);
+        waterMustPay = obtainSetPayment(waterBySet, waterMustPayField);
+        hotWaterMustPay = obtainSetPayment(hotWaterBySet, hotWaterMustPayField);
+        heatingMustPay = obtainSetPayment(heatingBySet, heatingMustPayField);
+        gasMustPay = obtainSetPayment(gasBySet, gasMustPayField);
+        sewageMustPay = obtainSetPayment(sewageBySet, sewageMustPayField);
+        flatMustPay = obtainSetPayment(flatBySet, flatMustPayField);
+        garbageMustPay = obtainSetPayment(garbageBySet, garbageMustPayField);
 
         if (someFieldsProcessedWrong) {
-
             Alerts.alertInfo(getAlertText("paymentDialogControllerProcessingErrorTitle"),
                     getAlertText("paymentDialogControllerProcessingErrorMessage"));
         }
+    }
+
+    private int obtainIntFromFields(TextField textField) {
+        int value = 0;
+        try {
+            value = Integer.parseInt(textField.getText().replace(',', '.'));
+        } catch (Exception e) {
+            someFieldsProcessedWrong = true;
+        }
+        return value;
+    }
+
+    private double obtainDoubleFromFields(TextField textField) {
+        double value = 0d;
+        try {
+            value = Double.parseDouble(textField.getText().replace(',', '.'));
+        } catch (Exception e) {
+            someFieldsProcessedWrong = true;
+        }
+        return value;
+    }
+
+    private double obtainSetPayment(RadioButton set, TextField mustPayField) {
+        double value = 0d;
+        try {
+            if (set.isSelected()) {
+                value = Double.parseDouble(mustPayField.getText().replace(',', '.'));
+            }
+        } catch (Exception e) {
+            someFieldsProcessedWrong = true;
+        }
+        return value;
     }
 
     public Payment processPayment(Payment payment) {
@@ -297,36 +308,76 @@ public class PaymentDialogController {
         payment.setElectroTariff3(electroTariff3);
         payment.setElectroLimit3(electroLimit3);
         payment.setElectroTariff4(electroTariff4);
-        payment.setHeatingTariff(heatingTariff);
         payment.setWaterTariff(waterTariff);
+        payment.setHotWaterTariff(hotWaterTariff);
+        payment.setHeatingTariff(heatingTariff);
+        payment.setGasTariff(gasTariff);
+        payment.setSewageTariff(sewageTariff);
         payment.setFlatTariff(flatTariff);
         payment.setGarbageTariff(garbageTariff);
         payment.setElectroStart(electroStart);
         payment.setElectroEnd(electroEnd);
         payment.setWaterStart(waterStart);
         payment.setWaterEnd(waterEnd);
+        payment.setHotWaterStart(hotWaterStart);
+        payment.setHotWaterEnd(hotWaterEnd);
+        payment.setHeatingStart(heatingStart);
+        payment.setHeatingEnd(heatingEnd);
+        payment.setGasStart(gasStart);
+        payment.setGasEnd(gasEnd);
+        payment.setSewageStart(sewageStart);
+        payment.setSewageEnd(sewageEnd);
 
-        /* If a user set one or another payment to be paid not by the tariff but set the sum himself */
+        /* Setting payment by counter, by tariff or by set value according to selected radio buttons */
+
+        payment.setElectroPaymentByTariff(electroByTariff.isSelected());
         if (electroBySet.isSelected() && !electroMustPayField.getText().equals("")) {
             payment.setElectroPayment(electroMustPay);
         } else {
-            payment.setDefaultElectroPayment();
+            payment.unsetElectroPayment();
         }
+
+        payment.setWaterPaymentByTariff(waterByTariff.isSelected());
         if (waterBySet.isSelected() && !waterMustPayField.getText().equals("")) {
             payment.setWaterPayment(waterMustPay);
         } else {
-            payment.setDefaultWaterPayment();
+            payment.unsetWaterPayment();
         }
-        if (flatBySet.isSelected() && !flatMustPayField.getText().equals("")) {
-            payment.setFlatPayment(flatMustPay);
+
+        payment.setHotWaterPaymentByTariff(hotWaterByTariff.isSelected());
+        if (hotWaterBySet.isSelected() && !hotWaterMustPayField.getText().equals("")) {
+            payment.setHotWaterPayment(hotWaterMustPay);
         } else {
-            payment.setDefaultFlatPayment();
+            payment.unsetHotWaterPayment();
         }
+
+        payment.setHeatingPaymentByTariff(heatingByTariff.isSelected());
         if (heatingBySet.isSelected() && !heatingMustPayField.getText().equals("")) {
             payment.setHeatingPayment(heatingMustPay);
         } else {
-            payment.setDefaultHeatingPayment();
+            payment.unseteatingPayment();
         }
+
+        payment.setGasPaymentByTariff(gasByTariff.isSelected());
+        if (gasBySet.isSelected() && !gasMustPayField.getText().equals("")) {
+            payment.setGasPayment(gasMustPay);
+        } else {
+            payment.unsetGasPayment();
+        }
+
+        payment.setSewagePaymentByTariff(sewageByTariff.isSelected());
+        if (sewageBySet.isSelected() && !sewageMustPayField.getText().equals("")) {
+            payment.setSewagePayment(sewageMustPay);
+        } else {
+            payment.unsetSewagePayment();
+        }
+
+        if (flatBySet.isSelected() && !flatMustPayField.getText().equals("")) {
+            payment.setFlatPayment(flatMustPay);
+        } else {
+            payment.unsetFlatPayment();
+        }
+
         if (garbageBySet.isSelected() && !garbageMustPayField.getText().equals("")) {
             payment.setGarbagePayment(garbageMustPay);
         } else {
@@ -334,7 +385,7 @@ public class PaymentDialogController {
         }
 
         payment.payForEverything();
-        payment.buidFullDescription();
+        payment.buildFullDescription();
         return payment;
     }
 
@@ -352,8 +403,11 @@ public class PaymentDialogController {
             electroLimit2Field.setText(String.valueOf(payment.getElectroLimit2()));
             electroLimit3Field.setText(String.valueOf(payment.getElectroLimit3()));
             waterTariffField.setText(String.valueOf(payment.getWaterTariff()));
-            flatTariffField.setText(String.valueOf(payment.getFlatTariff()));
+            hotWaterTariffField.setText(String.valueOf(payment.getHotWaterTariff()));
             heatingTariffField.setText(String.valueOf(payment.getHeatingTariff()));
+            gasTariffField.setText(String.valueOf(payment.getGasTariff()));
+            sewageTariffField.setText(String.valueOf(payment.getSewageTariff()));
+            flatTariffField.setText(String.valueOf(payment.getFlatTariff()));
             garbageTariffField.setText(String.valueOf(payment.getGarbageTariff()));
         } else {
             electroTariff1Field.setText(String.valueOf(tariffsData.electroTariff1));
@@ -364,16 +418,26 @@ public class PaymentDialogController {
             electroLimit2Field.setText(String.valueOf(tariffsData.electroLimit2));
             electroLimit3Field.setText(String.valueOf(tariffsData.electroLimit3));
             waterTariffField.setText(String.valueOf(tariffsData.waterTariff));
-            flatTariffField.setText(String.valueOf(tariffsData.flatTariff));
+            hotWaterTariffField.setText(String.valueOf(tariffsData.hotWaterTariff));
             heatingTariffField.setText(String.valueOf(tariffsData.heatingTariff));
+            gasTariffField.setText(String.valueOf(tariffsData.gasTariff));
+            sewageTariffField.setText(String.valueOf(tariffsData.sewageTariff));
+            flatTariffField.setText(String.valueOf(tariffsData.flatTariff));
             garbageTariffField.setText(String.valueOf(tariffsData.garbageTariff));
         }
 
         electroStartField.setText(String.valueOf(payment.getElectroStart()));
         electroEndField.setText(String.valueOf(payment.getElectroEnd()));
-
         waterStartField.setText(String.valueOf(payment.getWaterStart()));
         waterEndField.setText(String.valueOf(payment.getWaterEnd()));
+        hotWaterStartField.setText(String.valueOf(payment.getHotWaterStart()));
+        hotWaterEndField.setText(String.valueOf(payment.getHotWaterEnd()));
+        heatingStartField.setText(String.valueOf(payment.getHeatingStart()));
+        heatingEndField.setText(String.valueOf(payment.getHeatingEnd()));
+        gasStartField.setText(String.valueOf(payment.getGasStart()));
+        gasEndField.setText(String.valueOf(payment.getGasEnd()));
+        sewageStartField.setText(String.valueOf(payment.getSewageStart()));
+        sewageEndField.setText(String.valueOf(payment.getSewageEnd()));
 
 
         /* these fields' data is collected from the basis payment only if it's being edited */
@@ -382,29 +446,68 @@ public class PaymentDialogController {
             if (payment.isElectroPaymentSet()) {
                 electroBySet.setSelected(true);
                 electroMustPayField.setText(String.valueOf(payment.getElectroMustPay()));
-            }
+            } else if (payment.isElectroPaymentByTariff()) {
+                electroByTariff.setSelected(true);
+            } else electroByCounter.setSelected(true);
+            
             if (payment.isWaterPaymentSet()) {
                 waterBySet.setSelected(true);
                 waterMustPayField.setText(String.valueOf(payment.getWaterMustPay()));
-            }
-            if (payment.isFlatPaymentSet()) {
-                flatBySet.setSelected(true);
-                flatMustPayField.setText(String.valueOf(payment.getFlatMustPay()));
-            }
+            } else if (payment.isWaterPaymentByTariff()) {
+                waterByTariff.setSelected(true);
+            } else waterByCounter.setSelected(true);
+
+            if (payment.isHotWaterPaymentSet()) {
+                hotWaterBySet.setSelected(true);
+                hotWaterMustPayField.setText(String.valueOf(payment.getHotWaterMustPay()));
+            } else if (payment.isHotWaterPaymentByTariff()) {
+                hotWaterByTariff.setSelected(true);
+            } else hotWaterByCounter.setSelected(true);
+
             if (payment.isHeatingPaymentSet()) {
                 heatingBySet.setSelected(true);
                 heatingMustPayField.setText(String.valueOf(payment.getHeatingMustPay()));
-            }
+            } else if (payment.isHeatingPaymentByTariff()) {
+                heatingByTariff.setSelected(true);
+            } else heatingByCounter.setSelected(true);
+
+            if (payment.isGasPaymentSet()) {
+                gasBySet.setSelected(true);
+                gasMustPayField.setText(String.valueOf(payment.getGasMustPay()));
+            } else if (payment.isGasPaymentByTariff()) {
+                gasByTariff.setSelected(true);
+            } else gasByCounter.setSelected(true);
+
+            if (payment.isSewagePaymentSet()) {
+                sewageBySet.setSelected(true);
+                sewageMustPayField.setText(String.valueOf(payment.getSewageMustPay()));
+            } else if (payment.isSewagePaymentByTariff()) {
+                sewageByTariff.setSelected(true);
+            } else sewageByCounter.setSelected(true);
+
+            if (payment.isFlatPaymentSet()) {
+                flatBySet.setSelected(true);
+                flatMustPayField.setText(String.valueOf(payment.getFlatMustPay()));
+            } else flatByTariff.setSelected(true);
+
             if (payment.isGarbagePaymentSet()) {
                 garbageBySet.setSelected(true);
                 garbageMustPayField.setText(String.valueOf(payment.getGarbageMustPay()));
-            }
+            } else garbageByTariff.setSelected(true);
 
             if (refillAllFieldsForEditing) {
                 electroStartField.setText(String.valueOf(payment.getElectroStart()));
                 electroEndField.setText(String.valueOf(payment.getElectroEnd()));
                 waterStartField.setText(String.valueOf(payment.getWaterStart()));
                 waterEndField.setText(String.valueOf(payment.getWaterEnd()));
+                hotWaterStartField.setText(String.valueOf(payment.getHotWaterStart()));
+                hotWaterEndField.setText(String.valueOf(payment.getHotWaterEnd()));
+                heatingStartField.setText(String.valueOf(payment.getHeatingStart()));
+                heatingEndField.setText(String.valueOf(payment.getHeatingEnd()));
+                gasStartField.setText(String.valueOf(payment.getGasStart()));
+                gasEndField.setText(String.valueOf(payment.getGasEnd()));
+                sewageStartField.setText(String.valueOf(payment.getSewageStart()));
+                sewageEndField.setText(String.valueOf(payment.getSewageEnd()));
             }
         }
     }

@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+
 import java.io.*;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class Controller {
 
     private TariffsData tariffsData;
 
-    static ObservableList<PaymentMarker> paymentMarkers;
+    ObservableList<PaymentMarker> paymentMarkers;
 
     @FXML
     private ListView<PaymentMarker> paymentsListView;
@@ -127,6 +128,10 @@ public class Controller {
         int newPaymentMonth = 0;
         int newPaymentElectroStart = 0;
         int newPaymentWaterStart = 0;
+        int newPaymentHotWaterStart = 0;
+        int newPaymentHeatingStart = 0;
+        int newPaymentGasStart = 0;
+        int newPaymentSewageStart = 0;
         // Checking if the list of payments contains anything. It will help to set the new payment id
         if (paymentMarkers.isEmpty()) {
             newPaymentId = 1;
@@ -154,9 +159,16 @@ public class Controller {
             }
             newPaymentElectroStart = lastPayment.getElectroEnd();
             newPaymentWaterStart = lastPayment.getWaterEnd();
+            newPaymentHotWaterStart = lastPayment.getHotWaterEnd();
+            newPaymentHeatingStart = lastPayment.getHeatingEnd();
+            newPaymentGasStart = lastPayment.getGasEnd();
+            newPaymentSewageStart = lastPayment.getSewageEnd();
         }
+        /* Creating a new payment with pre-filled start indications of counters */
         newPaymentBase = new Payment(newPaymentId, newPaymentYear, newPaymentMonth,
-                newPaymentElectroStart, 0, newPaymentWaterStart, 0);
+                newPaymentElectroStart, 0, newPaymentWaterStart, 0,
+                newPaymentHotWaterStart, 0, newPaymentHeatingStart, 0,
+                newPaymentGasStart, 0, newPaymentSewageStart, 0);
         newPayment(newPaymentBase, false);
     }
 
@@ -175,7 +187,7 @@ public class Controller {
         /* Obtaining the payment corresponding the selected marker from the database
          * to be the basis for the new payment. Also cloning it цшер штскуьутештп its id by one */
         Payment basePaymentFromDB = getPaymentFromDB(marker.getId(), true);
-        int lastId = paymentMarkers.get(paymentMarkers.size()-1).getId();
+        int lastId = paymentMarkers.get(paymentMarkers.size() - 1).getId();
         if (basePaymentFromDB != null) {
             Payment basePaymentWithIncrementedID = basePaymentFromDB.cloneWithId(lastId + 1);
             newPayment(basePaymentWithIncrementedID, true);
@@ -207,6 +219,7 @@ public class Controller {
         dialog.initOwner(mainBorderPane.getScene().getWindow());
         dialog.setTitle(getText("processPaymentTitle"));
         dialog.setHeaderText(editPaymentOrNot ? getText("processPaymentEdit") : getText("processPaymentNew"));
+        dialog.setResizable(true);
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getClassLoader().getResource("paymentDialog.fxml"));
         try {
@@ -240,6 +253,7 @@ public class Controller {
         }
         return null;
     }
+
     @FXML
     public void editPayment(ActionEvent actionEvent) {
         selectedPaymentMarker = paymentsListView.getSelectionModel().getSelectedItem();
@@ -366,7 +380,6 @@ public class Controller {
     }
 
 
-
     /* This method sets a directory, a name and an extension for output file */
     File makeOutPutFile(String paymentName) throws IOException {
         String workingDir = System.getProperty("user.dir"); // Files will be stored in the project folder
@@ -393,6 +406,7 @@ public class Controller {
                         outPutFileToPrint));
         return new OutputStreamWriter(outputStream);
     }
+
     private void writeLinesToFile(PaymentMarker paymentToDoc, OutputStreamWriter dataOut) throws IOException {
 
         String writeLine = paymentToDoc.getFullDescription();
@@ -412,7 +426,7 @@ public class Controller {
     /* Next multithreading methods operate payment data source making database queries */
 
     private void initializeDBTable() {
-        Task<Object> initializeTableTask = new Task<Object>(){
+        Task<Object> initializeTableTask = new Task<Object>() {
             @Override
             protected Object call() {
                 PaymentsDataSource.getInstance().initializePaymentsDBTable(true);
@@ -437,7 +451,7 @@ public class Controller {
 
     private Payment getPaymentFromDB(int id, boolean openAndClose) {
 
-        Task<Object> getPaymentTask = new Task<Object>(){
+        Task<Object> getPaymentTask = new Task<Object>() {
             @Override
             protected Object call() {
                 paymentFromDB = paymentsDataSource.getPayment(id, openAndClose);
@@ -456,7 +470,7 @@ public class Controller {
     }
 
     private void storePaymentToDB(Payment payment, boolean openAndClose) {
-        Task<Object> storePaymentTask = new Task<Object>(){
+        Task<Object> storePaymentTask = new Task<Object>() {
             @Override
             protected Object call() {
                 paymentsDataSource.storePayment(payment, openAndClose);
@@ -465,12 +479,13 @@ public class Controller {
         };
         Thread thread = new Thread(storePaymentTask);
         thread.start();
-        Alerts.alertInfo(getAlertText("paymentStoredTitle"),
-                getAlertText("paymentStoredMessage") + " " + payment.getName());
+        /* This alert turned out to be annoying */
+//        Alerts.alertInfo(getAlertText("paymentStoredTitle"),
+//                getAlertText("paymentStoredMessage") + " " + payment.getName());
     }
 
     private void deletePaymentFromDB(PaymentMarker paymentMarker, boolean openAndClose) {
-        Task<Object> deletePaymentTask = new Task<Object>(){
+        Task<Object> deletePaymentTask = new Task<Object>() {
             @Override
             protected Object call() {
                 paymentsDataSource.deletePayment(paymentMarker.getId(), openAndClose);
@@ -481,5 +496,9 @@ public class Controller {
         thread.start();
         Alerts.alertInfo(getAlertText("paymentDeletedTitle"),
                 getAlertText("paymentDeletedMessage") + " " + paymentMarker.getName());
+    }
+
+    public void help(ActionEvent actionEvent) {
+        Alerts.alertInfo(getAlertText("helpTitle"), getAlertText("helpMessage"));
     }
 }

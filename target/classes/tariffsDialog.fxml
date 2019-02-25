@@ -10,6 +10,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.shape.Box?>
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="sample.TariffsDialogController">
@@ -18,13 +19,13 @@
             <Button fx:id="backToDefaultsButton" onAction="#backToDefaults" text="Вернуть самые изначальные"/>
             <BorderPane>
                 <center>
-                    <HBox>
+                    <VBox>
                         <VBox>
                             <VBox alignment="CENTER">
 
                                 <!--Electricity-->
 
-                                <Label text="Электричество">
+                                <Label text="Электроэнергия">
                                     <padding>
                                         <Insets bottom="10" top="10"/>
                                     </padding>
@@ -71,88 +72,158 @@
                                 <Insets right="10"/>
                             </padding>
 
-
                         </VBox>
-                        <Separator orientation="VERTICAL"/>
+                        <VBox.margin>
+                            <Insets right="20.0" />
+                        </VBox.margin>
 
-                        <VBox>
+                        <Separator/>
 
-                            <!--Water-->
+                        <HBox alignment="TOP_CENTER">
+                            <VBox alignment="TOP_CENTER">
 
-                            <VBox alignment="CENTER">
-                                <Label text="Вода">
+                                <!--Flat-->
+
+                                <VBox alignment="CENTER">
+                                    <Label text="Квартплата">
+                                        <padding>
+                                            <Insets bottom="10" top="10"/>
+                                        </padding>
+                                    </Label>
+                                    <GridPane vgap="10" hgap="10">
+                                        <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="flatTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                    </GridPane>
                                     <padding>
-                                        <Insets bottom="10" top="10"/>
+                                        <Insets bottom="10"/>
                                     </padding>
-                                </Label>
-                                <GridPane vgap="10" hgap="10">
-                                    <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                    <TextField fx:id="waterTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                                </GridPane>
-                                <padding>
-                                    <Insets bottom="10"/>
-                                </padding>
-                            </VBox>
-                            <Separator/>
+                                </VBox>
+                                <Separator/>
 
-                            <!--Flat-->
+                                <!--Heating-->
 
-                            <VBox alignment="CENTER">
-                                <Label text="Квартплата">
+                                <VBox alignment="CENTER">
+                                    <Label text="Отопление">
+                                        <padding>
+                                            <Insets bottom="10" top="10"/>
+                                        </padding>
+                                    </Label>
+                                    <GridPane vgap="10" hgap="10">
+                                        <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="heatingTariffField" GridPane.rowIndex="0"
+                                                   GridPane.columnIndex="1"/>
+                                    </GridPane>
                                     <padding>
-                                        <Insets bottom="10" top="10"/>
+                                        <Insets bottom="10"/>
                                     </padding>
-                                </Label>
-                                <GridPane vgap="10" hgap="10">
-                                    <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                    <TextField fx:id="flatTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                                </GridPane>
-                                <padding>
-                                    <Insets bottom="10"/>
-                                </padding>
-                            </VBox>
-                            <Separator/>
+                                </VBox>
+                                <Separator/>
 
-                            <!--Heating-->
+                                <!--Water-->
 
-                            <VBox alignment="CENTER">
-                                <Label text="Отопление">
+                                <VBox alignment="CENTER">
+                                    <Label text="Холодная вода">
+                                        <padding>
+                                            <Insets bottom="10" top="10"/>
+                                        </padding>
+                                    </Label>
+                                    <GridPane vgap="10" hgap="10">
+                                        <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="waterTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                    </GridPane>
                                     <padding>
-                                        <Insets bottom="10" top="10"/>
+                                        <Insets bottom="10"/>
                                     </padding>
-                                </Label>
-                                <GridPane vgap="10" hgap="10">
-                                    <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                    <TextField fx:id="heatingTariffField" GridPane.rowIndex="0"
-                                               GridPane.columnIndex="1"/>
-                                </GridPane>
-                                <padding>
-                                    <Insets bottom="10"/>
-                                </padding>
+                                </VBox>
+                                <Separator/>
+
+                                <!--Hot water-->
+
+                                <VBox alignment="CENTER">
+                                    <Label text="Горячая вода">
+                                        <padding>
+                                            <Insets bottom="10" top="10"/>
+                                        </padding>
+                                    </Label>
+                                    <GridPane vgap="10" hgap="10">
+                                        <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="hotWaterTariffField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                    </GridPane>
+                                </VBox>
+                                <HBox.margin>
+                                    <Insets right="20.0" />
+                                </HBox.margin>
                             </VBox>
-                            <Separator/>
 
-                            <!--Garbage-->
+                            <Separator orientation="VERTICAL"/>
 
-                            <VBox alignment="CENTER">
-                                <Label text="Вывоз мусора">
+                            <VBox alignment="TOP_CENTER">
+                                <HBox.margin>
+                                    <Insets left="20.0" />
+                                </HBox.margin>
+
+                                <!--Garbage-->
+
+                                <VBox alignment="CENTER">
+                                    <Label text="Вывоз мусора">
+                                        <padding>
+                                            <Insets bottom="10" top="10"/>
+                                        </padding>
+                                    </Label>
+                                    <GridPane vgap="10" hgap="10">
+                                        <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="garbageTariffField" GridPane.rowIndex="0"
+                                                   GridPane.columnIndex="1"/>
+                                    </GridPane>
                                     <padding>
-                                        <Insets bottom="10" top="10"/>
+                                        <Insets bottom="10"/>
                                     </padding>
-                                </Label>
-                                <GridPane vgap="10" hgap="10">
-                                    <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                    <TextField fx:id="garbageTariffField" GridPane.rowIndex="0"
-                                               GridPane.columnIndex="1"/>
+                                </VBox>
+                                <Separator/>
 
-                                </GridPane>
+                                <!--Gas-->
+
+                                <VBox alignment="CENTER">
+                                    <Label text="Природный газ">
+                                        <padding>
+                                            <Insets bottom="10" top="10"/>
+                                        </padding>
+                                    </Label>
+                                    <GridPane vgap="10" hgap="10">
+                                        <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="gasTariffField" GridPane.rowIndex="0"
+                                                   GridPane.columnIndex="1"/>
+                                    </GridPane>
+                                    <padding>
+                                        <Insets bottom="10"/>
+                                    </padding>
+                                </VBox>
+                                <Separator/>
+
+                                <!--Sewage-->
+
+                                <VBox alignment="CENTER">
+                                    <Label text="Стоки">
+                                        <padding>
+                                            <Insets bottom="10" top="10"/>
+                                        </padding>
+                                    </Label>
+                                    <GridPane vgap="10" hgap="10">
+                                        <Label text="Тариф:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                        <TextField fx:id="sewageTariffField" GridPane.rowIndex="0"
+                                                   GridPane.columnIndex="1"/>
+                                    </GridPane>
+                                    <padding>
+                                        <Insets bottom="10"/>
+                                    </padding>
+                                </VBox>
+                                <Separator/>
+
                             </VBox>
-                            <padding>
-                                <Insets left="10"/>
-                            </padding>
 
-                        </VBox>
-                    </HBox>
+
+                        </HBox>
+                    </VBox>
                 </center>
             </BorderPane>
         </VBox>

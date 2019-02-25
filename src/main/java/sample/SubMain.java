@@ -18,7 +18,7 @@ public class SubMain extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("mainWindow.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle(getText("mainWindowTitle"));
-        primaryStage.setScene(new Scene(root, 900, 475));
+        primaryStage.setScene(new Scene(root, 903, 700));
         primaryStage.show();
 
     }

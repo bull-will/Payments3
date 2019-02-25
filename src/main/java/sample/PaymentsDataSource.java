@@ -48,33 +48,61 @@ public class PaymentsDataSource {
     public static final String ELECTRO_TARIFF_3 = "electroTariff3";
     public static final String ELECTRO_LIMIT_3 = "electroLimit3";
     public static final String ELECTRO_TARIFF_4 = "electroTariff4";
-    public static final String HEATING_TARIFF = "heatingTariff";
-    public static final String HEATING_TARIFF_TO_PRINT = "heatingTariffToPrint";
     public static final String WATER_TARIFF = "waterTariff";
-    public static final String WATER_TARIFF_TO_PRINT = "waterTariffToPrint";
+    public static final String HOT_WATER_TARIFF = "hotWaterTariff";
+    public static final String HEATING_TARIFF = "heatingTariff";
+    public static final String GAS_TARIFF = "gasTariff";
+    public static final String SEWAGE_TARIFF = "sewageTariff";
     public static final String FLAT_TARIFF = "flatTariff";
-    public static final String FLAT_TARIFF_TO_PRINT = "flatTariffToPrint";
     public static final String GARBAGE_TARIFF = "garbageTariff";
-    public static final String GARBAGE_TARIFF_TO_PRINT = "garbageTariffToPrint";
-    public static final String ELECTRO_MUST_PAY = "electroMustPay";
     public static final String ELECTRO_PAYMENT_SET = "electroPaymentSet";
-    public static final String HEATING_MUST_PAY = "heatingMustPay";
-    public static final String HEATING_PAYMENT_SET = "heatingPaymentSet";
-    public static final String WATER_MUST_PAY = "waterMustPay";
     public static final String WATER_PAYMENT_SET = "waterPaymentSet";
-    public static final String FLAT_MUST_PAY = "flatMustPay";
+    public static final String HOT_WATER_PAYMENT_SET = "hotWaterPaymentSet";
+    public static final String HEATING_PAYMENT_SET = "heatingPaymentSet";
+    public static final String GAS_PAYMENT_SET = "gasPaymentSet";
+    public static final String SEWAGE_PAYMENT_SET = "sewagePaymentSet";
     public static final String FLAT_PAYMENT_SET = "flatPaymentSet";
-    public static final String GARBAGE_MUST_PAY = "garbageMustPay";
     public static final String GARBAGE_PAYMENT_SET = "garbagePaymentSet";
+    public static final String ELECTRO_PAYMENT_BY_TARIFF = "electroPaymentByTariff";
+    public static final String WATER_PAYMENT_BY_TARIFF = "waterPaymentByTariff";
+    public static final String HOT_WATER_PAYMENT_BY_TARIFF = "hotWaterPaymentByTariff";
+    public static final String HEATING_PAYMENT_BY_TARIFF = "heatingPaymentByTariff";
+    public static final String GAS_PAYMENT_BY_TARIFF = "gasPaymentByTariff";
+    public static final String SEWAGE_PAYMENT_BY_TARIFF = "sewagePaymentByTariff";
+    public static final String FLAT_PAYMENT_BY_TARIFF = "flatPaymentByTariff";
+    public static final String GARBAGE_PAYMENT_BY_TARIFF = "garbagePaymentByTariff";
+    public static final String ELECTRO_MUST_PAY = "electroMustPay";
+    public static final String WATER_MUST_PAY = "waterMustPay";
+    public static final String HOT_WATER_MUST_PAY = "hotWaterMustPay";
+    public static final String HEATING_MUST_PAY = "heatingMustPay";
+    public static final String GAS_MUST_PAY = "gasMustPay";
+    public static final String SEWAGE_MUST_PAY = "sewageMustPay";
+    public static final String FLAT_MUST_PAY = "flatMustPay";
+    public static final String GARBAGE_MUST_PAY = "garbageMustPay";
     public static final String ELECTRO_START = "electroStart";
     public static final String ELECTRO_END = "electroEnd";
     public static final String K_WATT_CONSUMED = "kWattConsumed";
     public static final String WATER_START = "waterStart";
     public static final String WATER_END = "waterEnd";
     public static final String M_3_CONSUMED = "m3consumed";
+    public static final String HOT_WATER_START = "hotWaterStart";
+    public static final String HOT_WATER_END = "hotWaterEnd";
+    public static final String HOT_M_3_CONSUMED = "hotM3consumed";
+    public static final String HEATING_START = "heatingStart";
+    public static final String HEATING_END = "heatingEnd";
+    public static final String HEATING_CONSUMED = "heatingConsumed";
+    public static final String GAS_START = "gasStart";
+    public static final String GAS_END = "gasEnd";
+    public static final String GAS_M_3_CONSUMED = "gasM3consumed";
+    public static final String SEWAGE_START = "sewageStart";
+    public static final String SEWAGE_END = "sewageEnd";
+    public static final String SEWAGE_M_3_CONSUMED = "sewageM3consumed";
     public static final String PAYMENT_FOR_ELECTRICITY = "paymentForElectricity";
-    public static final String PAYMENT_FOR_HEATING = "paymentForHeating";
     public static final String PAYMENT_FOR_WATER = "paymentForWater";
+    public static final String PAYMENT_FOR_HOT_WATER = "paymentForHotWater";
+    public static final String PAYMENT_FOR_HEATING = "paymentForHeating";
+    public static final String PAYMENT_FOR_GAS = "paymentForGas";
+    public static final String PAYMENT_FOR_SEWAGE = "paymentForSewage";
     public static final String PAYMENT_FOR_FLAT = "paymentForFlat";
     public static final String PAYMENT_FOR_GARBAGE = "paymentForGarbage";
     public static final String TOTAL = "total";
@@ -131,16 +159,16 @@ public class PaymentsDataSource {
         }
     }
 
-    // This method returns the list of payments markers (payment id, name, and fullDescription)
-    // of the payments stored in the database. Names and full descriptions of markers are shown in the list view
-    // in the program window.
-    // In case of SQLException it returns null
+    /* This method returns the list of payments markers (payment id, name, and fullDescription)
+    of the payments stored in the database. Names and full descriptions of markers are shown in the list view
+    in the program window. In case of SQLException it returns null */
     public ObservableList<PaymentMarker> getPaymentMarkers(boolean openAndClose) {
         PaymentMarker paymentMarker;
         ResultSet results;
 
         ObservableList<PaymentMarker> paymentMarkers = FXCollections.observableArrayList();
-        // This list will be returned from this method only if no SQLException occur, itherwise null will be returned instead
+        // This list will be returned from this method only if no SQLException occur,
+        // otherwise null will be returned instead
 
         if (openAndClose) {
             open();
@@ -172,7 +200,7 @@ public class PaymentsDataSource {
     public void storePayment(Payment payment, boolean openAndClose) {
         if (payment == null) {
             Alerts.alertInfo(getAlertText("paymentsDataSourceNullForStoringTitle"),
-                    getAlertText( "paymentsDataSourceNullForStoringMessage"));
+                    getAlertText("paymentsDataSourceNullForStoringMessage"));
             return;
         }
         if (openAndClose) {
@@ -187,15 +215,12 @@ public class PaymentsDataSource {
             int idIsThere = results.getInt(1);
             if (idIsThere == 0) {
                 String insertStatement = compileInsertStatement(payment);
-//                System.out.println(insertStatement); // print out the insert statement for info TODO: comment this entire line
                 statement.executeUpdate(insertStatement);
             } else {
                 String updateStatement = compileUpdateStatement(payment);
-//                System.out.println(updateStatement); // print out the update statement for info TODO: comment this entire line
                 statement.executeUpdate(updateStatement);
             }
         } catch (SQLException e) {
-//            e.printStackTrace();
             Alerts.alertInfo(getAlertText("paymentsDataSourceStoringToDBErrorTitle"),
                     getAlertText("paymentsDataSourceStoringToDBErrorMessage"));
         } finally {
@@ -216,68 +241,78 @@ public class PaymentsDataSource {
             while (results.next()) {
                 payment = new Payment(id);
                 payment.setName(results.getString(NAME));
-//                System.out.println(payment.getName()); 
-//// for info and handmade debugging  TODO comment that line
                 payment.setFullDescription(results.getString(FULL_DESCRIPTION));
-//                System.out.println(payment.getFullDescription()); 
-//// for info and handmade debugging  TODO comment that line
                 payment.setYear(results.getInt(YEAR));
                 payment.setMonth(results.getInt(MONTH));
-//                System.out.println("Payment month: " + payment.getMonth()); 
-// for info and handmade debugging TODO comment that line
                 payment.setElectroTariff1(results.getDouble(ELECTRO_TARIFF_1));
-//                System.out.println("Payment electroTariff1: " + payment.getElectroTariff1()); 
-//// for info and handmade debugging TODO comment that line
                 payment.setElectroLimit1(results.getInt(ELECTRO_LIMIT_1));
-//                System.out.println("Payment electroLimit: " + payment.getElectroLimit1()); 
-//// for info and handmade debugging TODO comment that line
                 payment.setElectroTariff2(results.getDouble(ELECTRO_TARIFF_2));
                 payment.setElectroLimit2(results.getInt(ELECTRO_LIMIT_2));
                 payment.setElectroTariff3(results.getDouble(ELECTRO_TARIFF_3));
                 payment.setElectroLimit3(results.getInt(ELECTRO_LIMIT_3));
                 payment.setElectroTariff4(results.getDouble(ELECTRO_TARIFF_4));
-//                System.out.println("Payment electroTariff4: " + payment.getElectroTariff4()); 
-//// for info and handmade debugging TODO comment that line
-                payment.setHeatingTariff(results.getDouble(HEATING_TARIFF));
-                payment.setHeatingTariffToPrint(results.getDouble(HEATING_TARIFF_TO_PRINT));
                 payment.setWaterTariff(results.getDouble(WATER_TARIFF));
-                payment.setWaterTariffToPrint(results.getDouble(WATER_TARIFF_TO_PRINT));
+                payment.setHotWaterTariff(results.getDouble(HOT_WATER_TARIFF));
+                payment.setHeatingTariff(results.getDouble(HEATING_TARIFF));
+                payment.setGasTariff(results.getDouble(GAS_TARIFF));
+                payment.setSewageTariff(results.getDouble(SEWAGE_TARIFF));
                 payment.setFlatTariff(results.getDouble(FLAT_TARIFF));
-                payment.setFlatTariffToPrint(results.getDouble(FLAT_TARIFF_TO_PRINT));
                 payment.setGarbageTariff(results.getDouble(GARBAGE_TARIFF));
-                payment.setGarbageTariffToPrint(results.getDouble(GARBAGE_TARIFF_TO_PRINT));
-//                System.out.println("Payment garbage tariff to print: " + payment.getGarbageTariffToPrint()); 
-//// for info and handmade debugging TODO comment that line
-                payment.setElectroMustPay(results.getDouble(ELECTRO_MUST_PAY));
                 payment.setElectroPaymentSet(results.getInt(ELECTRO_PAYMENT_SET) == 1);
-                payment.setHeatingMustPay(results.getDouble(HEATING_MUST_PAY));
-                payment.setHeatingPaymentSet(results.getInt(HEATING_PAYMENT_SET) == 1);
-                payment.setWaterMustPay(results.getDouble(WATER_MUST_PAY));
                 payment.setWaterPaymentSet(results.getInt(WATER_PAYMENT_SET) == 1);
-                payment.setFlatMustPay(results.getDouble(FLAT_MUST_PAY));
+                payment.setHotWaterPaymentSet(results.getInt(HOT_WATER_PAYMENT_SET) == 1);
+                payment.setHeatingPaymentSet(results.getInt(HEATING_PAYMENT_SET) == 1);
+                payment.setGasPaymentSet(results.getInt(GAS_PAYMENT_SET) == 1);
+                payment.setSewagePaymentSet(results.getInt(SEWAGE_PAYMENT_SET) == 1);
                 payment.setFlatPaymentSet(results.getInt(FLAT_PAYMENT_SET) == 1);
-                payment.setGarbageMustPay(results.getDouble(GARBAGE_MUST_PAY));
                 payment.setGarbagePaymentSet(results.getInt(GARBAGE_PAYMENT_SET) == 1);
+                payment.setElectroPaymentByTariff(results.getInt(ELECTRO_PAYMENT_BY_TARIFF) == 1);
+                payment.setWaterPaymentByTariff(results.getInt(WATER_PAYMENT_BY_TARIFF) == 1);
+                payment.setHotWaterPaymentByTariff(results.getInt(HOT_WATER_PAYMENT_BY_TARIFF) == 1);
+                payment.setHeatingPaymentByTariff(results.getInt(HEATING_PAYMENT_BY_TARIFF) == 1);
+                payment.setGasPaymentByTariff(results.getInt(GAS_PAYMENT_BY_TARIFF) == 1);
+                payment.setSewagePaymentByTariff(results.getInt(SEWAGE_PAYMENT_BY_TARIFF) == 1);
+                payment.setFlatPaymentByTariff(results.getInt(FLAT_PAYMENT_BY_TARIFF) == 1);
+                payment.setGarbagePaymentByTariff(results.getInt(GARBAGE_PAYMENT_BY_TARIFF) == 1);
+                payment.setElectroMustPay(results.getDouble(ELECTRO_MUST_PAY));
+                payment.setWaterMustPay(results.getDouble(WATER_MUST_PAY));
+                payment.setHotWaterMustPay(results.getDouble(HOT_WATER_MUST_PAY));
+                payment.setHeatingMustPay(results.getDouble(HEATING_MUST_PAY));
+                payment.setGasMustPay(results.getDouble(GAS_MUST_PAY));
+                payment.setSewageMustPay(results.getDouble(SEWAGE_MUST_PAY));
+                payment.setFlatMustPay(results.getDouble(FLAT_MUST_PAY));
+                payment.setGarbageMustPay(results.getDouble(GARBAGE_MUST_PAY));
                 payment.setElectroStart(results.getInt(ELECTRO_START));
                 payment.setElectroEnd(results.getInt(ELECTRO_END));
-//                System.out.println("Payment electro end: " + payment.getElectroEnd()); 
-//// for info and handmade debugging TODO comment that line
                 payment.setkWattConsumed(results.getInt(K_WATT_CONSUMED));
                 payment.setWaterStart(results.getInt(WATER_START));
                 payment.setWaterEnd(results.getInt(WATER_END));
                 payment.setM3consumed(results.getInt(M_3_CONSUMED));
+                payment.setHotWaterStart(results.getInt(HOT_WATER_START));
+                payment.setHotWaterEnd(results.getInt(HOT_WATER_END));
+                payment.setHotM3consumed(results.getInt(HOT_M_3_CONSUMED));
+                payment.setHeatingStart(results.getInt(HEATING_START));
+                payment.setHeatingEnd(results.getInt(HEATING_END));
+                payment.setHeatingConsumed(results.getInt(HEATING_CONSUMED));
+                payment.setGasStart(results.getInt(GAS_START));
+                payment.setGasEnd(results.getInt(GAS_END));
+                payment.setGasM3consumed(results.getInt(GAS_M_3_CONSUMED));
+                payment.setSewageStart(results.getInt(SEWAGE_START));
+                payment.setSewageEnd(results.getInt(SEWAGE_END));
+                payment.setSewageM3consumed(results.getInt(SEWAGE_M_3_CONSUMED));
                 payment.setPaymentForElectricity(results.getInt(PAYMENT_FOR_ELECTRICITY));
-                payment.setPaymentForHeating(results.getInt(PAYMENT_FOR_HEATING));
                 payment.setPaymentForWater(results.getInt(PAYMENT_FOR_WATER));
+                payment.setPaymentForHotWater(results.getInt(PAYMENT_FOR_HOT_WATER));
+                payment.setPaymentForHeating(results.getInt(PAYMENT_FOR_HEATING));
+                payment.setPaymentForGas(results.getInt(PAYMENT_FOR_GAS));
+                payment.setPaymentForSewage(results.getInt(PAYMENT_FOR_SEWAGE));
                 payment.setPaymentForFlat(results.getInt(PAYMENT_FOR_FLAT));
                 payment.setPaymentForGarbage(results.getInt(PAYMENT_FOR_GARBAGE));
                 payment.setTotal(results.getInt(TOTAL));
-//                System.out.println("Payment total: " + payment.getTotal()); 
-//// for info and handmade debugging TODO comment that line
             }
         } catch (SQLException e) {
             Alerts.alertInfo(getAlertText("paymentsDataSourceReadingSQLExceptionTitle"),
-                    getAlertText(    "paymentsDataSourceReadingSQLExceptionMessage"));
+                    getAlertText("paymentsDataSourceReadingSQLExceptionMessage"));
         } finally {
             if (openAndClose) {
                 close();
@@ -285,7 +320,7 @@ public class PaymentsDataSource {
         }
         if (payment == null) {
             Alerts.alertInfo(getAlertText("paymentsDataSourceNullPaymentFromDBTitle"),
-                    getAlertText( "paymentsDataSourceNullPaymentFromDBMessage"));
+                    getAlertText("paymentsDataSourceNullPaymentFromDBMessage"));
         }
         return payment;
     }
@@ -295,7 +330,6 @@ public class PaymentsDataSource {
             open();
         }
         String deleteStatement = "DELETE FROM " + TABLE_PAYMENTS + " WHERE " + ID + " = " + id;
-        /* In case of sql exception , let's not catch it but throw to the invoker method */
         try {
             statement.execute(deleteStatement);
         } catch (SQLException e) {
@@ -322,33 +356,61 @@ public class PaymentsDataSource {
                 payment.getElectroTariff3() + ", " +
                 payment.getElectroLimit3() + ", " +
                 payment.getElectroTariff4() + ", " +
-                payment.getHeatingTariff() + ", " +
-                payment.getHeatingTariffToPrint() + ", " +
                 payment.getWaterTariff() + ", " +
-                payment.getWaterTariffToPrint() + ", " +
+                payment.getHotWaterTariff() + ", " +
+                payment.getHeatingTariff() + ", " +
+                payment.getGasTariff() + ", " +
+                payment.getSewageTariff() + ", " +
                 payment.getFlatTariff() + ", " +
-                payment.getFlatTariffToPrint() + ", " +
                 payment.getGarbageTariff() + ", " +
-                payment.getGarbageTariffToPrint() + ", " +
-                payment.getElectroMustPay() + ", " +
                 (payment.isElectroPaymentSet() ? 1 : 0) + ", " +
-                payment.getHeatingMustPay() + ", " +
-                (payment.isHeatingPaymentSet() ? 1 : 0) + ", " +
-                payment.getWaterMustPay() + ", " +
                 (payment.isWaterPaymentSet() ? 1 : 0) + ", " +
-                payment.getFlatMustPay() + ", " +
+                (payment.isHotWaterPaymentSet() ? 1 : 0) + ", " +
+                (payment.isHeatingPaymentSet() ? 1 : 0) + ", " +
+                (payment.isGasPaymentSet() ? 1 : 0) + ", " +
+                (payment.isSewagePaymentSet() ? 1 : 0) + ", " +
                 (payment.isFlatPaymentSet() ? 1 : 0) + ", " +
-                payment.getGarbageMustPay() + ", " +
                 (payment.isGarbagePaymentSet() ? 1 : 0) + ", " +
+                (payment.isElectroPaymentByTariff() ? 1 : 0) + ", " +
+                (payment.isWaterPaymentByTariff() ? 1 : 0) + ", " +
+                (payment.isHotWaterPaymentByTariff() ? 1 : 0) + ", " +
+                (payment.isHeatingPaymentByTariff() ? 1 : 0) + ", " +
+                (payment.isGasPaymentByTariff() ? 1 : 0) + ", " +
+                (payment.isSewagePaymentByTariff() ? 1 : 0) + ", " +
+                (payment.isFlatPaymentByTariff() ? 1 : 0) + ", " +
+                (payment.isGarbagePaymentByTariff() ? 1 : 0) + ", " +
+                payment.getElectroMustPay() + ", " +
+                payment.getWaterMustPay() + ", " +
+                payment.getHotWaterMustPay() + ", " +
+                payment.getHeatingMustPay() + ", " +
+                payment.getGasMustPay() + ", " +
+                payment.getSewageMustPay() + ", " +
+                payment.getFlatMustPay() + ", " +
+                payment.getGarbageMustPay() + ", " +
                 payment.getElectroStart() + ", " +
                 payment.getElectroEnd() + ", " +
                 payment.getkWattConsumed() + ", " +
                 payment.getWaterStart() + ", " +
                 payment.getWaterEnd() + ", " +
                 payment.getM3consumed() + ", " +
+                payment.getHotWaterStart() + ", " +
+                payment.getHotWaterEnd() + ", " +
+                payment.getHotM3consumed() + ", " +
+                payment.getHeatingStart() + ", " +
+                payment.getHeatingEnd() + ", " +
+                payment.getHeatingConsumed() + ", " +
+                payment.getGasStart() + ", " +
+                payment.getGasEnd() + ", " +
+                payment.getGasM3consumed() + ", " +
+                payment.getSewageStart() + ", " +
+                payment.getSewageEnd() + ", " +
+                payment.getSewageM3consumed() + ", " +
                 payment.getPaymentForElectricity() + ", " +
-                payment.getPaymentForHeating() + ", " +
                 payment.getPaymentForWater() + ", " +
+                payment.getPaymentForHotWater() + ", " +
+                payment.getPaymentForHeating() + ", " +
+                payment.getPaymentForGas() + ", " +
+                payment.getPaymentForSewage() + ", " +
                 payment.getPaymentForFlat() + ", " +
                 payment.getPaymentForGarbage() + ", " +
                 payment.getTotal() +
@@ -368,33 +430,61 @@ public class PaymentsDataSource {
                 ELECTRO_TARIFF_3 + " = " + payment.getElectroTariff3() + ", " +
                 ELECTRO_LIMIT_3 + " = " + payment.getElectroLimit3() + ", " +
                 ELECTRO_TARIFF_4 + " = " + payment.getElectroTariff4() + ", " +
-                HEATING_TARIFF + " = " + payment.getHeatingTariff() + ", " +
-                HEATING_TARIFF_TO_PRINT + " = " + payment.getHeatingTariffToPrint() + ", " +
                 WATER_TARIFF + " = " + payment.getWaterTariff() + ", " +
-                WATER_TARIFF_TO_PRINT + " = " + payment.getWaterTariffToPrint() + ", " +
+                HOT_WATER_TARIFF + " = " + payment.getHotWaterTariff() + ", " +
+                HEATING_TARIFF + " = " + payment.getHeatingTariff() + ", " +
+                GAS_TARIFF + " = " + payment.getGasTariff() + ", " +
+                SEWAGE_TARIFF + " = " + payment.getSewageTariff() + ", " +
                 FLAT_TARIFF + " = " + payment.getFlatTariff() + ", " +
-                FLAT_TARIFF_TO_PRINT + " = " + payment.getFlatTariffToPrint() + ", " +
                 GARBAGE_TARIFF + " = " + payment.getGarbageTariff() + ", " +
-                GARBAGE_TARIFF_TO_PRINT + " = " + payment.getGarbageTariffToPrint() + ", " +
-                ELECTRO_MUST_PAY + " = " + payment.getElectroMustPay() + ", " +
                 ELECTRO_PAYMENT_SET + " = " + (payment.isElectroPaymentSet() ? 1 : 0) + ", " +
-                HEATING_MUST_PAY + " = " + payment.getHeatingMustPay() + ", " +
-                HEATING_PAYMENT_SET + " = " + (payment.isHeatingPaymentSet() ? 1 : 0) + ", " +
-                WATER_MUST_PAY + " = " + payment.getWaterMustPay() + ", " +
                 WATER_PAYMENT_SET + " = " + (payment.isWaterPaymentSet() ? 1 : 0) + ", " +
-                FLAT_MUST_PAY + " = " + payment.getFlatMustPay() + ", " +
+                HOT_WATER_PAYMENT_SET + " = " + (payment.isHotWaterPaymentSet() ? 1 : 0) + ", " +
+                HEATING_PAYMENT_SET + " = " + (payment.isHeatingPaymentSet() ? 1 : 0) + ", " +
+                GAS_PAYMENT_SET + " = " + (payment.isGasPaymentSet() ? 1 : 0) + ", " +
+                SEWAGE_PAYMENT_SET + " = " + (payment.isSewagePaymentSet() ? 1 : 0) + ", " +
                 FLAT_PAYMENT_SET + " = " + (payment.isFlatPaymentSet() ? 1 : 0) + ", " +
-                GARBAGE_MUST_PAY + " = " + payment.getGarbageMustPay() + ", " +
                 GARBAGE_PAYMENT_SET + " = " + (payment.isGarbagePaymentSet() ? 1 : 0) + ", " +
+                ELECTRO_PAYMENT_BY_TARIFF + " = " + (payment.isElectroPaymentByTariff() ? 1 : 0) + ", " +
+                WATER_PAYMENT_BY_TARIFF + " = " + (payment.isWaterPaymentByTariff() ? 1 : 0) + ", " +
+                HOT_WATER_PAYMENT_BY_TARIFF + " = " + (payment.isHotWaterPaymentByTariff() ? 1 : 0) + ", " +
+                HEATING_PAYMENT_BY_TARIFF + " = " + (payment.isHeatingPaymentByTariff() ? 1 : 0) + ", " +
+                GAS_PAYMENT_BY_TARIFF + " = " + (payment.isGasPaymentByTariff() ? 1 : 0) + ", " +
+                SEWAGE_PAYMENT_BY_TARIFF + " = " + (payment.isSewagePaymentByTariff() ? 1 : 0) + ", " +
+                FLAT_PAYMENT_BY_TARIFF + " = " + (payment.isFlatPaymentByTariff() ? 1 : 0) + ", " +
+                GARBAGE_PAYMENT_BY_TARIFF + " = " + (payment.isGarbagePaymentByTariff() ? 1 : 0) + ", " +
+                ELECTRO_MUST_PAY + " = " + payment.getElectroMustPay() + ", " +
+                WATER_MUST_PAY + " = " + payment.getWaterMustPay() + ", " +
+                HOT_WATER_MUST_PAY + " = " + payment.getHotWaterMustPay() + ", " +
+                HEATING_MUST_PAY + " = " + payment.getHeatingMustPay() + ", " +
+                GAS_MUST_PAY + " = " + payment.getGasMustPay() + ", " +
+                SEWAGE_MUST_PAY + " = " + payment.getSewageMustPay() + ", " +
+                FLAT_MUST_PAY + " = " + payment.getFlatMustPay() + ", " +
+                GARBAGE_MUST_PAY + " = " + payment.getGarbageMustPay() + ", " +
                 ELECTRO_START + " = " + payment.getElectroStart() + ", " +
                 ELECTRO_END + " = " + payment.getElectroEnd() + ", " +
                 K_WATT_CONSUMED + " = " + payment.getkWattConsumed() + ", " +
                 WATER_START + " = " + payment.getWaterStart() + ", " +
                 WATER_END + " = " + payment.getWaterEnd() + ", " +
                 M_3_CONSUMED + " = " + payment.getM3consumed() + ", " +
+                HOT_WATER_START + " = " + payment.getHotWaterStart() + ", " +
+                HOT_WATER_END + " = " + payment.getHotWaterEnd() + ", " +
+                HOT_M_3_CONSUMED + " = " + payment.getHotM3consumed() + ", " +
+                HEATING_START + " = " + payment.getHeatingStart() + ", " +
+                HEATING_END + " = " + payment.getHeatingEnd() + ", " +
+                HEATING_CONSUMED + " = " + payment.getHeatingConsumed() + ", " +
+                GAS_START + " = " + payment.getGasStart() + ", " +
+                GAS_END + " = " + payment.getGasEnd() + ", " +
+                GAS_M_3_CONSUMED + " = " + payment.getGasM3consumed() + ", " +
+                SEWAGE_START + " = " + payment.getSewageStart() + ", " +
+                SEWAGE_END + " = " + payment.getSewageEnd() + ", " +
+                SEWAGE_M_3_CONSUMED + " = " + payment.getSewageM3consumed() + ", " +
                 PAYMENT_FOR_ELECTRICITY + " = " + payment.getPaymentForElectricity() + ", " +
-                PAYMENT_FOR_HEATING + " = " + payment.getPaymentForHeating() + ", " +
                 PAYMENT_FOR_WATER + " = " + payment.getPaymentForWater() + ", " +
+                PAYMENT_FOR_HOT_WATER + " = " + payment.getPaymentForHotWater() + ", " +
+                PAYMENT_FOR_HEATING + " = " + payment.getPaymentForHeating() + ", " +
+                PAYMENT_FOR_GAS + " = " + payment.getPaymentForGas() + ", " +
+                PAYMENT_FOR_SEWAGE + " = " + payment.getPaymentForSewage() + ", " +
                 PAYMENT_FOR_FLAT + " = " + payment.getPaymentForFlat() + ", " +
                 PAYMENT_FOR_GARBAGE + " = " + payment.getPaymentForGarbage() + ", " +
                 TOTAL + " = " + payment.getTotal() +
@@ -416,33 +506,61 @@ public class PaymentsDataSource {
                 ELECTRO_TARIFF_3 + " real, " +
                 ELECTRO_LIMIT_3 + " integer, " +
                 ELECTRO_TARIFF_4 + " real, " +
-                HEATING_TARIFF + " real, " +
-                HEATING_TARIFF_TO_PRINT + " real, " +
                 WATER_TARIFF + " real, " +
-                WATER_TARIFF_TO_PRINT + " real, " +
+                HOT_WATER_TARIFF + " real, " +
+                HEATING_TARIFF + " real, " +
+                GAS_TARIFF + " real, " +
+                SEWAGE_TARIFF + " real, " +
                 FLAT_TARIFF + " real, " +
-                FLAT_TARIFF_TO_PRINT + " real, " +
                 GARBAGE_TARIFF + " real, " +
-                GARBAGE_TARIFF_TO_PRINT + " real, " +
-                ELECTRO_MUST_PAY + " real, " +
                 ELECTRO_PAYMENT_SET + " integer, " +
-                HEATING_MUST_PAY + " real, " +
-                HEATING_PAYMENT_SET + " integer, " +
-                WATER_MUST_PAY + " real, " +
                 WATER_PAYMENT_SET + " integer, " +
-                FLAT_MUST_PAY + " real, " +
+                HOT_WATER_PAYMENT_SET + " integer, " +
+                HEATING_PAYMENT_SET + " integer, " +
+                GAS_PAYMENT_SET + " integer, " +
+                SEWAGE_PAYMENT_SET + " integer, " +
                 FLAT_PAYMENT_SET + " integer, " +
-                GARBAGE_MUST_PAY + " real, " +
                 GARBAGE_PAYMENT_SET + " integer, " +
+                ELECTRO_PAYMENT_BY_TARIFF + " integer, " +
+                WATER_PAYMENT_BY_TARIFF + " integer, " +
+                HOT_WATER_PAYMENT_BY_TARIFF + " integer, " +
+                HEATING_PAYMENT_BY_TARIFF + " integer, " +
+                GAS_PAYMENT_BY_TARIFF + " integer, " +
+                SEWAGE_PAYMENT_BY_TARIFF + " integer, " +
+                FLAT_PAYMENT_BY_TARIFF + " integer, " +
+                GARBAGE_PAYMENT_BY_TARIFF + " integer, " +
+                ELECTRO_MUST_PAY + " real, " +
+                WATER_MUST_PAY + " real, " +
+                HOT_WATER_MUST_PAY + " real, " +
+                HEATING_MUST_PAY + " real, " +
+                GAS_MUST_PAY + " real, " +
+                SEWAGE_MUST_PAY + " real, " +
+                FLAT_MUST_PAY + " real, " +
+                GARBAGE_MUST_PAY + " real, " +
                 ELECTRO_START + " integer, " +
                 ELECTRO_END + " integer, " +
                 K_WATT_CONSUMED + " integer, " +
                 WATER_START + " integer, " +
                 WATER_END + " integer, " +
                 M_3_CONSUMED + " integer, " +
+                HOT_WATER_START + " integer, " +
+                HOT_WATER_END + " integer, " +
+                HOT_M_3_CONSUMED + " integer, " +
+                HEATING_START + " integer, " +
+                HEATING_END + " integer, " +
+                HEATING_CONSUMED + " integer, " +
+                GAS_START + " integer, " +
+                GAS_END + " integer, " +
+                GAS_M_3_CONSUMED + " integer, " +
+                SEWAGE_START + " integer, " +
+                SEWAGE_END + " integer, " +
+                SEWAGE_M_3_CONSUMED + " integer, " +
                 PAYMENT_FOR_ELECTRICITY + " integer, " +
-                PAYMENT_FOR_HEATING + " integer, " +
                 PAYMENT_FOR_WATER + " integer, " +
+                PAYMENT_FOR_HOT_WATER + " integer, " +
+                PAYMENT_FOR_HEATING + " integer, " +
+                PAYMENT_FOR_GAS + " integer, " +
+                PAYMENT_FOR_SEWAGE + " integer, " +
                 PAYMENT_FOR_FLAT + " integer, " +
                 PAYMENT_FOR_GARBAGE + " integer, " +
                 TOTAL + " integer" +
@@ -456,16 +574,14 @@ public class PaymentsDataSource {
         try {
             conn = DriverManager.getConnection(connectionString);
         } catch (SQLException e) {
-//            System.out.println("Exception when opening connection in PaymentsDataSource");
             Alerts.alertInfo(getAlertText("paymentsDataSourceConnectingToDBErrorTitle"),
                     getAlertText("paymentsDataSourceConnectingToDBErrorMessage"));
         }
         try {
             statement = conn.createStatement();
         } catch (SQLException e) {
-//            System.out.println("Exception when creating a Statement in PaymentsDataSource");
             Alerts.alertInfo(getAlertText("paymentsDataSourceSQLStatementErrorTitle"),
-                    getAlertText( "paymentsDataSourceSQLStatementErrorMessage"));
+                    getAlertText("paymentsDataSourceSQLStatementErrorMessage"));
         }
     }
 
@@ -479,7 +595,6 @@ public class PaymentsDataSource {
                 conn.close();
             }
         } catch (SQLException e) {
-//            System.out.println("Exception when closing connection in PaymentsDataSource");
             /* We shouldn't actualy care about exceptions when closing the connection and the statement, but still */
             Alerts.alertInfo(getAlertText(getAlertText("paymentsDataSourceClosingDBErrorTitle")),
                     getAlertText("paymentsDataSourceClosingDBErrorMessage"));

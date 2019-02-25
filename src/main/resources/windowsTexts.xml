@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-    <entry key="mainWindowTitle">Платежи</entry>
+    <entry key="mainWindowTitle">Платежи за коммунальные услуги</entry>
     <entry key="editPaymentMenuItem">Редактировать</entry>
     <entry key="newPaymentBasedMenuItem">Новый платеж на основе выделенного</entry>
     <entry key="deletePaymentMenuItem">Удалить</entry>
