@@ -365,7 +365,9 @@ public class Payment {
         if (paymentForFlat != 0) {
             writeLine = writeLine.concat("Квартплата");
             if (!flatPaymentSet) {
-                writeLine = writeLine.concat("\t\t\tТариф " + flatTariff + " руб.");
+                writeLine = writeLine.concat("\t\t\tТариф " +
+                        (flatTariff % 1 == 0d ? String.valueOf((int) Math.round(flatTariff)) : flatTariff) // rounding tariff if it has no coin part
+                        + " руб.");
             }
             writeLine = writeLine.concat("\n");
             writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForFlat + " руб.\n\n");
@@ -373,7 +375,9 @@ public class Payment {
         if (paymentForElectricity != 0) {
             writeLine = writeLine.concat("Электроэнергия");
             if (electroPaymentByTariff && !electroPaymentSet) {
-                writeLine = writeLine.concat("\t\tТариф " + electroTariff1 + " руб.");
+                writeLine = writeLine.concat("\t\tТариф " +
+                        (electroTariff1 % 1 == 0d ? String.valueOf((int) Math.round(electroTariff1)) : electroTariff1)
+                        + " руб.");
             }
             writeLine = writeLine.concat("\n");
             if (!electroPaymentByTariff && !electroPaymentSet) {
@@ -386,7 +390,9 @@ public class Payment {
         if (paymentForGas != 0) {
             writeLine = writeLine.concat("Природный газ");
             if (!gasPaymentSet) {
-                writeLine = writeLine.concat("\t\tТариф " + gasTariff + " руб.");
+                writeLine = writeLine.concat("\t\tТариф " +
+                        (gasTariff % 1 == 0d ? String.valueOf((int) Math.round(gasTariff)) : gasTariff)
+                        + " руб.");
             }
             writeLine = writeLine.concat("\n");
             if (!gasPaymentByTariff && !gasPaymentSet) {
@@ -399,7 +405,9 @@ public class Payment {
         if (paymentForWater != 0) {
             writeLine = writeLine.concat("Холодная вода");
             if (!waterPaymentSet) {
-                writeLine = writeLine.concat("\t\tТариф " + waterTariff + " руб.");
+                writeLine = writeLine.concat("\t\tТариф " +
+                        (waterTariff % 1 == 0d ? String.valueOf((int) Math.round(waterTariff)) : waterTariff)
+                        + " руб.");
             }
             writeLine = writeLine.concat("\n");
             if (!waterPaymentByTariff && !waterPaymentSet) {
@@ -412,7 +420,9 @@ public class Payment {
         if (paymentForSewage != 0) {
             writeLine = writeLine.concat("Стоки");
             if (!sewagePaymentSet) {
-                writeLine = writeLine.concat("\t\t\t\tТариф " + sewageTariff + " руб.");
+                writeLine = writeLine.concat("\t\t\t\tТариф " +
+                        (sewageTariff % 1 == 0d ? String.valueOf((int) Math.round(sewageTariff)) : sewageTariff)
+                        + " руб.");
             }
             writeLine = writeLine.concat("\n");
             if (!sewagePaymentByTariff && !sewagePaymentSet) {
@@ -425,7 +435,9 @@ public class Payment {
         if (paymentForHeating != 0) {
             writeLine = writeLine.concat("Отопление");
             if (!heatingPaymentSet) {
-                writeLine = writeLine.concat("\t\t\tТариф " + heatingTariff + " руб.");
+                writeLine = writeLine.concat("\t\t\tТариф " +
+                        (heatingTariff % 1 == 0 ? Math.round(heatingTariff) : heatingTariff)
+                        + " руб.");
             }
             writeLine = writeLine.concat("\n");
             if (!heatingPaymentByTariff && !heatingPaymentSet) {
@@ -438,7 +450,9 @@ public class Payment {
         if (paymentForHotWater != 0) {
             writeLine = writeLine.concat("Горячая вода");
             if (!hotWaterPaymentSet) {
-                writeLine = writeLine.concat("\t\t\tТариф " + hotWaterTariff + " руб.");
+                writeLine = writeLine.concat("\t\t\tТариф " +
+                        (hotWaterTariff % 1 == 0d ? String.valueOf((int) Math.round(hotWaterTariff)) : hotWaterTariff)
+                        + " руб.");
             }
             writeLine = writeLine.concat("\n");
             if (!hotWaterPaymentByTariff && !hotWaterPaymentSet) {
@@ -451,7 +465,9 @@ public class Payment {
         if (paymentForGarbage != 0) {
             writeLine = writeLine.concat("Вывоз мусора");
             if (!garbagePaymentSet) {
-                writeLine = writeLine.concat("\t\t\tТариф " + garbageTariff + " руб.");
+                writeLine = writeLine.concat("\t\t\tТариф " +
+                        (garbageTariff % 1 == 0d ? String.valueOf((int) Math.round(garbageTariff)) : garbageTariff)
+                        + " руб.");
             }
             writeLine = writeLine.concat("\n");
             writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForGarbage + " руб.\n\n");

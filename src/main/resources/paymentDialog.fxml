@@ -435,7 +435,7 @@
                                 BorderPane.alignment="CENTER">
                             <image>
                                 <Image
-                                        url="calculate-512.png"
+                                        url="catculate128.png"
                                         backgroundLoading="true"/>
                             </image>
                             <VBox.margin>
