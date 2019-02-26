@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Random;
 
 import static sample.TextDeliverer.getAlertText;
 
@@ -601,6 +602,82 @@ public class PaymentsDataSource {
         }
     }
 
+    public Payment getRandomPayment(int id) {
+        Random random = new Random();
+        Payment payment = new Payment(id);
+        payment.setName("Test");
+        payment.setFullDescription("TestFullDescription");
+        payment.setYear(random.nextInt());
+        payment.setMonth(random.nextInt());
+        payment.setElectroTariff1(random.nextDouble());
+        payment.setElectroLimit1(random.nextInt());
+        payment.setElectroTariff2(random.nextDouble());
+        payment.setElectroLimit2(random.nextInt());
+        payment.setElectroTariff3(random.nextDouble());
+        payment.setElectroLimit3(random.nextInt());
+        payment.setElectroTariff4(random.nextDouble());
+        payment.setWaterTariff(random.nextDouble());
+        payment.setHotWaterTariff(random.nextDouble());
+        payment.setHeatingTariff(random.nextDouble());
+        payment.setGasTariff(random.nextDouble());
+        payment.setSewageTariff(random.nextDouble());
+        payment.setFlatTariff(random.nextDouble());
+        payment.setGarbageTariff(random.nextDouble());
+        payment.setElectroPaymentSet(random.nextBoolean());
+        payment.setWaterPaymentSet(random.nextBoolean());
+        payment.setHotWaterPaymentSet(random.nextBoolean());
+        payment.setHeatingPaymentSet(random.nextBoolean());
+        payment.setGasPaymentSet(random.nextBoolean());
+        payment.setSewagePaymentSet(random.nextBoolean());
+        payment.setFlatPaymentSet(random.nextBoolean());
+        payment.setGarbagePaymentSet(random.nextBoolean());
+        payment.setElectroPaymentByTariff(random.nextBoolean());
+        payment.setWaterPaymentByTariff(random.nextBoolean());
+        payment.setHotWaterPaymentByTariff(random.nextBoolean());
+        payment.setHeatingPaymentByTariff(random.nextBoolean());
+        payment.setGasPaymentByTariff(random.nextBoolean());
+        payment.setSewagePaymentByTariff(random.nextBoolean());
+        payment.setFlatPaymentByTariff(random.nextBoolean());
+        payment.setGarbagePaymentByTariff(random.nextBoolean());
+        payment.setElectroMustPay(random.nextDouble());
+        payment.setWaterMustPay(random.nextDouble());
+        payment.setHotWaterMustPay(random.nextDouble());
+        payment.setHeatingMustPay(random.nextDouble());
+        payment.setGasMustPay(random.nextDouble());
+        payment.setSewageMustPay(random.nextDouble());
+        payment.setFlatMustPay(random.nextDouble());
+        payment.setGarbageMustPay(random.nextDouble());
+        payment.setElectroStart(random.nextInt());
+        payment.setElectroEnd(random.nextInt());
+        payment.setkWattConsumed(random.nextInt());
+        payment.setWaterStart(random.nextInt());
+        payment.setWaterEnd(random.nextInt());
+        payment.setM3consumed(random.nextInt());
+        payment.setHotWaterStart(random.nextInt());
+        payment.setHotWaterEnd(random.nextInt());
+        payment.setHotM3consumed(random.nextInt());
+        payment.setHeatingStart(random.nextInt());
+        payment.setHeatingEnd(random.nextInt());
+        payment.setHeatingConsumed(random.nextInt());
+        payment.setGasStart(random.nextInt());
+        payment.setGasEnd(random.nextInt());
+        payment.setGasM3consumed(random.nextInt());
+        payment.setSewageStart(random.nextInt());
+        payment.setSewageEnd(random.nextInt());
+        payment.setSewageM3consumed(random.nextInt());
+        payment.setPaymentForElectricity(random.nextInt());
+        payment.setPaymentForWater(random.nextInt());
+        payment.setPaymentForHotWater(random.nextInt());
+        payment.setPaymentForHeating(random.nextInt());
+        payment.setPaymentForGas(random.nextInt());
+        payment.setPaymentForSewage(random.nextInt());
+        payment.setPaymentForFlat(random.nextInt());
+        payment.setPaymentForGarbage(random.nextInt());
+        payment.setTotal(random.nextInt());        
+        
+        return payment;
+    }
+
     public static String getDbName() {
         return DB_NAME;
     }
@@ -616,4 +693,5 @@ public class PaymentsDataSource {
     public String getViewName() {
         return VIEW_NAME;
     }
+
 }

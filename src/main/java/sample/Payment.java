@@ -1115,5 +1115,87 @@ public class Payment {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Payment)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        Payment that = (Payment) obj;
+        if (that.id != this.id) return false;
+        if (!that.name.equals(this.name)) return false;
+        if (!that.fullDescription.equals(this.fullDescription)) return false;
+        if (that.year != this.year) return false;
+        if (that.month != this.month) return false;
+        if (that.electroTariff1 != this.electroTariff1) return false;
+        if (that.electroLimit1 != this.electroLimit1) return false;
+        if (that.electroTariff2 != this.electroTariff2) return false;
+        if (that.electroLimit2 != this.electroLimit2) return false;
+        if (that.electroTariff3 != this.electroTariff3) return false;
+        if (that.electroLimit3 != this.electroLimit3) return false;
+        if (that.electroTariff4 != this.electroTariff4) return false;
+        if (that.waterTariff != this.waterTariff) return false;
+        if (that.hotWaterTariff != this.hotWaterTariff) return false;
+        if (that.heatingTariff != this.heatingTariff) return false;
+        if (that.gasTariff != this.gasTariff) return false;
+        if (that.sewageTariff != this.sewageTariff) return false;
+        if (that.flatTariff != this.flatTariff) return false;
+        if (that.garbageTariff != this.garbageTariff) return false;
+        if (that.electroPaymentSet != this.electroPaymentSet) return false;
+        if (that.waterPaymentSet != this.waterPaymentSet) return false;
+        if (that.hotWaterPaymentSet != this.hotWaterPaymentSet) return false;
+        if (that.heatingPaymentSet != this.heatingPaymentSet) return false;
+        if (that.gasPaymentSet != this.gasPaymentSet) return false;
+        if (that.sewagePaymentSet != this.sewagePaymentSet) return false;
+        if (that.flatPaymentSet != this.flatPaymentSet) return false;
+        if (that.garbagePaymentSet != this.garbagePaymentSet) return false;
+        if (that.electroPaymentByTariff != this.electroPaymentByTariff) return false;
+        if (that.waterPaymentByTariff != this.waterPaymentByTariff) return false;
+        if (that.hotWaterPaymentByTariff != this.hotWaterPaymentByTariff) return false;
+        if (that.heatingPaymentByTariff != this.heatingPaymentByTariff) return false;
+        if (that.gasPaymentByTariff != this.gasPaymentByTariff) return false;
+        if (that.sewagePaymentByTariff != this.sewagePaymentByTariff) return false;
+        if (that.flatPaymentByTariff != this.flatPaymentByTariff) return false;
+        if (that.garbagePaymentByTariff != this.garbagePaymentByTariff) return false;
+        if (that.electroMustPay != this.electroMustPay) return false;
+        if (that.waterMustPay != this.waterMustPay) return false;
+        if (that.hotWaterMustPay != this.hotWaterMustPay) return false;
+        if (that.heatingMustPay != this.heatingMustPay) return false;
+        if (that.gasMustPay != this.gasMustPay) return false;
+        if (that.sewageMustPay != this.sewageMustPay) return false;
+        if (that.flatMustPay != this.flatMustPay) return false;
+        if (that.garbageMustPay != this.garbageMustPay) return false;
+        if (that.electroStart != this.electroStart) return false;
+        if (that.electroEnd != this.electroEnd) return false;
+        if (that.kWattConsumed != this.kWattConsumed) return false;
+        if (that.waterStart != this.waterStart) return false;
+        if (that.waterEnd != this.waterEnd) return false;
+        if (that.m3consumed != this.m3consumed) return false;
+        if (that.hotWaterStart != this.hotWaterStart) return false;
+        if (that.hotWaterEnd != this.hotWaterEnd) return false;
+        if (that.hotM3consumed != this.hotM3consumed) return false;
+        if (that.heatingStart != this.heatingStart) return false;
+        if (that.heatingEnd != this.heatingEnd) return false;
+        if (that.heatingConsumed != this.heatingConsumed) return false;
+        if (that.gasStart != this.gasStart) return false;
+        if (that.gasEnd != this.gasEnd) return false;
+        if (that.gasM3consumed != this.gasM3consumed) return false;
+        if (that.sewageStart != this.sewageStart) return false;
+        if (that.sewageEnd != this.sewageEnd) return false;
+        if (that.sewageM3consumed != this.sewageM3consumed) return false;
+        if (that.paymentForElectricity != this.paymentForElectricity) return false;
+        if (that.paymentForWater != this.paymentForWater) return false;
+        if (that.paymentForHotWater != this.paymentForHotWater) return false;
+        if (that.paymentForHeating != this.paymentForHeating) return false;
+        if (that.paymentForGas != this.paymentForGas) return false;
+        if (that.paymentForSewage != this.paymentForSewage) return false;
+        if (that.paymentForFlat != this.paymentForFlat) return false;
+        if (that.paymentForGarbage != this.paymentForGarbage) return false;
+        if (that.total != this.total) return false;
+        return true;
+    }
 }
 

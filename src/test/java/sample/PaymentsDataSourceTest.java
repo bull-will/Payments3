@@ -1,10 +1,12 @@
 package sample;
 
+import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.*;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -14,18 +16,15 @@ public class PaymentsDataSourceTest {
     Statement statement;
     Payment testPayment1;
     Payment testPayment2;
+    Random random = new Random();
+    int lastPaymentId;
 
     @Before
     public void setUp() throws Exception {
         paymentsDataSource = PaymentsDataSource.getInstance();
         paymentsDataSource.open();
         paymentsDataSource.initializePaymentsDBTable(false);
-
-        testPayment1 = new Payment(1);
-
-        testPayment2 = new Payment(2, 2002, 2, 1, 100, 3, 4);
-        testPayment2.payForEverything();
-        testPayment2.buildFullDescription();
+//        lastPaymentId = (paymentMarkers != null) ? paymentMarkers.get(paymentMarkers.size() - 1).getId() : 1;
     }
 
     @Test
@@ -54,6 +53,29 @@ public class PaymentsDataSourceTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void getPaymentMarkers() {
+        ObservableList<PaymentMarker> paymentMarkers = paymentsDataSource.getPaymentMarkers(false);
+        assertNotNull(paymentMarkers);
+    }
+
+    @Test
+    /* To me this test needs to be for two methods at once */
+    public void storeAndGetPayment_looongTest() {
+        ObservableList<PaymentMarker> paymentMarkers = paymentsDataSource.getPaymentMarkers(false);
+        lastPaymentId = paymentMarkers.get(paymentMarkers.size()-1).getId();
+        int newPaymentId = lastPaymentId + 1;
+
+        testPayment1 = paymentsDataSource.getRandomPayment(newPaymentId);
+
+        paymentsDataSource.storePayment(testPayment1, false);
+        testPayment2 = paymentsDataSource.getPayment(newPaymentId, false);
+        paymentsDataSource.deletePayment(newPaymentId, false); // I don't need this in my database
+
+        assertTrue(testPayment1.equals(testPayment2));
+
     }
 
     /* Next tests worked only when the payments database wasn't filled with another payments */
@@ -93,7 +115,9 @@ public class PaymentsDataSourceTest {
                 paymentsDataSource.close();
             }
             if (conn != null && !conn.isClosed()) {
-                statement.close();
+                if (statement != null) {
+                    statement.close();
+                }
                 conn.close();
             }
         } catch (SQLException e) {
