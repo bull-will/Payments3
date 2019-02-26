@@ -62,8 +62,8 @@ public class PaymentsDataSourceTest {
     }
 
     @Test
-    /* To me this test needs to be for two methods at once */
-    public void storeAndGetPayment_looongTest() {
+    /* Two methods need to be tested together */
+    public void storeAndGetPayment_twoMethodsInOneTest() {
         ObservableList<PaymentMarker> paymentMarkers = paymentsDataSource.getPaymentMarkers(false);
         lastPaymentId = paymentMarkers.get(paymentMarkers.size()-1).getId();
         int newPaymentId = lastPaymentId + 1;
@@ -77,36 +77,6 @@ public class PaymentsDataSourceTest {
         assertTrue(testPayment1.equals(testPayment2));
 
     }
-
-    /* Next tests worked only when the payments database wasn't filled with another payments */
-//    @Test
-//    /* It worked only on the beginning, now it fails and screws first entries of my database
-//    * so screw this test instead*/
-//    public void storePaymentTest_countHowManyPaymentsStored() {
-//
-//        paymentsDataSource.storePayment(testPayment1, false);
-//        paymentsDataSource.storePayment(testPayment2, false);
-//        String countEntriesRequest = "SELECT COUNT(*) FROM " + paymentsDataSource.getViewName();
-//        long count = 0;
-//        try {
-//            conn = DriverManager.getConnection(paymentsDataSource.getConnectionString());
-//            statement = conn.createStatement();
-//            ResultSet results = statement.executeQuery(countEntriesRequest);
-//            count = (long) results.getInt(1);
-//            results.close();
-//            statement.close();
-//            conn.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        assertEquals(2L, count, 0.01);
-//    }
-
-//    @Test
-//    public void getPaymentTest() {
-//        Payment paymentForGetting = paymentsDataSource.getPayment(2, false);
-//        assertEquals(testPayment2.getTotal(), paymentForGetting.getTotal(), 0.01);
-//    }
 
     @After
     public void tearDown() {
