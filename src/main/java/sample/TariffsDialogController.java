@@ -60,22 +60,32 @@ public class TariffsDialogController {
 
     private boolean someFieldsProcessedWrong = false;
 
+
+    private String makeDoublesLookNice(double value) {
+        if (value % 1 == 0) {
+            return String.valueOf(Math.round(value));
+        } else {
+            return String.valueOf(value);/* This part is needed
+            because the result of calculation of consumed quantity often has infinite periodic decimal part*/
+        }
+    }
+
     public void showDialogFillFields(TariffsData tariffsData) {
-        electroTariff1Field.setText(tariffsData.electroTariff1 % 1 == 0d ? String.valueOf(Math.round(tariffsData.electroTariff1)) : String.valueOf(tariffsData.electroTariff1));
-        electroTariff2Field.setText(tariffsData.electroTariff2 % 1 == 0d ? String.valueOf(Math.round(tariffsData.electroTariff2)) : String.valueOf(tariffsData.electroTariff2));
-        electroTariff3Field.setText(tariffsData.electroTariff3 % 1 == 0d ? String.valueOf(Math.round(tariffsData.electroTariff3)) : String.valueOf(tariffsData.electroTariff3));
-        electroTariff4Field.setText(tariffsData.electroTariff4 % 1 == 0d ? String.valueOf(Math.round(tariffsData.electroTariff4)) : String.valueOf(tariffsData.electroTariff4));
-        electroLimit1Field.setText(tariffsData.electroLimit1 % 1 == 0d ? String.valueOf(Math.round(tariffsData.electroLimit1)) : String.valueOf(tariffsData.electroLimit1));
-        electroLimit2Field.setText(tariffsData.electroLimit2 % 1 == 0d ? String.valueOf(Math.round(tariffsData.electroLimit2)) : String.valueOf(tariffsData.electroLimit2));
-        electroLimit3Field.setText(tariffsData.electroLimit3 % 1 == 0d ? String.valueOf(Math.round(tariffsData.electroLimit3)) : String.valueOf(tariffsData.electroLimit3));
-        waterTariffField.setText(tariffsData.waterTariff % 1 == 0d ? String.valueOf(Math.round(tariffsData.waterTariff)) : String.valueOf(tariffsData.waterTariff));
-        hotWaterTariffField.setText(tariffsData.hotWaterTariff % 1 == 0d ? String.valueOf(Math.round(tariffsData.hotWaterTariff)) : String.valueOf(tariffsData.hotWaterTariff));
-        heatingTariffField.setText(tariffsData.heatingTariff % 1 == 0d ? String.valueOf(Math.round(tariffsData.heatingTariff)) : String.valueOf(tariffsData.heatingTariff));
-        gasTariffField.setText(tariffsData.gasTariff % 1 == 0d ? String.valueOf(Math.round(tariffsData.gasTariff)) : String.valueOf(tariffsData.gasTariff));
-        sewageTariffField.setText(tariffsData.sewageTariff % 1 == 0d ? String.valueOf(Math.round(tariffsData.sewageTariff)) : String.valueOf(tariffsData.sewageTariff));
-        flatTariffField.setText(tariffsData.flatTariff % 1 == 0d ? String.valueOf(Math.round(tariffsData.flatTariff)) : String.valueOf(tariffsData.flatTariff));
-        garbageTariffField.setText(tariffsData.garbageTariff % 1 == 0d ? String.valueOf(Math.round(tariffsData.garbageTariff)) : String.valueOf(tariffsData.garbageTariff));
-        roundCheckBox.setSelected(tariffsData.round);
+        electroTariff1Field.setText(makeDoublesLookNice(tariffsData.getElectroTariff1()));
+        electroTariff2Field.setText(makeDoublesLookNice(tariffsData.getElectroTariff2()));
+        electroTariff3Field.setText(makeDoublesLookNice(tariffsData.getElectroTariff3()));
+        electroTariff4Field.setText(makeDoublesLookNice(tariffsData.getElectroTariff4()));
+        electroLimit1Field.setText(makeDoublesLookNice(tariffsData.getElectroLimit1()));
+        electroLimit2Field.setText(makeDoublesLookNice(tariffsData.getElectroLimit2()));
+        electroLimit3Field.setText(makeDoublesLookNice(tariffsData.getElectroLimit3()));
+        waterTariffField.setText(makeDoublesLookNice(tariffsData.getWaterTariff()));
+        hotWaterTariffField.setText(makeDoublesLookNice(tariffsData.getHotWaterTariff()));
+        heatingTariffField.setText(makeDoublesLookNice(tariffsData.getHeatingTariff()));
+        gasTariffField.setText(makeDoublesLookNice(tariffsData.getGasTariff()));
+        sewageTariffField.setText(makeDoublesLookNice(tariffsData.getSewageTariff()));
+        flatTariffField.setText(makeDoublesLookNice(tariffsData.getFlatTariff()));
+        garbageTariffField.setText(makeDoublesLookNice(tariffsData.getGarbageTariff()));
+        roundCheckBox.setSelected(tariffsData.isRound());
     }
 
     private double obtainDoubleFromFields(TextField textField) {
@@ -120,21 +130,21 @@ public class TariffsDialogController {
     public TariffsData processTariffs(TariffsData tariffsData) {
         obtainNumbersFromTextFields();
 
-        tariffsData.electroTariff1 = electroTariff1;
-        tariffsData.electroLimit1 = electroLimit1;
-        tariffsData.electroTariff2 = electroTariff2;
-        tariffsData.electroLimit2 = electroLimit2;
-        tariffsData.electroTariff3 = electroTariff3;
-        tariffsData.electroLimit3 = electroLimit3;
-        tariffsData.electroTariff4 = electroTariff4;
-        tariffsData.waterTariff = waterTariff;
-        tariffsData.hotWaterTariff = hotWaterTariff;
-        tariffsData.heatingTariff = heatingTariff;
-        tariffsData.gasTariff = gasTariff;
-        tariffsData.sewageTariff = sewageTariff;
-        tariffsData.flatTariff = flatTariff;
-        tariffsData.garbageTariff = garbageTariff;
-        tariffsData.round = round;
+        tariffsData.setElectroTariff1(electroTariff1);
+        tariffsData.setElectroLimit1(electroLimit1);
+        tariffsData.setElectroTariff2(electroTariff2);
+        tariffsData.setElectroLimit2(electroLimit2);
+        tariffsData.setElectroTariff3(electroTariff3);
+        tariffsData.setElectroLimit3(electroLimit3);
+        tariffsData.setElectroTariff4(electroTariff4);
+        tariffsData.setWaterTariff(waterTariff);
+        tariffsData.setHotWaterTariff(hotWaterTariff);
+        tariffsData.setHeatingTariff(heatingTariff);
+        tariffsData.setGasTariff(gasTariff);
+        tariffsData.setSewageTariff(sewageTariff);
+        tariffsData.setFlatTariff(flatTariff);
+        tariffsData.setGarbageTariff(garbageTariff);
+        tariffsData.setRound(round);
 
         return tariffsData;
     }

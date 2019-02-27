@@ -26,21 +26,21 @@ public class TariffsData {
     private static final String GARBAGE_TARIFF = "garbage_tariff";
     private static final String ROUND = "round";
 
-    double electroTariff1;
-    double electroLimit1;
-    double electroTariff2;
-    double electroLimit2;
-    double electroTariff3;
-    double electroLimit3;
-    double electroTariff4;
-    double waterTariff;
-    double hotWaterTariff;
-    double heatingTariff;
-    double gasTariff;
-    double sewageTariff;
-    double flatTariff;
-    double garbageTariff;
-    boolean round;
+    private double electroTariff1;
+    private double electroLimit1;
+    private double electroTariff2;
+    private double electroLimit2;
+    private double electroTariff3;
+    private double electroLimit3;
+    private double electroTariff4;
+    private double waterTariff;
+    private double hotWaterTariff;
+    private double heatingTariff;
+    private double gasTariff;
+    private double sewageTariff;
+    private double flatTariff;
+    private double garbageTariff;
+    private boolean round;
 
     private final double electroTariff1Original = 0.3084;
     private final double electroLimit1Original = 75;
@@ -197,5 +197,125 @@ public class TariffsData {
         flatTariff = flatTariffOriginal;
         garbageTariff = garbageTariffOriginal;
         round = roundOriginal;
+    }
+
+    public double getElectroTariff1() {
+        return electroTariff1;
+    }
+
+    public double getElectroLimit1() {
+        return electroLimit1;
+    }
+
+    public double getElectroTariff2() {
+        return electroTariff2;
+    }
+
+    public double getElectroLimit2() {
+        return electroLimit2;
+    }
+
+    public double getElectroTariff3() {
+        return electroTariff3;
+    }
+
+    public double getElectroLimit3() {
+        return electroLimit3;
+    }
+
+    public double getElectroTariff4() {
+        return electroTariff4;
+    }
+
+    public double getWaterTariff() {
+        return waterTariff;
+    }
+
+    public double getHotWaterTariff() {
+        return hotWaterTariff;
+    }
+
+    public double getHeatingTariff() {
+        return heatingTariff;
+    }
+
+    public double getGasTariff() {
+        return gasTariff;
+    }
+
+    public double getSewageTariff() {
+        return sewageTariff;
+    }
+
+    public double getFlatTariff() {
+        return flatTariff;
+    }
+
+    public double getGarbageTariff() {
+        return garbageTariff;
+    }
+
+    public boolean isRound() {
+        return round;
+    }
+
+    public void setElectroTariff1(double electroTariff1) {
+        this.electroTariff1 = electroTariff1;
+    }
+
+    public void setElectroLimit1(double electroLimit1) {
+        this.electroLimit1 = electroLimit1;
+    }
+
+    public void setElectroTariff2(double electroTariff2) {
+        this.electroTariff2 = electroTariff2;
+    }
+
+    public void setElectroLimit2(double electroLimit2) {
+        this.electroLimit2 = electroLimit2;
+    }
+
+    public void setElectroTariff3(double electroTariff3) {
+        this.electroTariff3 = electroTariff3;
+    }
+
+    public void setElectroLimit3(double electroLimit3) {
+        this.electroLimit3 = electroLimit3;
+    }
+
+    public void setElectroTariff4(double electroTariff4) {
+        this.electroTariff4 = electroTariff4;
+    }
+
+    public void setWaterTariff(double waterTariff) {
+        this.waterTariff = waterTariff;
+    }
+
+    public void setHotWaterTariff(double hotWaterTariff) {
+        this.hotWaterTariff = hotWaterTariff;
+    }
+
+    public void setHeatingTariff(double heatingTariff) {
+        this.heatingTariff = heatingTariff;
+    }
+
+    public void setGasTariff(double gasTariff) {
+        this.gasTariff = gasTariff;
+    }
+
+    public void setSewageTariff(double sewageTariff) {
+        this.sewageTariff = sewageTariff;
+    }
+
+    public void setFlatTariff(double flatTariff) {
+        this.flatTariff = flatTariff;
+    }
+
+    public void setGarbageTariff(double garbageTariff) {
+        this.garbageTariff = garbageTariff;
+    }
+
+    public void setRound(boolean round) {
+        this.round = round;
     }
 }

@@ -397,6 +397,14 @@ public class PaymentDialogController {
         return payment;
     }
 
+    private String makeDoublesLookNice(double value) {
+        if (value % 1 == 0) {
+            return String.valueOf(Math.round(value));
+        } else {
+            return String.valueOf(value);
+        }
+    }
+
     /* refillAllFieldsForEditing speaks for itself,
      * and fillSetFields is true when creating a new payment based on an existing one*/
     public void showDialogFillFields(Payment payment, boolean refillAllFieldsForEditing, boolean fillSetFields,
@@ -405,51 +413,51 @@ public class PaymentDialogController {
         yearField.setText(String.valueOf(payment.getYear()));
 
         if (fillSetFields) {
-            electroTariff1Field.setText(payment.getElectroTariff1() % 1 == 0d ? String.valueOf((int) payment.getElectroTariff1()) : String.valueOf(payment.getElectroTariff1()));
-            electroTariff2Field.setText(payment.getElectroTariff2() % 1 == 0d ? String.valueOf((int) payment.getElectroTariff2()) : String.valueOf(payment.getElectroTariff2()));
-            electroTariff3Field.setText(payment.getElectroTariff3() % 1 == 0d ? String.valueOf((int) payment.getElectroTariff3()) : String.valueOf(payment.getElectroTariff3()));
-            electroTariff4Field.setText(payment.getElectroTariff4() % 1 == 0d ? String.valueOf((int) payment.getElectroTariff4()) : String.valueOf(payment.getElectroTariff4()));
-            electroLimit1Field.setText(payment.getElectroLimit1() % 1 == 0d ? String.valueOf((int) payment.getElectroLimit1()) : String.valueOf(payment.getElectroLimit1()));
-            electroLimit2Field.setText(payment.getElectroLimit2() % 1 == 0d ? String.valueOf((int) payment.getElectroLimit2()) : String.valueOf(payment.getElectroLimit2()));
-            electroLimit3Field.setText(payment.getElectroLimit3() % 1 == 0d ? String.valueOf((int) payment.getElectroLimit3()) : String.valueOf(payment.getElectroLimit3()));
-            waterTariffField.setText(payment.getWaterTariff() % 1 == 0d ? String.valueOf((int) payment.getWaterTariff()) : String.valueOf(payment.getWaterTariff()));
-            hotWaterTariffField.setText(payment.getHotWaterTariff() % 1 == 0d ? String.valueOf((int) payment.getHotWaterTariff()) : String.valueOf(payment.getHotWaterTariff()));
-            heatingTariffField.setText(payment.getHeatingTariff() % 1 == 0d ? String.valueOf((int) payment.getHeatingTariff()) : String.valueOf(payment.getHeatingTariff()));
-            gasTariffField.setText(payment.getGasTariff() % 1 == 0d ? String.valueOf((int) payment.getGasTariff()) : String.valueOf(payment.getGasTariff()));
-            sewageTariffField.setText(payment.getSewageTariff() % 1 == 0d ? String.valueOf((int) payment.getSewageTariff()) : String.valueOf(payment.getSewageTariff()));
-            flatTariffField.setText(payment.getFlatTariff() % 1 == 0d ? String.valueOf((int) payment.getFlatTariff()) : String.valueOf(payment.getFlatTariff()));
-            garbageTariffField.setText(payment.getGarbageTariff() % 1 == 0d ? String.valueOf((int) payment.getGarbageTariff()) : String.valueOf(payment.getGarbageTariff()));
+            electroTariff1Field.setText(makeDoublesLookNice(payment.getElectroTariff1()));
+            electroTariff2Field.setText(makeDoublesLookNice(payment.getElectroTariff2()));
+            electroTariff3Field.setText(makeDoublesLookNice(payment.getElectroTariff3()));
+            electroTariff4Field.setText(makeDoublesLookNice(payment.getElectroTariff4()));
+            electroLimit1Field.setText(makeDoublesLookNice(payment.getElectroLimit1()));
+            electroLimit2Field.setText(makeDoublesLookNice(payment.getElectroLimit2()));
+            electroLimit3Field.setText(makeDoublesLookNice(payment.getElectroLimit3()));
+            waterTariffField.setText(makeDoublesLookNice(payment.getWaterTariff()));
+            hotWaterTariffField.setText(makeDoublesLookNice(payment.getHotWaterTariff()));
+            heatingTariffField.setText(makeDoublesLookNice(payment.getHeatingTariff()));
+            gasTariffField.setText(makeDoublesLookNice(payment.getGasTariff()));
+            sewageTariffField.setText(makeDoublesLookNice(payment.getSewageTariff()));
+            flatTariffField.setText(makeDoublesLookNice(payment.getFlatTariff()));
+            garbageTariffField.setText(makeDoublesLookNice(payment.getGarbageTariff()));
             roundCheckBox.setSelected(payment.isRound());
         } else {
-            electroTariff1Field.setText(tariffsData.electroTariff1 % 1 == 0d ? String.valueOf((int) tariffsData.electroTariff1) : String.valueOf(tariffsData.electroTariff1));
-            electroTariff2Field.setText(tariffsData.electroTariff2 % 1 == 0d ? String.valueOf((int) tariffsData.electroTariff2) : String.valueOf(tariffsData.electroTariff2));
-            electroTariff3Field.setText(tariffsData.electroTariff3 % 1 == 0d ? String.valueOf((int) tariffsData.electroTariff3) : String.valueOf(tariffsData.electroTariff3));
-            electroTariff4Field.setText(tariffsData.electroTariff4 % 1 == 0d ? String.valueOf((int) tariffsData.electroTariff4) : String.valueOf(tariffsData.electroTariff4));
-            electroLimit1Field.setText(tariffsData.electroLimit1 % 1 == 0d ? String.valueOf((int) tariffsData.electroLimit1) : String.valueOf(tariffsData.electroLimit1));
-            electroLimit2Field.setText(tariffsData.electroLimit2 % 1 == 0d ? String.valueOf((int) tariffsData.electroLimit2) : String.valueOf(tariffsData.electroLimit2));
-            electroLimit3Field.setText(tariffsData.electroLimit3 % 1 == 0d ? String.valueOf((int) tariffsData.electroLimit3) : String.valueOf(tariffsData.electroLimit3));
-            waterTariffField.setText(tariffsData.waterTariff % 1 == 0d ? String.valueOf((int) tariffsData.waterTariff) : String.valueOf(tariffsData.waterTariff));
-            hotWaterTariffField.setText(tariffsData.hotWaterTariff % 1 == 0d ? String.valueOf((int) tariffsData.hotWaterTariff) : String.valueOf(tariffsData.hotWaterTariff));
-            heatingTariffField.setText(tariffsData.heatingTariff % 1 == 0d ? String.valueOf((int) tariffsData.heatingTariff) : String.valueOf(tariffsData.heatingTariff));
-            gasTariffField.setText(tariffsData.gasTariff % 1 == 0d ? String.valueOf((int) tariffsData.gasTariff) : String.valueOf(tariffsData.gasTariff));
-            sewageTariffField.setText(tariffsData.sewageTariff % 1 == 0d ? String.valueOf((int) tariffsData.sewageTariff) : String.valueOf(tariffsData.sewageTariff));
-            flatTariffField.setText(tariffsData.flatTariff % 1 == 0d ? String.valueOf((int) tariffsData.flatTariff) : String.valueOf(tariffsData.flatTariff));
-            garbageTariffField.setText(tariffsData.garbageTariff % 1 == 0d ? String.valueOf((int) tariffsData.garbageTariff) : String.valueOf(tariffsData.garbageTariff));
-            roundCheckBox.setSelected(tariffsData.round);
+            electroTariff1Field.setText(makeDoublesLookNice(tariffsData.getElectroTariff1()));
+            electroTariff2Field.setText(makeDoublesLookNice(tariffsData.getElectroTariff2()));
+            electroTariff3Field.setText(makeDoublesLookNice(tariffsData.getElectroTariff3()));
+            electroTariff4Field.setText(makeDoublesLookNice(tariffsData.getElectroTariff4()));
+            electroLimit1Field.setText(makeDoublesLookNice(tariffsData.getElectroLimit1()));
+            electroLimit2Field.setText(makeDoublesLookNice(tariffsData.getElectroLimit2()));
+            electroLimit3Field.setText(makeDoublesLookNice(tariffsData.getElectroLimit3()));
+            waterTariffField.setText(makeDoublesLookNice(tariffsData.getWaterTariff()));
+            hotWaterTariffField.setText(makeDoublesLookNice(tariffsData.getHotWaterTariff()));
+            heatingTariffField.setText(makeDoublesLookNice(tariffsData.getHeatingTariff()));
+            gasTariffField.setText(makeDoublesLookNice(tariffsData.getGasTariff()));
+            sewageTariffField.setText(makeDoublesLookNice(tariffsData.getSewageTariff()));
+            flatTariffField.setText(makeDoublesLookNice(tariffsData.getFlatTariff()));
+            garbageTariffField.setText(makeDoublesLookNice(tariffsData.getGarbageTariff()));
+            roundCheckBox.setSelected(tariffsData.isRound());
         }
 
-        electroStartField.setText(payment.getElectroStart() % 1 == 0d ? String.valueOf((int) payment.getElectroStart()) : String.valueOf(payment.getElectroStart()));
-        electroEndField.setText(payment.getElectroEnd() % 1 == 0d ? String.valueOf((int) payment.getElectroEnd()) : String.valueOf(payment.getElectroEnd()));
-        waterStartField.setText(payment.getWaterStart() % 1 == 0d ? String.valueOf((int) payment.getWaterStart()) : String.valueOf(payment.getWaterStart()));
-        waterEndField.setText(payment.getWaterEnd() % 1 == 0d ? String.valueOf((int) payment.getWaterEnd()) : String.valueOf(payment.getWaterEnd()));
-        hotWaterStartField.setText(payment.getHotWaterStart() % 1 == 0d ? String.valueOf((int) payment.getHotWaterStart()) : String.valueOf(payment.getHotWaterStart()));
-        hotWaterEndField.setText(payment.getHotWaterEnd() % 1 == 0d ? String.valueOf((int) payment.getHotWaterEnd()) : String.valueOf(payment.getHotWaterEnd()));
-        heatingStartField.setText(payment.getHeatingStart() % 1 == 0d ? String.valueOf((int) payment.getHeatingStart()) : String.valueOf(payment.getHeatingStart()));
-        heatingEndField.setText(payment.getHeatingEnd() % 1 == 0d ? String.valueOf((int) payment.getHeatingEnd()) : String.valueOf(payment.getHeatingEnd()));
-        gasStartField.setText(payment.getGasStart() % 1 == 0d ? String.valueOf((int) payment.getGasStart()) : String.valueOf(payment.getGasStart()));
-        gasEndField.setText(payment.getGasEnd() % 1 == 0d ? String.valueOf((int) payment.getGasEnd()) : String.valueOf(payment.getGasEnd()));
-        sewageStartField.setText(payment.getSewageStart() % 1 == 0d ? String.valueOf((int) payment.getSewageStart()) : String.valueOf(payment.getSewageStart()));
-        sewageEndField.setText(payment.getSewageEnd() % 1 == 0d ? String.valueOf((int) payment.getSewageEnd()) : String.valueOf(payment.getSewageEnd()));
+        electroStartField.setText(makeDoublesLookNice(payment.getElectroStart()));
+        electroEndField.setText(makeDoublesLookNice(payment.getElectroEnd()));
+        waterStartField.setText(makeDoublesLookNice(payment.getWaterStart()));
+        waterEndField.setText(makeDoublesLookNice(payment.getWaterEnd()));
+        hotWaterStartField.setText(makeDoublesLookNice(payment.getHotWaterStart()));
+        hotWaterEndField.setText(makeDoublesLookNice(payment.getHotWaterEnd()));
+        heatingStartField.setText(makeDoublesLookNice(payment.getHeatingStart()));
+        heatingEndField.setText(makeDoublesLookNice(payment.getHeatingEnd()));
+        gasStartField.setText(makeDoublesLookNice(payment.getGasStart()));
+        gasEndField.setText(makeDoublesLookNice(payment.getGasEnd()));
+        sewageStartField.setText(makeDoublesLookNice(payment.getSewageStart()));
+        sewageEndField.setText(makeDoublesLookNice(payment.getSewageEnd()));
 
 
         /* these fields' data is collected from the basis payment only if it's being edited */
@@ -457,54 +465,54 @@ public class PaymentDialogController {
 
             if (payment.isElectroPaymentSet()) {
                 electroBySet.setSelected(true);
-                electroMustPayField.setText(String.valueOf(payment.getElectroMustPay()));
+                electroMustPayField.setText(makeDoublesLookNice(payment.getElectroMustPay()));
             } else if (payment.isElectroPaymentByTariff()) {
                 electroByTariff.setSelected(true);
             } else electroByCounter.setSelected(true);
 
             if (payment.isWaterPaymentSet()) {
                 waterBySet.setSelected(true);
-                waterMustPayField.setText(String.valueOf(payment.getWaterMustPay()));
+                waterMustPayField.setText(makeDoublesLookNice(payment.getWaterMustPay()));
             } else if (payment.isWaterPaymentByTariff()) {
                 waterByTariff.setSelected(true);
             } else waterByCounter.setSelected(true);
 
             if (payment.isHotWaterPaymentSet()) {
                 hotWaterBySet.setSelected(true);
-                hotWaterMustPayField.setText(String.valueOf(payment.getHotWaterMustPay()));
+                hotWaterMustPayField.setText(makeDoublesLookNice(payment.getHotWaterMustPay()));
             } else if (payment.isHotWaterPaymentByTariff()) {
                 hotWaterByTariff.setSelected(true);
             } else hotWaterByCounter.setSelected(true);
 
             if (payment.isHeatingPaymentSet()) {
                 heatingBySet.setSelected(true);
-                heatingMustPayField.setText(String.valueOf(payment.getHeatingMustPay()));
+                heatingMustPayField.setText(makeDoublesLookNice(payment.getHeatingMustPay()));
             } else if (payment.isHeatingPaymentByTariff()) {
                 heatingByTariff.setSelected(true);
             } else heatingByCounter.setSelected(true);
 
             if (payment.isGasPaymentSet()) {
                 gasBySet.setSelected(true);
-                gasMustPayField.setText(String.valueOf(payment.getGasMustPay()));
+                gasMustPayField.setText(makeDoublesLookNice(payment.getGasMustPay()));
             } else if (payment.isGasPaymentByTariff()) {
                 gasByTariff.setSelected(true);
             } else gasByCounter.setSelected(true);
 
             if (payment.isSewagePaymentSet()) {
                 sewageBySet.setSelected(true);
-                sewageMustPayField.setText(String.valueOf(payment.getSewageMustPay()));
+                sewageMustPayField.setText(makeDoublesLookNice(payment.getSewageMustPay()));
             } else if (payment.isSewagePaymentByTariff()) {
                 sewageByTariff.setSelected(true);
             } else sewageByCounter.setSelected(true);
 
             if (payment.isFlatPaymentSet()) {
                 flatBySet.setSelected(true);
-                flatMustPayField.setText(String.valueOf(payment.getFlatMustPay()));
+                flatMustPayField.setText(makeDoublesLookNice(payment.getFlatMustPay()));
             } else flatByTariff.setSelected(true);
 
             if (payment.isGarbagePaymentSet()) {
                 garbageBySet.setSelected(true);
-                garbageMustPayField.setText(String.valueOf(payment.getGarbageMustPay()));
+                garbageMustPayField.setText(makeDoublesLookNice(payment.getGarbageMustPay()));
             } else garbageByTariff.setSelected(true);
 
         }
