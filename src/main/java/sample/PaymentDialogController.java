@@ -135,11 +135,11 @@ public class PaymentDialogController {
     /* These are going to be collected from the basis payment,
     then changed(or not) in the dialog, and then put into new/edited payment */
     private double electroTariff1;
-    private int electroLimit1;
+    private double electroLimit1;
     private double electroTariff2;
-    private int electroLimit2;
+    private double electroLimit2;
     private double electroTariff3;
-    private int electroLimit3;
+    private double electroLimit3;
     private double electroTariff4;
 
     private double waterTariff;
@@ -162,18 +162,18 @@ public class PaymentDialogController {
     private int year;
     private int month;
 
-    private int electroStart;
-    private int electroEnd;
-    private int waterStart;
-    private int waterEnd;
-    private int hotWaterStart;
-    private int hotWaterEnd;
-    private int heatingStart;
-    private int heatingEnd;
-    private int gasStart;
-    private int gasEnd;
-    private int sewageStart;
-    private int sewageEnd;
+    private double electroStart;
+    private double electroEnd;
+    private double waterStart;
+    private double waterEnd;
+    private double hotWaterStart;
+    private double hotWaterEnd;
+    private double heatingStart;
+    private double heatingEnd;
+    private double gasStart;
+    private double gasEnd;
+    private double sewageStart;
+    private double sewageEnd;
 
     private boolean round;
 
@@ -226,29 +226,29 @@ public class PaymentDialogController {
         year = obtainIntFromFields(yearField);
         month = obtainIntFromFields(monthField);
         electroTariff1 = obtainDoubleFromFields(electroTariff1Field);
-        electroLimit1 = obtainIntFromFields(electroLimit1Field);
+        electroLimit1 = obtainDoubleFromFields(electroLimit1Field);
         electroTariff2 = obtainDoubleFromFields(electroTariff2Field);
-        electroLimit2 = obtainIntFromFields(electroLimit2Field);
+        electroLimit2 = obtainDoubleFromFields(electroLimit2Field);
         electroTariff3 = obtainDoubleFromFields(electroTariff3Field);
-        electroLimit3 = obtainIntFromFields(electroLimit3Field);
+        electroLimit3 = obtainDoubleFromFields(electroLimit3Field);
         electroTariff4 = obtainDoubleFromFields(electroTariff4Field);
-        electroStart = obtainIntFromFields(electroStartField);
-        electroEnd = obtainIntFromFields(electroEndField);
+        electroStart = obtainDoubleFromFields(electroStartField);
+        electroEnd = obtainDoubleFromFields(electroEndField);
         waterTariff = obtainDoubleFromFields(waterTariffField);
-        waterStart = obtainIntFromFields(waterStartField);
-        waterEnd = obtainIntFromFields(waterEndField);
+        waterStart = obtainDoubleFromFields(waterStartField);
+        waterEnd = obtainDoubleFromFields(waterEndField);
         hotWaterTariff = obtainDoubleFromFields(hotWaterTariffField);
-        hotWaterStart = obtainIntFromFields(hotWaterStartField);
-        hotWaterEnd = obtainIntFromFields(hotWaterEndField);
+        hotWaterStart = obtainDoubleFromFields(hotWaterStartField);
+        hotWaterEnd = obtainDoubleFromFields(hotWaterEndField);
         heatingTariff = obtainDoubleFromFields(heatingTariffField);
-        heatingStart = obtainIntFromFields(heatingStartField);
-        heatingEnd = obtainIntFromFields(heatingEndField);
+        heatingStart = obtainDoubleFromFields(heatingStartField);
+        heatingEnd = obtainDoubleFromFields(heatingEndField);
         gasTariff = obtainDoubleFromFields(gasTariffField);
-        gasStart = obtainIntFromFields(gasStartField);
-        gasEnd = obtainIntFromFields(gasEndField);
+        gasStart = obtainDoubleFromFields(gasStartField);
+        gasEnd = obtainDoubleFromFields(gasEndField);
         sewageTariff = obtainDoubleFromFields(sewageTariffField);
-        sewageStart = obtainIntFromFields(sewageStartField);
-        sewageEnd = obtainIntFromFields(sewageEndField);
+        sewageStart = obtainDoubleFromFields(sewageStartField);
+        sewageEnd = obtainDoubleFromFields(sewageEndField);
         flatTariff = obtainDoubleFromFields(flatTariffField);
         garbageTariff = obtainDoubleFromFields(garbageTariffField);
         electroMustPay = obtainSetPayment(electroBySet, electroMustPayField);
@@ -405,51 +405,51 @@ public class PaymentDialogController {
         yearField.setText(String.valueOf(payment.getYear()));
 
         if (fillSetFields) {
-            electroTariff1Field.setText(String.valueOf(payment.getElectroTariff1()));
-            electroTariff2Field.setText(String.valueOf(payment.getElectroTariff2()));
-            electroTariff3Field.setText(String.valueOf(payment.getElectroTariff3()));
-            electroTariff4Field.setText(String.valueOf(payment.getElectroTariff4()));
-            electroLimit1Field.setText(String.valueOf(payment.getElectroLimit1()));
-            electroLimit2Field.setText(String.valueOf(payment.getElectroLimit2()));
-            electroLimit3Field.setText(String.valueOf(payment.getElectroLimit3()));
-            waterTariffField.setText(String.valueOf(payment.getWaterTariff()));
-            hotWaterTariffField.setText(String.valueOf(payment.getHotWaterTariff()));
-            heatingTariffField.setText(String.valueOf(payment.getHeatingTariff()));
-            gasTariffField.setText(String.valueOf(payment.getGasTariff()));
-            sewageTariffField.setText(String.valueOf(payment.getSewageTariff()));
-            flatTariffField.setText(String.valueOf(payment.getFlatTariff()));
-            garbageTariffField.setText(String.valueOf(payment.getGarbageTariff()));
+            electroTariff1Field.setText(payment.getElectroTariff1() % 1 == 0d ? String.valueOf((int) payment.getElectroTariff1()) : String.valueOf(payment.getElectroTariff1()));
+            electroTariff2Field.setText(payment.getElectroTariff2() % 1 == 0d ? String.valueOf((int) payment.getElectroTariff2()) : String.valueOf(payment.getElectroTariff2()));
+            electroTariff3Field.setText(payment.getElectroTariff3() % 1 == 0d ? String.valueOf((int) payment.getElectroTariff3()) : String.valueOf(payment.getElectroTariff3()));
+            electroTariff4Field.setText(payment.getElectroTariff4() % 1 == 0d ? String.valueOf((int) payment.getElectroTariff4()) : String.valueOf(payment.getElectroTariff4()));
+            electroLimit1Field.setText(payment.getElectroLimit1() % 1 == 0d ? String.valueOf((int) payment.getElectroLimit1()) : String.valueOf(payment.getElectroLimit1()));
+            electroLimit2Field.setText(payment.getElectroLimit2() % 1 == 0d ? String.valueOf((int) payment.getElectroLimit2()) : String.valueOf(payment.getElectroLimit2()));
+            electroLimit3Field.setText(payment.getElectroLimit3() % 1 == 0d ? String.valueOf((int) payment.getElectroLimit3()) : String.valueOf(payment.getElectroLimit3()));
+            waterTariffField.setText(payment.getWaterTariff() % 1 == 0d ? String.valueOf((int) payment.getWaterTariff()) : String.valueOf(payment.getWaterTariff()));
+            hotWaterTariffField.setText(payment.getHotWaterTariff() % 1 == 0d ? String.valueOf((int) payment.getHotWaterTariff()) : String.valueOf(payment.getHotWaterTariff()));
+            heatingTariffField.setText(payment.getHeatingTariff() % 1 == 0d ? String.valueOf((int) payment.getHeatingTariff()) : String.valueOf(payment.getHeatingTariff()));
+            gasTariffField.setText(payment.getGasTariff() % 1 == 0d ? String.valueOf((int) payment.getGasTariff()) : String.valueOf(payment.getGasTariff()));
+            sewageTariffField.setText(payment.getSewageTariff() % 1 == 0d ? String.valueOf((int) payment.getSewageTariff()) : String.valueOf(payment.getSewageTariff()));
+            flatTariffField.setText(payment.getFlatTariff() % 1 == 0d ? String.valueOf((int) payment.getFlatTariff()) : String.valueOf(payment.getFlatTariff()));
+            garbageTariffField.setText(payment.getGarbageTariff() % 1 == 0d ? String.valueOf((int) payment.getGarbageTariff()) : String.valueOf(payment.getGarbageTariff()));
             roundCheckBox.setSelected(payment.isRound());
         } else {
-            electroTariff1Field.setText(String.valueOf(tariffsData.electroTariff1));
-            electroTariff2Field.setText(String.valueOf(tariffsData.electroTariff2));
-            electroTariff3Field.setText(String.valueOf(tariffsData.electroTariff3));
-            electroTariff4Field.setText(String.valueOf(tariffsData.electroTariff4));
-            electroLimit1Field.setText(String.valueOf(tariffsData.electroLimit1));
-            electroLimit2Field.setText(String.valueOf(tariffsData.electroLimit2));
-            electroLimit3Field.setText(String.valueOf(tariffsData.electroLimit3));
-            waterTariffField.setText(String.valueOf(tariffsData.waterTariff));
-            hotWaterTariffField.setText(String.valueOf(tariffsData.hotWaterTariff));
-            heatingTariffField.setText(String.valueOf(tariffsData.heatingTariff));
-            gasTariffField.setText(String.valueOf(tariffsData.gasTariff));
-            sewageTariffField.setText(String.valueOf(tariffsData.sewageTariff));
-            flatTariffField.setText(String.valueOf(tariffsData.flatTariff));
-            garbageTariffField.setText(String.valueOf(tariffsData.garbageTariff));
+            electroTariff1Field.setText(tariffsData.electroTariff1 % 1 == 0d ? String.valueOf((int) tariffsData.electroTariff1) : String.valueOf(tariffsData.electroTariff1));
+            electroTariff2Field.setText(tariffsData.electroTariff2 % 1 == 0d ? String.valueOf((int) tariffsData.electroTariff2) : String.valueOf(tariffsData.electroTariff2));
+            electroTariff3Field.setText(tariffsData.electroTariff3 % 1 == 0d ? String.valueOf((int) tariffsData.electroTariff3) : String.valueOf(tariffsData.electroTariff3));
+            electroTariff4Field.setText(tariffsData.electroTariff4 % 1 == 0d ? String.valueOf((int) tariffsData.electroTariff4) : String.valueOf(tariffsData.electroTariff4));
+            electroLimit1Field.setText(tariffsData.electroLimit1 % 1 == 0d ? String.valueOf((int) tariffsData.electroLimit1) : String.valueOf(tariffsData.electroLimit1));
+            electroLimit2Field.setText(tariffsData.electroLimit2 % 1 == 0d ? String.valueOf((int) tariffsData.electroLimit2) : String.valueOf(tariffsData.electroLimit2));
+            electroLimit3Field.setText(tariffsData.electroLimit3 % 1 == 0d ? String.valueOf((int) tariffsData.electroLimit3) : String.valueOf(tariffsData.electroLimit3));
+            waterTariffField.setText(tariffsData.waterTariff % 1 == 0d ? String.valueOf((int) tariffsData.waterTariff) : String.valueOf(tariffsData.waterTariff));
+            hotWaterTariffField.setText(tariffsData.hotWaterTariff % 1 == 0d ? String.valueOf((int) tariffsData.hotWaterTariff) : String.valueOf(tariffsData.hotWaterTariff));
+            heatingTariffField.setText(tariffsData.heatingTariff % 1 == 0d ? String.valueOf((int) tariffsData.heatingTariff) : String.valueOf(tariffsData.heatingTariff));
+            gasTariffField.setText(tariffsData.gasTariff % 1 == 0d ? String.valueOf((int) tariffsData.gasTariff) : String.valueOf(tariffsData.gasTariff));
+            sewageTariffField.setText(tariffsData.sewageTariff % 1 == 0d ? String.valueOf((int) tariffsData.sewageTariff) : String.valueOf(tariffsData.sewageTariff));
+            flatTariffField.setText(tariffsData.flatTariff % 1 == 0d ? String.valueOf((int) tariffsData.flatTariff) : String.valueOf(tariffsData.flatTariff));
+            garbageTariffField.setText(tariffsData.garbageTariff % 1 == 0d ? String.valueOf((int) tariffsData.garbageTariff) : String.valueOf(tariffsData.garbageTariff));
             roundCheckBox.setSelected(tariffsData.round);
         }
 
-        electroStartField.setText(String.valueOf(payment.getElectroStart()));
-        electroEndField.setText(String.valueOf(payment.getElectroEnd()));
-        waterStartField.setText(String.valueOf(payment.getWaterStart()));
-        waterEndField.setText(String.valueOf(payment.getWaterEnd()));
-        hotWaterStartField.setText(String.valueOf(payment.getHotWaterStart()));
-        hotWaterEndField.setText(String.valueOf(payment.getHotWaterEnd()));
-        heatingStartField.setText(String.valueOf(payment.getHeatingStart()));
-        heatingEndField.setText(String.valueOf(payment.getHeatingEnd()));
-        gasStartField.setText(String.valueOf(payment.getGasStart()));
-        gasEndField.setText(String.valueOf(payment.getGasEnd()));
-        sewageStartField.setText(String.valueOf(payment.getSewageStart()));
-        sewageEndField.setText(String.valueOf(payment.getSewageEnd()));
+        electroStartField.setText(payment.getElectroStart() % 1 == 0d ? String.valueOf((int) payment.getElectroStart()) : String.valueOf(payment.getElectroStart()));
+        electroEndField.setText(payment.getElectroEnd() % 1 == 0d ? String.valueOf((int) payment.getElectroEnd()) : String.valueOf(payment.getElectroEnd()));
+        waterStartField.setText(payment.getWaterStart() % 1 == 0d ? String.valueOf((int) payment.getWaterStart()) : String.valueOf(payment.getWaterStart()));
+        waterEndField.setText(payment.getWaterEnd() % 1 == 0d ? String.valueOf((int) payment.getWaterEnd()) : String.valueOf(payment.getWaterEnd()));
+        hotWaterStartField.setText(payment.getHotWaterStart() % 1 == 0d ? String.valueOf((int) payment.getHotWaterStart()) : String.valueOf(payment.getHotWaterStart()));
+        hotWaterEndField.setText(payment.getHotWaterEnd() % 1 == 0d ? String.valueOf((int) payment.getHotWaterEnd()) : String.valueOf(payment.getHotWaterEnd()));
+        heatingStartField.setText(payment.getHeatingStart() % 1 == 0d ? String.valueOf((int) payment.getHeatingStart()) : String.valueOf(payment.getHeatingStart()));
+        heatingEndField.setText(payment.getHeatingEnd() % 1 == 0d ? String.valueOf((int) payment.getHeatingEnd()) : String.valueOf(payment.getHeatingEnd()));
+        gasStartField.setText(payment.getGasStart() % 1 == 0d ? String.valueOf((int) payment.getGasStart()) : String.valueOf(payment.getGasStart()));
+        gasEndField.setText(payment.getGasEnd() % 1 == 0d ? String.valueOf((int) payment.getGasEnd()) : String.valueOf(payment.getGasEnd()));
+        sewageStartField.setText(payment.getSewageStart() % 1 == 0d ? String.valueOf((int) payment.getSewageStart()) : String.valueOf(payment.getSewageStart()));
+        sewageEndField.setText(payment.getSewageEnd() % 1 == 0d ? String.valueOf((int) payment.getSewageEnd()) : String.valueOf(payment.getSewageEnd()));
 
 
         /* these fields' data is collected from the basis payment only if it's being edited */
@@ -461,7 +461,7 @@ public class PaymentDialogController {
             } else if (payment.isElectroPaymentByTariff()) {
                 electroByTariff.setSelected(true);
             } else electroByCounter.setSelected(true);
-            
+
             if (payment.isWaterPaymentSet()) {
                 waterBySet.setSelected(true);
                 waterMustPayField.setText(String.valueOf(payment.getWaterMustPay()));
@@ -507,20 +507,6 @@ public class PaymentDialogController {
                 garbageMustPayField.setText(String.valueOf(payment.getGarbageMustPay()));
             } else garbageByTariff.setSelected(true);
 
-//            if (refillAllFieldsForEditing) {
-//                electroStartField.setText(String.valueOf(payment.getElectroStart()));
-//                electroEndField.setText(String.valueOf(payment.getElectroEnd()));
-//                waterStartField.setText(String.valueOf(payment.getWaterStart()));
-//                waterEndField.setText(String.valueOf(payment.getWaterEnd()));
-//                hotWaterStartField.setText(String.valueOf(payment.getHotWaterStart()));
-//                hotWaterEndField.setText(String.valueOf(payment.getHotWaterEnd()));
-//                heatingStartField.setText(String.valueOf(payment.getHeatingStart()));
-//                heatingEndField.setText(String.valueOf(payment.getHeatingEnd()));
-//                gasStartField.setText(String.valueOf(payment.getGasStart()));
-//                gasEndField.setText(String.valueOf(payment.getGasEnd()));
-//                sewageStartField.setText(String.valueOf(payment.getSewageStart()));
-//                sewageEndField.setText(String.valueOf(payment.getSewageEnd()));
-//            }
         }
     }
 

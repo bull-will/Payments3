@@ -27,11 +27,11 @@ public class TariffsData {
     private static final String ROUND = "round";
 
     double electroTariff1;
-    int electroLimit1;
+    double electroLimit1;
     double electroTariff2;
-    int electroLimit2;
+    double electroLimit2;
     double electroTariff3;
-    int electroLimit3;
+    double electroLimit3;
     double electroTariff4;
     double waterTariff;
     double hotWaterTariff;
@@ -43,11 +43,11 @@ public class TariffsData {
     boolean round;
 
     private final double electroTariff1Original = 0.3084;
-    private final int electroLimit1Original = 75;
+    private final double electroLimit1Original = 75;
     private final double electroTariff2Original = 0.6168;
-    private final int electroLimit2Original = 150;
+    private final double electroLimit2Original = 150;
     private final double electroTariff3Original = 0.8388;
-    private final int electroLimit3Original = 800;
+    private final double electroLimit3Original = 800;
     private final double electroTariff4Original = 2.6808;
     private final double waterTariffOriginal = 14.0;
     private final double hotWaterTariffOriginal = 0.0;
@@ -103,11 +103,11 @@ public class TariffsData {
 
             // get the property values and transmitting them values to fields
             this.electroTariff1 = Double.parseDouble(tariffs.getProperty(ELECTRO_TARIFF_1));
-            this.electroLimit1 = Integer.parseInt(tariffs.getProperty(ELECTRO_LIMIT_1));
+            this.electroLimit1 = Double.parseDouble(tariffs.getProperty(ELECTRO_LIMIT_1));
             this.electroTariff2 = Double.parseDouble(tariffs.getProperty(ELECTRO_TARIFF_2));
-            this.electroLimit2 = Integer.parseInt(tariffs.getProperty(ELECTRO_LIMIT_2));
+            this.electroLimit2 = Double.parseDouble(tariffs.getProperty(ELECTRO_LIMIT_2));
             this.electroTariff3 = Double.parseDouble(tariffs.getProperty(ELECTRO_TARIFF_3));
-            this.electroLimit3 = Integer.parseInt(tariffs.getProperty(ELECTRO_LIMIT_3));
+            this.electroLimit3 = Double.parseDouble(tariffs.getProperty(ELECTRO_LIMIT_3));
             this.electroTariff4 = Double.parseDouble(tariffs.getProperty(ELECTRO_TARIFF_4));
             this.waterTariff = Double.parseDouble(tariffs.getProperty(WATER_TARIFF));
             this.hotWaterTariff = Double.parseDouble(tariffs.getProperty(HOT_WATER_TARIFF));

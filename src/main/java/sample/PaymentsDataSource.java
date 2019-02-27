@@ -247,11 +247,11 @@ public class PaymentsDataSource {
                 payment.setYear(results.getInt(YEAR));
                 payment.setMonth(results.getInt(MONTH));
                 payment.setElectroTariff1(results.getDouble(ELECTRO_TARIFF_1));
-                payment.setElectroLimit1(results.getInt(ELECTRO_LIMIT_1));
+                payment.setElectroLimit1(results.getDouble(ELECTRO_LIMIT_1));
                 payment.setElectroTariff2(results.getDouble(ELECTRO_TARIFF_2));
-                payment.setElectroLimit2(results.getInt(ELECTRO_LIMIT_2));
+                payment.setElectroLimit2(results.getDouble(ELECTRO_LIMIT_2));
                 payment.setElectroTariff3(results.getDouble(ELECTRO_TARIFF_3));
-                payment.setElectroLimit3(results.getInt(ELECTRO_LIMIT_3));
+                payment.setElectroLimit3(results.getDouble(ELECTRO_LIMIT_3));
                 payment.setElectroTariff4(results.getDouble(ELECTRO_TARIFF_4));
                 payment.setWaterTariff(results.getDouble(WATER_TARIFF));
                 payment.setHotWaterTariff(results.getDouble(HOT_WATER_TARIFF));
@@ -284,24 +284,24 @@ public class PaymentsDataSource {
                 payment.setSewageMustPay(results.getDouble(SEWAGE_MUST_PAY));
                 payment.setFlatMustPay(results.getDouble(FLAT_MUST_PAY));
                 payment.setGarbageMustPay(results.getDouble(GARBAGE_MUST_PAY));
-                payment.setElectroStart(results.getInt(ELECTRO_START));
-                payment.setElectroEnd(results.getInt(ELECTRO_END));
-                payment.setkWattConsumed(results.getInt(K_WATT_CONSUMED));
-                payment.setWaterStart(results.getInt(WATER_START));
-                payment.setWaterEnd(results.getInt(WATER_END));
-                payment.setM3consumed(results.getInt(M_3_CONSUMED));
-                payment.setHotWaterStart(results.getInt(HOT_WATER_START));
-                payment.setHotWaterEnd(results.getInt(HOT_WATER_END));
-                payment.setHotM3consumed(results.getInt(HOT_M_3_CONSUMED));
-                payment.setHeatingStart(results.getInt(HEATING_START));
-                payment.setHeatingEnd(results.getInt(HEATING_END));
-                payment.setHeatingConsumed(results.getInt(HEATING_CONSUMED));
-                payment.setGasStart(results.getInt(GAS_START));
-                payment.setGasEnd(results.getInt(GAS_END));
-                payment.setGasM3consumed(results.getInt(GAS_M_3_CONSUMED));
-                payment.setSewageStart(results.getInt(SEWAGE_START));
-                payment.setSewageEnd(results.getInt(SEWAGE_END));
-                payment.setSewageM3consumed(results.getInt(SEWAGE_M_3_CONSUMED));
+                payment.setElectroStart(results.getDouble(ELECTRO_START));
+                payment.setElectroEnd(results.getDouble(ELECTRO_END));
+                payment.setkWattConsumed(results.getDouble(K_WATT_CONSUMED));
+                payment.setWaterStart(results.getDouble(WATER_START));
+                payment.setWaterEnd(results.getDouble(WATER_END));
+                payment.setM3consumed(results.getDouble(M_3_CONSUMED));
+                payment.setHotWaterStart(results.getDouble(HOT_WATER_START));
+                payment.setHotWaterEnd(results.getDouble(HOT_WATER_END));
+                payment.setHotM3consumed(results.getDouble(HOT_M_3_CONSUMED));
+                payment.setHeatingStart(results.getDouble(HEATING_START));
+                payment.setHeatingEnd(results.getDouble(HEATING_END));
+                payment.setHeatingConsumed(results.getDouble(HEATING_CONSUMED));
+                payment.setGasStart(results.getDouble(GAS_START));
+                payment.setGasEnd(results.getDouble(GAS_END));
+                payment.setGasM3consumed(results.getDouble(GAS_M_3_CONSUMED));
+                payment.setSewageStart(results.getDouble(SEWAGE_START));
+                payment.setSewageEnd(results.getDouble(SEWAGE_END));
+                payment.setSewageM3consumed(results.getDouble(SEWAGE_M_3_CONSUMED));
                 payment.setPaymentForElectricity(results.getDouble(PAYMENT_FOR_ELECTRICITY));
                 payment.setPaymentForWater(results.getDouble(PAYMENT_FOR_WATER));
                 payment.setPaymentForHotWater(results.getDouble(PAYMENT_FOR_HOT_WATER));
@@ -505,11 +505,11 @@ public class PaymentsDataSource {
                 YEAR + " integer, " +
                 MONTH + " integer, " +
                 ELECTRO_TARIFF_1 + " real, " +
-                ELECTRO_LIMIT_1 + " integer, " +
+                ELECTRO_LIMIT_1 + " real, " +
                 ELECTRO_TARIFF_2 + " real, " +
-                ELECTRO_LIMIT_2 + " integer, " +
+                ELECTRO_LIMIT_2 + " real, " +
                 ELECTRO_TARIFF_3 + " real, " +
-                ELECTRO_LIMIT_3 + " integer, " +
+                ELECTRO_LIMIT_3 + " real, " +
                 ELECTRO_TARIFF_4 + " real, " +
                 WATER_TARIFF + " real, " +
                 HOT_WATER_TARIFF + " real, " +
@@ -542,24 +542,24 @@ public class PaymentsDataSource {
                 SEWAGE_MUST_PAY + " real, " +
                 FLAT_MUST_PAY + " real, " +
                 GARBAGE_MUST_PAY + " real, " +
-                ELECTRO_START + " integer, " +
-                ELECTRO_END + " integer, " +
-                K_WATT_CONSUMED + " integer, " +
-                WATER_START + " integer, " +
-                WATER_END + " integer, " +
-                M_3_CONSUMED + " integer, " +
-                HOT_WATER_START + " integer, " +
-                HOT_WATER_END + " integer, " +
-                HOT_M_3_CONSUMED + " integer, " +
-                HEATING_START + " integer, " +
-                HEATING_END + " integer, " +
-                HEATING_CONSUMED + " integer, " +
-                GAS_START + " integer, " +
-                GAS_END + " integer, " +
-                GAS_M_3_CONSUMED + " integer, " +
-                SEWAGE_START + " integer, " +
-                SEWAGE_END + " integer, " +
-                SEWAGE_M_3_CONSUMED + " integer, " +
+                ELECTRO_START + " real, " +
+                ELECTRO_END + " real, " +
+                K_WATT_CONSUMED + " real, " +
+                WATER_START + " real, " +
+                WATER_END + " real, " +
+                M_3_CONSUMED + " real, " +
+                HOT_WATER_START + " real, " +
+                HOT_WATER_END + " real, " +
+                HOT_M_3_CONSUMED + " real, " +
+                HEATING_START + " real, " +
+                HEATING_END + " real, " +
+                HEATING_CONSUMED + " real, " +
+                GAS_START + " real, " +
+                GAS_END + " real, " +
+                GAS_M_3_CONSUMED + " real, " +
+                SEWAGE_START + " real, " +
+                SEWAGE_END + " real, " +
+                SEWAGE_M_3_CONSUMED + " real, " +
                 PAYMENT_FOR_ELECTRICITY + " real, " +
                 PAYMENT_FOR_WATER + " real, " +
                 PAYMENT_FOR_HOT_WATER + " real, " +
@@ -615,11 +615,11 @@ public class PaymentsDataSource {
         payment.setYear(random.nextInt());
         payment.setMonth(random.nextInt());
         payment.setElectroTariff1(random.nextDouble());
-        payment.setElectroLimit1(random.nextInt());
+        payment.setElectroLimit1(random.nextDouble());
         payment.setElectroTariff2(random.nextDouble());
-        payment.setElectroLimit2(random.nextInt());
+        payment.setElectroLimit2(random.nextDouble());
         payment.setElectroTariff3(random.nextDouble());
-        payment.setElectroLimit3(random.nextInt());
+        payment.setElectroLimit3(random.nextDouble());
         payment.setElectroTariff4(random.nextDouble());
         payment.setWaterTariff(random.nextDouble());
         payment.setHotWaterTariff(random.nextDouble());
@@ -652,25 +652,25 @@ public class PaymentsDataSource {
         payment.setSewageMustPay(random.nextDouble());
         payment.setFlatMustPay(random.nextDouble());
         payment.setGarbageMustPay(random.nextDouble());
-        payment.setElectroStart(random.nextInt());
-        payment.setElectroEnd(random.nextInt());
-        payment.setkWattConsumed(random.nextInt());
-        payment.setWaterStart(random.nextInt());
-        payment.setWaterEnd(random.nextInt());
-        payment.setM3consumed(random.nextInt());
-        payment.setHotWaterStart(random.nextInt());
-        payment.setHotWaterEnd(random.nextInt());
-        payment.setHotM3consumed(random.nextInt());
-        payment.setHeatingStart(random.nextInt());
-        payment.setHeatingEnd(random.nextInt());
-        payment.setHeatingConsumed(random.nextInt());
-        payment.setGasStart(random.nextInt());
-        payment.setGasEnd(random.nextInt());
-        payment.setGasM3consumed(random.nextInt());
-        payment.setSewageStart(random.nextInt());
-        payment.setSewageEnd(random.nextInt());
-        payment.setSewageM3consumed(random.nextInt());
-        payment.setPaymentForElectricity(random.nextInt());
+        payment.setElectroStart(random.nextDouble());
+        payment.setElectroEnd(random.nextDouble());
+        payment.setkWattConsumed(random.nextDouble());
+        payment.setWaterStart(random.nextDouble());
+        payment.setWaterEnd(random.nextDouble());
+        payment.setM3consumed(random.nextDouble());
+        payment.setHotWaterStart(random.nextDouble());
+        payment.setHotWaterEnd(random.nextDouble());
+        payment.setHotM3consumed(random.nextDouble());
+        payment.setHeatingStart(random.nextDouble());
+        payment.setHeatingEnd(random.nextDouble());
+        payment.setHeatingConsumed(random.nextDouble());
+        payment.setGasStart(random.nextDouble());
+        payment.setGasEnd(random.nextDouble());
+        payment.setGasM3consumed(random.nextDouble());
+        payment.setSewageStart(random.nextDouble());
+        payment.setSewageEnd(random.nextDouble());
+        payment.setSewageM3consumed(random.nextDouble());
+        payment.setPaymentForElectricity(random.nextDouble());
         payment.setPaymentForWater(random.nextDouble());
         payment.setPaymentForHotWater(random.nextDouble());
         payment.setPaymentForHeating(random.nextDouble());

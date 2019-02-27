@@ -126,12 +126,12 @@ public class Controller {
         int newPaymentId;
         int newPaymentYear = 0;
         int newPaymentMonth = 0;
-        int newPaymentElectroStart = 0;
-        int newPaymentWaterStart = 0;
-        int newPaymentHotWaterStart = 0;
-        int newPaymentHeatingStart = 0;
-        int newPaymentGasStart = 0;
-        int newPaymentSewageStart = 0;
+        double newPaymentElectroStart = 0;
+        double newPaymentWaterStart = 0;
+        double newPaymentHotWaterStart = 0;
+        double newPaymentHeatingStart = 0;
+        double newPaymentGasStart = 0;
+        double newPaymentSewageStart = 0;
         // Checking if the list of payments contains anything. It will help to set the new payment id
         if (paymentMarkers.isEmpty()) {
             newPaymentId = 1;

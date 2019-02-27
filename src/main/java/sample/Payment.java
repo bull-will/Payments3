@@ -11,11 +11,11 @@ public class Payment {
     private int year;
     private int month;
     private double electroTariff1 = 0.3084;
-    private int electroLimit1 = 75;
+    private double electroLimit1 = 75;
     private double electroTariff2 = 0.6168;
-    private int electroLimit2 = 150;
+    private double electroLimit2 = 150;
     private double electroTariff3 = 0.8388;
-    private int electroLimit3 = 800;
+    private double electroLimit3 = 800;
     private double electroTariff4 = 2.6808;
     private double waterTariff = 14.0;
     private double hotWaterTariff = 0d;
@@ -48,24 +48,24 @@ public class Payment {
     private double sewageMustPay = 0.0;
     private double flatMustPay = 0.0;
     private double garbageMustPay = 0.0;
-    private int electroStart;
-    private int electroEnd;
-    private int kWattConsumed;
-    private int waterStart;
-    private int waterEnd;
-    private int m3consumed;
-    private int hotWaterStart;
-    private int hotWaterEnd;
-    private int hotM3consumed;
-    private int heatingStart;
-    private int heatingEnd;
-    private int heatingConsumed;
-    private int gasStart;
-    private int gasEnd;
-    private int gasM3consumed;
-    private int sewageStart;
-    private int sewageEnd;
-    private int sewageM3consumed;
+    private double electroStart;
+    private double electroEnd;
+    private double kWattConsumed;
+    private double waterStart;
+    private double waterEnd;
+    private double m3consumed;
+    private double hotWaterStart;
+    private double hotWaterEnd;
+    private double hotM3consumed;
+    private double heatingStart;
+    private double heatingEnd;
+    private double heatingConsumed;
+    private double gasStart;
+    private double gasEnd;
+    private double gasM3consumed;
+    private double sewageStart;
+    private double sewageEnd;
+    private double sewageM3consumed;
     private double paymentForElectricity;
     private double paymentForWater;
     private double paymentForHotWater;
@@ -83,9 +83,9 @@ public class Payment {
         and the water counter.
         */
     public Payment(int id, int year,
-                   int month, int electroStart, int electroEnd, int waterStart, int waterEnd,
-                   int hotWaterStart, int hotWaterEnd, int heatingStart, int heatingEnd,
-                   int gasStart, int gasEnd, int sewageStart, int sewageEnd) {
+                   int month, double electroStart, double electroEnd, double waterStart, double waterEnd,
+                   double hotWaterStart, double hotWaterEnd, double heatingStart, double heatingEnd,
+                   double gasStart, double gasEnd, double sewageStart, double sewageEnd) {
         this.id = id;
         this.year = year;
         this.month = month;
@@ -355,7 +355,9 @@ public class Payment {
     }
 
     /* This method combines a String value of the payment's full description, fills its fullDescription field
-    and also returns the compiled String */
+     * and also returns the compiled String. So it is actually the printout of a payment.
+     * For the sake of a reasonable printout, values of type double are printed out as integers where
+     * integers were entered and where integers are supposed to be */
     public String printPayment() {
 
         String writeLine = "";
@@ -364,7 +366,7 @@ public class Payment {
             writeLine = writeLine.concat("Квартплата");
             if (!flatPaymentSet) {
                 writeLine = writeLine.concat("\t\t\tТариф " +
-                        (flatTariff % 1 == 0d ? String.valueOf((int) Math.round(flatTariff)) : flatTariff) // rounding tariff if it has no coin part
+                        (flatTariff % 1 == 0d ? String.valueOf((int) Math.round(flatTariff)) : flatTariff)
                         + " руб.");
             }
             writeLine = writeLine.concat("\n");
@@ -380,9 +382,16 @@ public class Payment {
             }
             writeLine = writeLine.concat("\n");
             if (!electroPaymentByTariff && !electroPaymentSet) {
-                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" + electroStart + ")\n");
-                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + electroEnd + ")\n");
-                writeLine = writeLine.concat("(Потреблено кВт:\t\t" + kWattConsumed + ")\n");
+                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" +
+                        (electroStart % 1 == 0d ? String.valueOf((int) Math.round(electroStart)) : electroStart)
+                        + ")\n");
+                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" +
+                        (electroEnd % 1 == 0d ? String.valueOf((int) Math.round(electroEnd)) : electroEnd)
+                        + ")\n");
+                writeLine = writeLine.concat("(Потреблено кВт:\t\t" +
+                        (kWattConsumed % 1 == 0d ? String.valueOf((int) Math.round(kWattConsumed)) :
+                                String.valueOf((double) Math.round(kWattConsumed * 1000) / 1000))
+                        + ")\n");
             }
             writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
                     (round ? String.valueOf((int) paymentForElectricity) : paymentForElectricity) + " руб.\n\n");
@@ -396,9 +405,16 @@ public class Payment {
             }
             writeLine = writeLine.concat("\n");
             if (!gasPaymentByTariff && !gasPaymentSet) {
-                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" + gasStart + ")\n");
-                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + gasEnd + ")\n");
-                writeLine = writeLine.concat("(Потреблено куб.м:\t" + gasM3consumed + ")\n");
+                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" +
+                        (gasStart % 1 == 0d ? String.valueOf((int) Math.round(gasStart)) : gasStart)
+                        + ")\n");
+                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" +
+                        (gasEnd % 1 == 0d ? String.valueOf((int) Math.round(gasEnd)) : gasEnd)
+                        + ")\n");
+                writeLine = writeLine.concat("(Потреблено куб.м:\t" +
+                        (gasM3consumed % 1 == 0d ? String.valueOf((int) Math.round(gasM3consumed)) :
+                                String.valueOf((double) Math.round(gasM3consumed * 1000) / 1000))
+                        + ")\n");
             }
             writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
                     (round ? String.valueOf((int) paymentForGas) : paymentForGas) + " руб.\n\n");
@@ -412,9 +428,16 @@ public class Payment {
             }
             writeLine = writeLine.concat("\n");
             if (!waterPaymentByTariff && !waterPaymentSet) {
-                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" + waterStart + ")\n");
-                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + waterEnd + ")\n");
-                writeLine = writeLine.concat("(Потреблено куб.м:\t" + m3consumed + ")\n");
+                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" +
+                        (waterStart % 1 == 0d ? String.valueOf((int) Math.round(waterStart)) : waterStart)
+                        + ")\n");
+                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" +
+                        (waterEnd % 1 == 0d ? String.valueOf((int) Math.round(waterEnd)) : waterEnd)
+                        + ")\n");
+                writeLine = writeLine.concat("(Потреблено куб.м:\t" +
+                        (m3consumed % 1 == 0d ? String.valueOf((int) Math.round(m3consumed)) :
+                                String.valueOf((double) Math.round(m3consumed * 1000) / 1000))
+                        + ")\n");
             }
             writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
                     (round ? String.valueOf((int) paymentForWater) : paymentForWater) + " руб.\n\n");
@@ -428,9 +451,16 @@ public class Payment {
             }
             writeLine = writeLine.concat("\n");
             if (!sewagePaymentByTariff && !sewagePaymentSet) {
-                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" + sewageStart + ")\n");
-                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + sewageEnd + ")\n");
-                writeLine = writeLine.concat("(Потреблено куб.м:\t" + sewageM3consumed + ")\n");
+                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" +
+                        (sewageStart % 1 == 0d ? String.valueOf((int) Math.round(sewageStart)) : sewageStart)
+                        + ")\n");
+                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" +
+                        (sewageEnd % 1 == 0d ? String.valueOf((int) Math.round(sewageEnd)) : sewageEnd)
+                        + ")\n");
+                writeLine = writeLine.concat("(Потреблено куб.м:\t" +
+                        (sewageM3consumed % 1 == 0d ? String.valueOf((int) Math.round(sewageM3consumed)) :
+                                String.valueOf((double) Math.round(sewageM3consumed * 1000) / 1000))
+                        + ")\n");
             }
             writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
                     (round ? String.valueOf((int) paymentForSewage) : paymentForSewage) + " руб.\n\n");
@@ -439,14 +469,21 @@ public class Payment {
             writeLine = writeLine.concat("Отопление");
             if (!heatingPaymentSet) {
                 writeLine = writeLine.concat("\t\t\tТариф " +
-                        (heatingTariff % 1 == 0 ? Math.round(heatingTariff) : heatingTariff)
+                        (heatingTariff % 1 == 0d ? Math.round(heatingTariff) : heatingTariff)
                         + " руб.");
             }
             writeLine = writeLine.concat("\n");
             if (!heatingPaymentByTariff && !heatingPaymentSet) {
-                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" + heatingStart + ")\n");
-                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + heatingEnd + ")\n");
-                writeLine = writeLine.concat("(Потреблено:\t\t\t" + heatingConsumed + ")\n");
+                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" +
+                        (heatingStart % 1 == 0d ? String.valueOf((int) Math.round(heatingStart)) : heatingStart)
+                        + ")\n");
+                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" +
+                        (heatingEnd % 1 == 0d ? String.valueOf((int) Math.round(heatingEnd)) : heatingEnd)
+                        + ")\n");
+                writeLine = writeLine.concat("(Потреблено:\t\t\t" +
+                        (heatingConsumed % 1 == 0d ? String.valueOf((int) Math.round(heatingConsumed)) :
+                                String.valueOf((double) Math.round(heatingConsumed * 1000) / 1000))
+                        + ")\n");
             }
             writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
                     (round ? String.valueOf((int) paymentForHeating) : paymentForHeating) + " руб.\n\n");
@@ -460,9 +497,16 @@ public class Payment {
             }
             writeLine = writeLine.concat("\n");
             if (!hotWaterPaymentByTariff && !hotWaterPaymentSet) {
-                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" + hotWaterStart + ")\n");
-                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + hotWaterEnd + ")\n");
-                writeLine = writeLine.concat("(Потреблено куб.м:\t" + hotM3consumed + ")\n");
+                writeLine = writeLine.concat("(Нач. пок. счетчика:\t" +
+                        (hotWaterStart % 1 == 0d ? String.valueOf((int) Math.round(hotWaterStart)) : hotWaterStart)
+                        + ")\n");
+                writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" +
+                        (hotWaterEnd % 1 == 0d ? String.valueOf((int) Math.round(hotWaterEnd)) : hotWaterEnd)
+                        + ")\n");
+                writeLine = writeLine.concat("(Потреблено куб.м:\t" +
+                        (hotM3consumed % 1 == 0d ? String.valueOf((int) Math.round(hotM3consumed)) :
+                                String.valueOf((double) Math.round(hotM3consumed * 1000) / 1000))
+                        + ")\n");
             }
             writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
                     (round ? String.valueOf((int) paymentForHotWater) : paymentForHotWater) + " руб.\n\n");
@@ -612,11 +656,11 @@ public class Payment {
         this.electroTariff1 = electroTariff1;
     }
 
-    public int getElectroLimit1() {
+    public double getElectroLimit1() {
         return electroLimit1;
     }
 
-    public void setElectroLimit1(int electroLimit1) {
+    public void setElectroLimit1(double electroLimit1) {
         this.electroLimit1 = electroLimit1;
     }
 
@@ -628,11 +672,11 @@ public class Payment {
         this.electroTariff2 = electroTariff2;
     }
 
-    public int getElectroLimit2() {
+    public double getElectroLimit2() {
         return electroLimit2;
     }
 
-    public void setElectroLimit2(int electroLimit2) {
+    public void setElectroLimit2(double electroLimit2) {
         this.electroLimit2 = electroLimit2;
     }
 
@@ -644,11 +688,11 @@ public class Payment {
         this.electroTariff3 = electroTariff3;
     }
 
-    public int getElectroLimit3() {
+    public double getElectroLimit3() {
         return electroLimit3;
     }
 
-    public void setElectroLimit3(int electroLimit3) {
+    public void setElectroLimit3(double electroLimit3) {
         this.electroLimit3 = electroLimit3;
     }
 
@@ -908,147 +952,147 @@ public class Payment {
         this.garbageMustPay = garbageMustPay;
     }
 
-    public int getElectroStart() {
+    public double getElectroStart() {
         return electroStart;
     }
 
-    public void setElectroStart(int electroStart) {
+    public void setElectroStart(double electroStart) {
         this.electroStart = electroStart;
     }
 
-    public int getElectroEnd() {
+    public double getElectroEnd() {
         return electroEnd;
     }
 
-    public void setElectroEnd(int electroEnd) {
+    public void setElectroEnd(double electroEnd) {
         this.electroEnd = electroEnd;
     }
 
-    public int getkWattConsumed() {
+    public double getkWattConsumed() {
         return kWattConsumed;
     }
 
-    public void setkWattConsumed(int kWattConsumed) {
+    public void setkWattConsumed(double kWattConsumed) {
         this.kWattConsumed = kWattConsumed;
     }
 
-    public int getWaterStart() {
+    public double getWaterStart() {
         return waterStart;
     }
 
-    public void setWaterStart(int waterStart) {
+    public void setWaterStart(double waterStart) {
         this.waterStart = waterStart;
     }
 
-    public int getWaterEnd() {
+    public double getWaterEnd() {
         return waterEnd;
     }
 
-    public void setWaterEnd(int waterEnd) {
+    public void setWaterEnd(double waterEnd) {
         this.waterEnd = waterEnd;
     }
 
-    public int getM3consumed() {
+    public double getM3consumed() {
         return m3consumed;
     }
 
-    public void setM3consumed(int m3consumed) {
+    public void setM3consumed(double m3consumed) {
         this.m3consumed = m3consumed;
     }
 
-    public int getHotWaterStart() {
+    public double getHotWaterStart() {
         return hotWaterStart;
     }
 
-    public void setHotWaterStart(int hotWaterStart) {
+    public void setHotWaterStart(double hotWaterStart) {
         this.hotWaterStart = hotWaterStart;
     }
 
-    public int getHotWaterEnd() {
+    public double getHotWaterEnd() {
         return hotWaterEnd;
     }
 
-    public void setHotWaterEnd(int hotWaterEnd) {
+    public void setHotWaterEnd(double hotWaterEnd) {
         this.hotWaterEnd = hotWaterEnd;
     }
 
-    public int getHotM3consumed() {
+    public double getHotM3consumed() {
         return hotM3consumed;
     }
 
-    public void setHotM3consumed(int hotM3consumed) {
+    public void setHotM3consumed(double hotM3consumed) {
         this.hotM3consumed = hotM3consumed;
     }
 
-    public int getHeatingStart() {
+    public double getHeatingStart() {
         return heatingStart;
     }
 
-    public void setHeatingStart(int heatingStart) {
+    public void setHeatingStart(double heatingStart) {
         this.heatingStart = heatingStart;
     }
 
-    public int getHeatingEnd() {
+    public double getHeatingEnd() {
         return heatingEnd;
     }
 
-    public void setHeatingEnd(int heatingEnd) {
+    public void setHeatingEnd(double heatingEnd) {
         this.heatingEnd = heatingEnd;
     }
 
-    public int getHeatingConsumed() {
+    public double getHeatingConsumed() {
         return heatingConsumed;
     }
 
-    public void setHeatingConsumed(int heatingConsumed) {
+    public void setHeatingConsumed(double heatingConsumed) {
         this.heatingConsumed = heatingConsumed;
     }
 
-    public int getGasStart() {
+    public double getGasStart() {
         return gasStart;
     }
 
-    public void setGasStart(int gasStart) {
+    public void setGasStart(double gasStart) {
         this.gasStart = gasStart;
     }
 
-    public int getGasEnd() {
+    public double getGasEnd() {
         return gasEnd;
     }
 
-    public void setGasEnd(int gasEnd) {
+    public void setGasEnd(double gasEnd) {
         this.gasEnd = gasEnd;
     }
 
-    public int getGasM3consumed() {
+    public double getGasM3consumed() {
         return gasM3consumed;
     }
 
-    public void setGasM3consumed(int gasM3consumed) {
+    public void setGasM3consumed(double gasM3consumed) {
         this.gasM3consumed = gasM3consumed;
     }
 
-    public int getSewageStart() {
+    public double getSewageStart() {
         return sewageStart;
     }
 
-    public void setSewageStart(int sewageStart) {
+    public void setSewageStart(double sewageStart) {
         this.sewageStart = sewageStart;
     }
 
-    public int getSewageEnd() {
+    public double getSewageEnd() {
         return sewageEnd;
     }
 
-    public void setSewageEnd(int sewageEnd) {
+    public void setSewageEnd(double sewageEnd) {
         this.sewageEnd = sewageEnd;
     }
 
-    public int getSewageM3consumed() {
+    public double getSewageM3consumed() {
         return sewageM3consumed;
     }
 
-    public void setSewageM3consumed(int sewageM3consumed) {
+    public void setSewageM3consumed(double sewageM3consumed) {
         this.sewageM3consumed = sewageM3consumed;
     }
 
