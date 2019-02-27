@@ -12,6 +12,9 @@ public class PaymentDialogController {
     private DialogPane dialogPane; /* do I even need this? */
 
     @FXML
+    private CheckBox roundCheckBox;
+
+    @FXML
     private TextField monthField;
     @FXML
     private TextField yearField;
@@ -172,6 +175,8 @@ public class PaymentDialogController {
     private int sewageStart;
     private int sewageEnd;
 
+    private boolean round;
+
     private boolean someFieldsProcessedWrong = false;
 
     /* switching radio buttons in the dialog window
@@ -254,6 +259,7 @@ public class PaymentDialogController {
         sewageMustPay = obtainSetPayment(sewageBySet, sewageMustPayField);
         flatMustPay = obtainSetPayment(flatBySet, flatMustPayField);
         garbageMustPay = obtainSetPayment(garbageBySet, garbageMustPayField);
+        round = roundCheckBox.isSelected();
 
         if (someFieldsProcessedWrong) {
             Alerts.alertInfo(getAlertText("paymentDialogControllerProcessingErrorTitle"),
@@ -384,11 +390,15 @@ public class PaymentDialogController {
             payment.setDefaultGarbagePayment();
         }
 
+        payment.setRound(round);
+
         payment.payForEverything();
         payment.buildFullDescription();
         return payment;
     }
 
+    /* refillAllFieldsForEditing speaks for itself,
+     * and fillSetFields is true when creating a new payment based on an existing one*/
     public void showDialogFillFields(Payment payment, boolean refillAllFieldsForEditing, boolean fillSetFields,
                                      TariffsData tariffsData) {
         monthField.setText(String.valueOf(payment.getMonth()));
@@ -409,6 +419,7 @@ public class PaymentDialogController {
             sewageTariffField.setText(String.valueOf(payment.getSewageTariff()));
             flatTariffField.setText(String.valueOf(payment.getFlatTariff()));
             garbageTariffField.setText(String.valueOf(payment.getGarbageTariff()));
+            roundCheckBox.setSelected(payment.isRound());
         } else {
             electroTariff1Field.setText(String.valueOf(tariffsData.electroTariff1));
             electroTariff2Field.setText(String.valueOf(tariffsData.electroTariff2));
@@ -424,6 +435,7 @@ public class PaymentDialogController {
             sewageTariffField.setText(String.valueOf(tariffsData.sewageTariff));
             flatTariffField.setText(String.valueOf(tariffsData.flatTariff));
             garbageTariffField.setText(String.valueOf(tariffsData.garbageTariff));
+            roundCheckBox.setSelected(tariffsData.round);
         }
 
         electroStartField.setText(String.valueOf(payment.getElectroStart()));
@@ -495,20 +507,20 @@ public class PaymentDialogController {
                 garbageMustPayField.setText(String.valueOf(payment.getGarbageMustPay()));
             } else garbageByTariff.setSelected(true);
 
-            if (refillAllFieldsForEditing) {
-                electroStartField.setText(String.valueOf(payment.getElectroStart()));
-                electroEndField.setText(String.valueOf(payment.getElectroEnd()));
-                waterStartField.setText(String.valueOf(payment.getWaterStart()));
-                waterEndField.setText(String.valueOf(payment.getWaterEnd()));
-                hotWaterStartField.setText(String.valueOf(payment.getHotWaterStart()));
-                hotWaterEndField.setText(String.valueOf(payment.getHotWaterEnd()));
-                heatingStartField.setText(String.valueOf(payment.getHeatingStart()));
-                heatingEndField.setText(String.valueOf(payment.getHeatingEnd()));
-                gasStartField.setText(String.valueOf(payment.getGasStart()));
-                gasEndField.setText(String.valueOf(payment.getGasEnd()));
-                sewageStartField.setText(String.valueOf(payment.getSewageStart()));
-                sewageEndField.setText(String.valueOf(payment.getSewageEnd()));
-            }
+//            if (refillAllFieldsForEditing) {
+//                electroStartField.setText(String.valueOf(payment.getElectroStart()));
+//                electroEndField.setText(String.valueOf(payment.getElectroEnd()));
+//                waterStartField.setText(String.valueOf(payment.getWaterStart()));
+//                waterEndField.setText(String.valueOf(payment.getWaterEnd()));
+//                hotWaterStartField.setText(String.valueOf(payment.getHotWaterStart()));
+//                hotWaterEndField.setText(String.valueOf(payment.getHotWaterEnd()));
+//                heatingStartField.setText(String.valueOf(payment.getHeatingStart()));
+//                heatingEndField.setText(String.valueOf(payment.getHeatingEnd()));
+//                gasStartField.setText(String.valueOf(payment.getGasStart()));
+//                gasEndField.setText(String.valueOf(payment.getGasEnd()));
+//                sewageStartField.setText(String.valueOf(payment.getSewageStart()));
+//                sewageEndField.setText(String.valueOf(payment.getSewageEnd()));
+//            }
         }
     }
 

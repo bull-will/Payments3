@@ -43,7 +43,7 @@
                     <Insets right="10.0"/>
                 </HBox.margin>
             </Button>
-            <Button fx:id="helpButton" text="Помощь" onAction="#help"/>
+            <Button fx:id="helpButton" text="Справка" onAction="#help"/>
             <padding>
                 <Insets bottom="10.0" left="10" top="10.0"/>
             </padding>

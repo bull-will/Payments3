@@ -213,6 +213,8 @@ public class Controller {
 
     /* for both newPayment() and editPayment() */
 
+    /* editPaymentOrNot speaks for itself,
+     * and fillSetFields is true when creating a new payment based on an existing one*/
     public Payment processPaymentWithDialog(Payment payment, boolean editPaymentOrNot, boolean fillSetFields) {
 
         Dialog dialog = new Dialog();
@@ -225,8 +227,7 @@ public class Controller {
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
-//            System.out.println("Couldn't load the dialog");
-            Alerts.alertInfo(getAlertText("paymentProcessingDialogError"),
+            Alerts.alertInfo(getAlertText("paymentProcessingDialogErrorTitle"),
                     getAlertText("paymentProcessingDialogErrorMessage"));
             return null;
         }

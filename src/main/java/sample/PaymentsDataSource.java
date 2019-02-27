@@ -107,6 +107,7 @@ public class PaymentsDataSource {
     public static final String PAYMENT_FOR_FLAT = "paymentForFlat";
     public static final String PAYMENT_FOR_GARBAGE = "paymentForGarbage";
     public static final String TOTAL = "total";
+    public static final String ROUND = "round";
 
     static {
         try {
@@ -301,15 +302,16 @@ public class PaymentsDataSource {
                 payment.setSewageStart(results.getInt(SEWAGE_START));
                 payment.setSewageEnd(results.getInt(SEWAGE_END));
                 payment.setSewageM3consumed(results.getInt(SEWAGE_M_3_CONSUMED));
-                payment.setPaymentForElectricity(results.getInt(PAYMENT_FOR_ELECTRICITY));
-                payment.setPaymentForWater(results.getInt(PAYMENT_FOR_WATER));
-                payment.setPaymentForHotWater(results.getInt(PAYMENT_FOR_HOT_WATER));
-                payment.setPaymentForHeating(results.getInt(PAYMENT_FOR_HEATING));
-                payment.setPaymentForGas(results.getInt(PAYMENT_FOR_GAS));
-                payment.setPaymentForSewage(results.getInt(PAYMENT_FOR_SEWAGE));
-                payment.setPaymentForFlat(results.getInt(PAYMENT_FOR_FLAT));
-                payment.setPaymentForGarbage(results.getInt(PAYMENT_FOR_GARBAGE));
-                payment.setTotal(results.getInt(TOTAL));
+                payment.setPaymentForElectricity(results.getDouble(PAYMENT_FOR_ELECTRICITY));
+                payment.setPaymentForWater(results.getDouble(PAYMENT_FOR_WATER));
+                payment.setPaymentForHotWater(results.getDouble(PAYMENT_FOR_HOT_WATER));
+                payment.setPaymentForHeating(results.getDouble(PAYMENT_FOR_HEATING));
+                payment.setPaymentForGas(results.getDouble(PAYMENT_FOR_GAS));
+                payment.setPaymentForSewage(results.getDouble(PAYMENT_FOR_SEWAGE));
+                payment.setPaymentForFlat(results.getDouble(PAYMENT_FOR_FLAT));
+                payment.setPaymentForGarbage(results.getDouble(PAYMENT_FOR_GARBAGE));
+                payment.setTotal(results.getDouble(TOTAL));
+                payment.setRound(results.getInt(ROUND) == 1);
             }
         } catch (SQLException e) {
             Alerts.alertInfo(getAlertText("paymentsDataSourceReadingSQLExceptionTitle"),
@@ -414,7 +416,8 @@ public class PaymentsDataSource {
                 payment.getPaymentForSewage() + ", " +
                 payment.getPaymentForFlat() + ", " +
                 payment.getPaymentForGarbage() + ", " +
-                payment.getTotal() +
+                payment.getTotal() + ", " +
+                (payment.isRound() ? 1 : 0) +
                 ")";
     }
 
@@ -488,7 +491,8 @@ public class PaymentsDataSource {
                 PAYMENT_FOR_SEWAGE + " = " + payment.getPaymentForSewage() + ", " +
                 PAYMENT_FOR_FLAT + " = " + payment.getPaymentForFlat() + ", " +
                 PAYMENT_FOR_GARBAGE + " = " + payment.getPaymentForGarbage() + ", " +
-                TOTAL + " = " + payment.getTotal() +
+                TOTAL + " = " + payment.getTotal() + ", " +
+                ROUND + " = " + (payment.isRound() ? 1 : 0) +
                 " WHERE " + ID + " = " + payment.getId();
     }
 
@@ -556,16 +560,17 @@ public class PaymentsDataSource {
                 SEWAGE_START + " integer, " +
                 SEWAGE_END + " integer, " +
                 SEWAGE_M_3_CONSUMED + " integer, " +
-                PAYMENT_FOR_ELECTRICITY + " integer, " +
-                PAYMENT_FOR_WATER + " integer, " +
-                PAYMENT_FOR_HOT_WATER + " integer, " +
-                PAYMENT_FOR_HEATING + " integer, " +
-                PAYMENT_FOR_GAS + " integer, " +
-                PAYMENT_FOR_SEWAGE + " integer, " +
-                PAYMENT_FOR_FLAT + " integer, " +
-                PAYMENT_FOR_GARBAGE + " integer, " +
-                TOTAL + " integer" +
-                ", PRIMARY KEY (" + ID + ") " +
+                PAYMENT_FOR_ELECTRICITY + " real, " +
+                PAYMENT_FOR_WATER + " real, " +
+                PAYMENT_FOR_HOT_WATER + " real, " +
+                PAYMENT_FOR_HEATING + " real, " +
+                PAYMENT_FOR_GAS + " real, " +
+                PAYMENT_FOR_SEWAGE + " real, " +
+                PAYMENT_FOR_FLAT + " real, " +
+                PAYMENT_FOR_GARBAGE + " real, " +
+                TOTAL + " real, " +
+                ROUND + " integer, " +
+                "PRIMARY KEY (" + ID + ") " +
                 ")";
     }
 
@@ -666,14 +671,15 @@ public class PaymentsDataSource {
         payment.setSewageEnd(random.nextInt());
         payment.setSewageM3consumed(random.nextInt());
         payment.setPaymentForElectricity(random.nextInt());
-        payment.setPaymentForWater(random.nextInt());
-        payment.setPaymentForHotWater(random.nextInt());
-        payment.setPaymentForHeating(random.nextInt());
-        payment.setPaymentForGas(random.nextInt());
-        payment.setPaymentForSewage(random.nextInt());
-        payment.setPaymentForFlat(random.nextInt());
-        payment.setPaymentForGarbage(random.nextInt());
-        payment.setTotal(random.nextInt());        
+        payment.setPaymentForWater(random.nextDouble());
+        payment.setPaymentForHotWater(random.nextDouble());
+        payment.setPaymentForHeating(random.nextDouble());
+        payment.setPaymentForGas(random.nextDouble());
+        payment.setPaymentForSewage(random.nextDouble());
+        payment.setPaymentForFlat(random.nextDouble());
+        payment.setPaymentForGarbage(random.nextDouble());
+        payment.setTotal(random.nextDouble());
+        payment.setRound(random.nextBoolean());
         
         return payment;
     }

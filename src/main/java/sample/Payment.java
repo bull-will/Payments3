@@ -66,39 +66,22 @@ public class Payment {
     private int sewageStart;
     private int sewageEnd;
     private int sewageM3consumed;
-    private int paymentForElectricity;
-    private int paymentForWater;
-    private int paymentForHotWater;
-    private int paymentForHeating;
-    private int paymentForGas;
-    private int paymentForSewage;
-    private int paymentForFlat;
-    private int paymentForGarbage;
-    private int total;
+    private double paymentForElectricity;
+    private double paymentForWater;
+    private double paymentForHotWater;
+    private double paymentForHeating;
+    private double paymentForGas;
+    private double paymentForSewage;
+    private double paymentForFlat;
+    private double paymentForGarbage;
+    private double total;
+    private boolean round;
 
     /*
-    This constructor generates an instance of a monthly payment by the specified values:
-    the number of the month (1 - 12), the start readings and the end readings of the electricity counter
-    and the water counter.
-    The methods of this class must be run to calculate the payments for all services and the total payment.
-    Method payForEverything() (at the bottom) runs them all.
-    */
-
-    public Payment(int id, int year, int month, int electroStart, int electroEnd, int waterStart, int waterEnd) {
-        this.id = id;
-        this.year = year;
-        this.month = month;
-        buildName();
-        this.electroStart = electroStart;
-        this.electroEnd = electroEnd;
-        this.waterStart = waterStart;
-        this.waterEnd = waterEnd;
-    }
-
-
-    /*
-    This constructor does what the previous constructor did but with more payments
-    */
+        This constructor generates an instance of a monthly payment by the specified values:
+        the number of the month (1 - 12), the start readings and the end readings of the electricity counter
+        and the water counter.
+        */
     public Payment(int id, int year,
                    int month, int electroStart, int electroEnd, int waterStart, int waterEnd,
                    int hotWaterStart, int hotWaterEnd, int heatingStart, int heatingEnd,
@@ -156,31 +139,30 @@ public class Payment {
     void payForElectricity() {
         kWattConsumed = electroEnd - electroStart;
         if (electroPaymentSet) {
-            paymentForElectricity = (int) Math.round(electroMustPay);
+            paymentForElectricity = electroMustPay;
         } else if (electroPaymentByTariff) {
-            paymentForElectricity = (int) Math.round(electroTariff1);
+            paymentForElectricity = electroTariff1;
         } else {
-            double paymentForElectricityCopeek = 0;
+            paymentForElectricity = 0;
             if (kWattConsumed >= 0) {
                 if (kWattConsumed <= electroLimit1) {
-                    paymentForElectricityCopeek += kWattConsumed * electroTariff1;
+                    paymentForElectricity += kWattConsumed * electroTariff1;
                 } else if (kWattConsumed <= electroLimit2) {
-                    paymentForElectricityCopeek += electroLimit1 * electroTariff1 +
+                    paymentForElectricity += electroLimit1 * electroTariff1 +
                             (kWattConsumed - electroLimit1) * electroTariff2;
                 } else if (kWattConsumed <= electroLimit3) {
-                    paymentForElectricityCopeek += electroLimit1 * electroTariff1 +
+                    paymentForElectricity += electroLimit1 * electroTariff1 +
                             (electroLimit2 - electroLimit1) * electroTariff2 +
                             (kWattConsumed - electroLimit2) * electroTariff3;
                 } else {
-                    paymentForElectricityCopeek += electroLimit1 * electroTariff1 +
+                    paymentForElectricity += electroLimit1 * electroTariff1 +
                             (electroLimit2 - electroLimit1) * electroTariff2 +
                             (electroLimit3 - electroLimit2) * electroTariff3 +
                             (kWattConsumed - electroLimit3) * electroTariff4;
-
                 }
             }
-            paymentForElectricity = (int) Math.round(paymentForElectricityCopeek);
         }
+        paymentForElectricity = roundPayment(paymentForElectricity);
     }
 
     void setWaterPayment(double waterMustPay) {
@@ -196,14 +178,15 @@ public class Payment {
     void payForWater() {
         m3consumed = waterEnd - waterStart;
         if (waterPaymentSet) {
-            paymentForWater = (int) Math.round(waterMustPay);
+            paymentForWater = waterMustPay;
         } else if (waterPaymentByTariff) {
-            paymentForWater = (int) Math.round(waterTariff);
+            paymentForWater = waterTariff;
         } else {
             if (m3consumed >= 0) {
-                paymentForWater = (int) Math.round(m3consumed * waterTariff);
+                paymentForWater = m3consumed * waterTariff;
             }
         }
+        paymentForWater = roundPayment(paymentForWater);
     }
 
     void setHotWaterPayment(double hotWaterMustPay) {
@@ -219,14 +202,15 @@ public class Payment {
     void payForHotWater() {
         hotM3consumed = hotWaterEnd - hotWaterStart;
         if (hotWaterPaymentSet) {
-            paymentForHotWater = (int) Math.round(hotWaterMustPay);
+            paymentForHotWater = hotWaterMustPay;
         } else if (hotWaterPaymentByTariff) {
-            paymentForHotWater = (int) Math.round(hotWaterTariff);
+            paymentForHotWater = hotWaterTariff;
         } else {
             if (hotM3consumed >= 0) {
-                paymentForHotWater = (int) Math.round(hotM3consumed * hotWaterTariff);
+                paymentForHotWater = hotM3consumed * hotWaterTariff;
             }
         }
+        paymentForHotWater = roundPayment(paymentForHotWater);
     }
 
     void setHeatingPayment(double heatingMustPay) {
@@ -242,14 +226,15 @@ public class Payment {
     void payForHeating() {
         heatingConsumed = heatingEnd - heatingStart;
         if (heatingPaymentSet) {
-            paymentForHeating = (int) Math.round(heatingMustPay);
+            paymentForHeating = heatingMustPay;
         } else if (heatingPaymentByTariff) {
-            paymentForHeating = (int) Math.round(heatingTariff);
+            paymentForHeating = heatingTariff;
         } else {
             if (heatingConsumed >= 0) {
-                paymentForHeating = (int) Math.round(heatingConsumed * heatingTariff);
+                paymentForHeating = heatingConsumed * heatingTariff;
             }
         }
+        paymentForHeating = roundPayment(paymentForHeating);
     }
 
     void setGasPayment(double gasMustPay) {
@@ -265,14 +250,15 @@ public class Payment {
     void payForGas() {
         gasM3consumed = gasEnd - gasStart;
         if (gasPaymentSet) {
-            paymentForGas = (int) Math.round(gasMustPay);
+            paymentForGas = gasMustPay;
         } else if (gasPaymentByTariff) {
-            paymentForGas = (int) Math.round(gasTariff);
+            paymentForGas = gasTariff;
         } else {
             if (gasM3consumed >= 0) {
-                paymentForGas = (int) Math.round(gasM3consumed * gasTariff);
+                paymentForGas = gasM3consumed * gasTariff;
             }
         }
+        paymentForGas = roundPayment(paymentForGas);
     }
 
     void setSewagePayment(double sewageMustPay) {
@@ -288,14 +274,15 @@ public class Payment {
     void payForSewage() {
         sewageM3consumed = sewageEnd - sewageStart;
         if (sewagePaymentSet) {
-            paymentForSewage = (int) Math.round(sewageMustPay);
+            paymentForSewage = sewageMustPay;
         } else if (sewagePaymentByTariff) {
-            paymentForSewage = (int) Math.round(sewageTariff);
+            paymentForSewage = sewageTariff;
         } else {
             if (sewageM3consumed >= 0) {
-                paymentForSewage = (int) Math.round(sewageM3consumed * sewageTariff);
+                paymentForSewage = sewageM3consumed * sewageTariff;
             }
         }
+        paymentForSewage = roundPayment(paymentForSewage);
     }
 
     void setFlatPayment(double flatMustPay) {
@@ -310,10 +297,11 @@ public class Payment {
 
     void payForFlat() {
         if (flatPaymentSet == true) {
-            paymentForFlat = (int) Math.round(flatMustPay);
+            paymentForFlat = flatMustPay;
         } else {
-            paymentForFlat = (int) Math.round(flatTariff);
+            paymentForFlat = flatTariff;
         }
+        paymentForFlat = roundPayment(paymentForFlat);
     }
 
     void setGarbagePayment(double garbageMustPay) {
@@ -328,10 +316,17 @@ public class Payment {
 
     void payForGarbage() {
         if (garbagePaymentSet == true) {
-            paymentForGarbage = (int) Math.round(garbageMustPay);
+            paymentForGarbage = garbageMustPay;
         } else {
-            paymentForGarbage = (int) Math.round(garbageTariff);
+            paymentForGarbage = garbageTariff;
         }
+        paymentForGarbage = roundPayment(paymentForGarbage);
+    }
+
+    private double roundPayment(double paymentFor) {
+
+        return round ? Math.round(paymentFor) : (double) Math.round(paymentFor * 100) / 100;
+
     }
 
     void calculateTotal() {
@@ -343,8 +338,10 @@ public class Payment {
                 + paymentForSewage
                 + paymentForFlat
                 + paymentForGarbage;
+        total = roundPayment(total);
     }
 
+    /* This method invokes all the calculations*/
     void payForEverything() {
         payForElectricity();
         payForWater();
@@ -360,6 +357,7 @@ public class Payment {
     /* This method combines a String value of the payment's full description, fills its fullDescription field
     and also returns the compiled String */
     public String printPayment() {
+
         String writeLine = "";
         writeLine = writeLine.concat(name + ":\n\n");
         if (paymentForFlat != 0) {
@@ -370,7 +368,8 @@ public class Payment {
                         + " руб.");
             }
             writeLine = writeLine.concat("\n");
-            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForFlat + " руб.\n\n");
+            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
+                    (round ? String.valueOf((int) paymentForFlat) : paymentForFlat) + " руб.\n\n");
         }
         if (paymentForElectricity != 0) {
             writeLine = writeLine.concat("Электроэнергия");
@@ -385,7 +384,8 @@ public class Payment {
                 writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + electroEnd + ")\n");
                 writeLine = writeLine.concat("(Потреблено кВт:\t\t" + kWattConsumed + ")\n");
             }
-            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForElectricity + " руб.\n\n");
+            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
+                    (round ? String.valueOf((int) paymentForElectricity) : paymentForElectricity) + " руб.\n\n");
         }
         if (paymentForGas != 0) {
             writeLine = writeLine.concat("Природный газ");
@@ -400,7 +400,8 @@ public class Payment {
                 writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + gasEnd + ")\n");
                 writeLine = writeLine.concat("(Потреблено куб.м:\t" + gasM3consumed + ")\n");
             }
-            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForGas + " руб.\n\n");
+            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
+                    (round ? String.valueOf((int) paymentForGas) : paymentForGas) + " руб.\n\n");
         }
         if (paymentForWater != 0) {
             writeLine = writeLine.concat("Холодная вода");
@@ -415,7 +416,8 @@ public class Payment {
                 writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + waterEnd + ")\n");
                 writeLine = writeLine.concat("(Потреблено куб.м:\t" + m3consumed + ")\n");
             }
-            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForWater + " руб.\n\n");
+            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
+                    (round ? String.valueOf((int) paymentForWater) : paymentForWater) + " руб.\n\n");
         }
         if (paymentForSewage != 0) {
             writeLine = writeLine.concat("Стоки");
@@ -430,7 +432,8 @@ public class Payment {
                 writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + sewageEnd + ")\n");
                 writeLine = writeLine.concat("(Потреблено куб.м:\t" + sewageM3consumed + ")\n");
             }
-            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForSewage + " руб.\n\n");
+            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
+                    (round ? String.valueOf((int) paymentForSewage) : paymentForSewage) + " руб.\n\n");
         }
         if (paymentForHeating != 0) {
             writeLine = writeLine.concat("Отопление");
@@ -445,7 +448,8 @@ public class Payment {
                 writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + heatingEnd + ")\n");
                 writeLine = writeLine.concat("(Потреблено:\t\t\t" + heatingConsumed + ")\n");
             }
-            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForHeating + " руб.\n\n");
+            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
+                    (round ? String.valueOf((int) paymentForHeating) : paymentForHeating) + " руб.\n\n");
         }
         if (paymentForHotWater != 0) {
             writeLine = writeLine.concat("Горячая вода");
@@ -460,7 +464,8 @@ public class Payment {
                 writeLine = writeLine.concat("(Конеч. пок. счетчика:\t" + hotWaterEnd + ")\n");
                 writeLine = writeLine.concat("(Потреблено куб.м:\t" + hotM3consumed + ")\n");
             }
-            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForHotWater + " руб.\n\n");
+            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
+                    (round ? String.valueOf((int) paymentForHotWater) : paymentForHotWater) + " руб.\n\n");
         }
         if (paymentForGarbage != 0) {
             writeLine = writeLine.concat("Вывоз мусора");
@@ -470,9 +475,11 @@ public class Payment {
                         + " руб.");
             }
             writeLine = writeLine.concat("\n");
-            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " + paymentForGarbage + " руб.\n\n");
+            writeLine = writeLine.concat("\t\t\t\t\tПлатеж " +
+                    (round ? String.valueOf((int) paymentForGarbage) : paymentForGarbage) + " руб.\n\n");
         }
-        writeLine = writeLine.concat("Всего: \t\t\t\t" + total + " руб.\n");
+        writeLine = writeLine.concat("Всего: \t\t\t\t" +
+                (round ? String.valueOf((int) total) : total) + " руб.\n");
         fullDescription = writeLine;
         return writeLine;
     }
@@ -549,6 +556,7 @@ public class Payment {
         clone.paymentForFlat = this.paymentForFlat;
         clone.paymentForGarbage = this.paymentForGarbage;
         clone.total = this.total;
+        clone.round = this.round;
 
         return clone;
     }
@@ -1044,76 +1052,84 @@ public class Payment {
         this.sewageM3consumed = sewageM3consumed;
     }
 
-    public int getPaymentForElectricity() {
+    public double getPaymentForElectricity() {
         return paymentForElectricity;
     }
 
-    public void setPaymentForElectricity(int paymentForElectricity) {
+    public void setPaymentForElectricity(double paymentForElectricity) {
         this.paymentForElectricity = paymentForElectricity;
     }
 
-    public int getPaymentForWater() {
+    public double getPaymentForWater() {
         return paymentForWater;
     }
 
-    public void setPaymentForWater(int paymentForWater) {
+    public void setPaymentForWater(double paymentForWater) {
         this.paymentForWater = paymentForWater;
     }
 
-    public int getPaymentForHotWater() {
+    public double getPaymentForHotWater() {
         return paymentForHotWater;
     }
 
-    public void setPaymentForHotWater(int paymentForHotWater) {
+    public void setPaymentForHotWater(double paymentForHotWater) {
         this.paymentForHotWater = paymentForHotWater;
     }
 
-    public int getPaymentForHeating() {
+    public double getPaymentForHeating() {
         return paymentForHeating;
     }
 
-    public void setPaymentForHeating(int paymentForHeating) {
+    public void setPaymentForHeating(double paymentForHeating) {
         this.paymentForHeating = paymentForHeating;
     }
 
-    public int getPaymentForGas() {
+    public double getPaymentForGas() {
         return paymentForGas;
     }
 
-    public void setPaymentForGas(int paymentForGas) {
+    public void setPaymentForGas(double paymentForGas) {
         this.paymentForGas = paymentForGas;
     }
 
-    public int getPaymentForSewage() {
+    public double getPaymentForSewage() {
         return paymentForSewage;
     }
 
-    public void setPaymentForSewage(int paymentForSewage) {
+    public void setPaymentForSewage(double paymentForSewage) {
         this.paymentForSewage = paymentForSewage;
     }
 
-    public int getPaymentForFlat() {
+    public double getPaymentForFlat() {
         return paymentForFlat;
     }
 
-    public void setPaymentForFlat(int paymentForFlat) {
+    public void setPaymentForFlat(double paymentForFlat) {
         this.paymentForFlat = paymentForFlat;
     }
 
-    public int getPaymentForGarbage() {
+    public double getPaymentForGarbage() {
         return paymentForGarbage;
     }
 
-    public void setPaymentForGarbage(int paymentForGarbage) {
+    public void setPaymentForGarbage(double paymentForGarbage) {
         this.paymentForGarbage = paymentForGarbage;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
+    }
+
+    public boolean isRound() {
+        return round;
+    }
+
+    public void setRound(boolean round) {
+        this.round = round;
     }
 
     @Override
@@ -1195,7 +1211,7 @@ public class Payment {
         if (that.paymentForFlat != this.paymentForFlat) return false;
         if (that.paymentForGarbage != this.paymentForGarbage) return false;
         if (that.total != this.total) return false;
+        if (that.round != this.round) return false;
         return true;
     }
 }
-

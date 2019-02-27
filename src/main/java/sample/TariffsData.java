@@ -24,7 +24,7 @@ public class TariffsData {
     private static final String SEWAGE_TARIFF = "sewage_tariff";
     private static final String FLAT_TARIFF = "flat_tariff";
     private static final String GARBAGE_TARIFF = "garbage_tariff";
-
+    private static final String ROUND = "round";
 
     double electroTariff1;
     int electroLimit1;
@@ -40,6 +40,7 @@ public class TariffsData {
     double sewageTariff;
     double flatTariff;
     double garbageTariff;
+    boolean round;
 
     private final double electroTariff1Original = 0.3084;
     private final int electroLimit1Original = 75;
@@ -55,6 +56,7 @@ public class TariffsData {
     private final double sewageTariffOriginal = 0.0;
     private final double flatTariffOriginal = 197.0;
     private final double garbageTariffOriginal = 22.0;
+    private final boolean roundOriginal = true;
 
 
     public TariffsData() {
@@ -86,6 +88,7 @@ public class TariffsData {
         this.sewageTariff = sewageTariffOriginal;
         this.flatTariff = flatTariffOriginal;
         this.garbageTariff = garbageTariffOriginal;
+        this.round = roundOriginal;
     }
 
     public void loadTariffs() {
@@ -113,6 +116,7 @@ public class TariffsData {
             this.sewageTariff = Double.parseDouble(tariffs.getProperty(SEWAGE_TARIFF));
             this.flatTariff = Double.parseDouble(tariffs.getProperty(FLAT_TARIFF));
             this.garbageTariff = Double.parseDouble(tariffs.getProperty(GARBAGE_TARIFF));
+            this.round = Boolean.parseBoolean(tariffs.getProperty(ROUND));
 
         } catch (FileNotFoundException fnfe) {
             Alerts.alertInfo(getAlertText("tariffsNotFoundTitle"), getAlertText("tariffsNotFoundMessage"));
@@ -155,6 +159,7 @@ public class TariffsData {
             prop.setProperty(SEWAGE_TARIFF, String.valueOf(sewageTariff));
             prop.setProperty(FLAT_TARIFF, String.valueOf(flatTariff));
             prop.setProperty(GARBAGE_TARIFF, String.valueOf(garbageTariff));
+            prop.setProperty(ROUND, String.valueOf(round));
 
             // save properties to project root folder
             prop.store(output, null);
@@ -191,5 +196,6 @@ public class TariffsData {
         sewageTariff = sewageTariffOriginal;
         flatTariff = flatTariffOriginal;
         garbageTariff = garbageTariffOriginal;
+        round = roundOriginal;
     }
 }

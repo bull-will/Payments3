@@ -11,6 +11,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.control.CheckBox?>
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="sample.PaymentDialogController">
@@ -24,10 +25,17 @@
                         <TextField fx:id="monthField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
                         <Label text="Год (например, 2012):" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
                         <TextField fx:id="yearField" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-                        <padding>
-                            <Insets bottom="10"/>
-                        </padding>
+                        <VBox.margin>
+                            <Insets bottom="10.0"/>
+                        </VBox.margin>
                     </GridPane>
+                    <Separator/>
+                    <CheckBox fx:id="roundCheckBox" text="Округлять до целых платеж за каждую услугу (оплата без копеек)"
+                              selected="true">
+                        <VBox.margin>
+                            <Insets bottom="10.0" top="5.0"/>
+                        </VBox.margin>
+                    </CheckBox>
                     <Separator/>
                 </VBox>
             </top>

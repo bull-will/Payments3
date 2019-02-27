@@ -6,17 +6,25 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.shape.Box?>
+<?import javafx.scene.control.CheckBox?>
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="sample.TariffsDialogController">
     <content>
         <VBox>
-            <Button fx:id="backToDefaultsButton" onAction="#backToDefaults" text="Вернуть самые изначальные"/>
+            <Button fx:id="backToDefaultsButton" onAction="#backToDefaults" text="Вернуть самые изначальные">
+                <VBox.margin>
+                    <Insets bottom="20.0"/>
+                </VBox.margin>
+            </Button>
+            <CheckBox fx:id="roundCheckBox" text="Округлять до целых платеж за каждую услугу (оплата без копеек)"
+                      selected="true">
+                <VBox.margin>
+                    <Insets bottom="5.0"/>
+                </VBox.margin>
+            </CheckBox>
             <BorderPane>
                 <center>
                     <VBox>

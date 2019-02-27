@@ -89,6 +89,7 @@ public class PaymentTest {
         payment2.setPaymentForFlat(payment1.getPaymentForFlat());
         payment2.setPaymentForGarbage(payment1.getPaymentForGarbage());
         payment2.setTotal(payment1.getTotal());
+        payment2.setRound(payment1.isRound());
 
         assertTrue(payment1.equals(payment2));
         assertEquals(payment1.getName(), payment2.getName());
@@ -151,15 +152,15 @@ public class PaymentTest {
         assertEquals(payment1.getSewageStart(), payment2.getSewageStart());
         assertEquals(payment1.getSewageEnd(), payment2.getSewageEnd());
         assertEquals(payment1.getSewageM3consumed(), payment2.getSewageM3consumed());
-        assertEquals(payment1.getPaymentForElectricity(), payment2.getPaymentForElectricity());
-        assertEquals(payment1.getPaymentForWater(), payment2.getPaymentForWater());
-        assertEquals(payment1.getPaymentForHotWater(), payment2.getPaymentForHotWater());
-        assertEquals(payment1.getPaymentForHeating(), payment2.getPaymentForHeating());
-        assertEquals(payment1.getPaymentForGas(), payment2.getPaymentForGas());
-        assertEquals(payment1.getPaymentForSewage(), payment2.getPaymentForSewage());
-        assertEquals(payment1.getPaymentForFlat(), payment2.getPaymentForFlat());
-        assertEquals(payment1.getPaymentForGarbage(), payment2.getPaymentForGarbage());
-        assertEquals(payment1.getTotal(), payment2.getTotal());
-
+        assertEquals(payment1.getPaymentForElectricity(), payment2.getPaymentForElectricity(), 0.01);
+        assertEquals(payment1.getPaymentForWater(), payment2.getPaymentForWater(), 0.01);
+        assertEquals(payment1.getPaymentForHotWater(), payment2.getPaymentForHotWater(), 0.01);
+        assertEquals(payment1.getPaymentForHeating(), payment2.getPaymentForHeating(), 0.01);
+        assertEquals(payment1.getPaymentForGas(), payment2.getPaymentForGas(), 0.01);
+        assertEquals(payment1.getPaymentForSewage(), payment2.getPaymentForSewage(), 0.01);
+        assertEquals(payment1.getPaymentForFlat(), payment2.getPaymentForFlat(), 0.01);
+        assertEquals(payment1.getPaymentForGarbage(), payment2.getPaymentForGarbage(), 0.01);
+        assertEquals(payment1.getTotal(), payment2.getTotal(), 0.01);
+        assertEquals(payment1.isRound(), payment2.isRound());
     }
 }

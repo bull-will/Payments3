@@ -2,11 +2,15 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 import static sample.TextDeliverer.getAlertText;
 
 public class TariffsDialogController {
+
+    @FXML
+    private CheckBox roundCheckBox;
 
     @FXML
     private TextField electroTariff1Field;
@@ -45,7 +49,6 @@ public class TariffsDialogController {
     private double electroTariff3;
     private int electroLimit3;
     private double electroTariff4;
-    
     private double waterTariff;
     private double hotWaterTariff;
     private double heatingTariff;
@@ -53,6 +56,7 @@ public class TariffsDialogController {
     private double sewageTariff;
     private double flatTariff;
     private double garbageTariff;
+    private boolean round;
 
     private boolean someFieldsProcessedWrong = false;
 
@@ -71,6 +75,7 @@ public class TariffsDialogController {
         sewageTariffField.setText(String.valueOf(tariffsData.sewageTariff));
         flatTariffField.setText(String.valueOf(tariffsData.flatTariff));
         garbageTariffField.setText(String.valueOf(tariffsData.garbageTariff));
+        roundCheckBox.setSelected(tariffsData.round);
     }
     
     public void obtainNumbersFromTextFields() {
@@ -158,6 +163,12 @@ public class TariffsDialogController {
             garbageTariff = 0;
             someFieldsProcessedWrong = true;
         }
+        try {
+            round = roundCheckBox.isSelected();
+        } catch (Exception e) {
+            round = true;
+            someFieldsProcessedWrong = true;
+        }
 
         if (someFieldsProcessedWrong) {
             Alerts.alertInfo(getAlertText("tariffsNumbersProcessedWrongTitle"),
@@ -182,6 +193,7 @@ public class TariffsDialogController {
         tariffsData.sewageTariff = sewageTariff;
         tariffsData.flatTariff = flatTariff;
         tariffsData.garbageTariff = garbageTariff;
+        tariffsData.round = round;
 
         return tariffsData;
     }
