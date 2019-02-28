@@ -33,6 +33,9 @@ public class Controller {
     private ListView<PaymentMarker> paymentsListView;
 
     @FXML
+    private Label copyright;
+
+    @FXML
     private TextArea paymentTextArea;
 
     @FXML
@@ -77,6 +80,8 @@ public class Controller {
 
         });
         listContextMenu.getItems().addAll(editMenuItem, newPaymenBasedMenuItem, deleteMenuItem);
+
+        copyright.setText("© 2018 - 2019 Vilhelm Skrypkar.");
 
         /* Some necessary  configuring of the list view */
         paymentsListView.getSelectionModel().selectedItemProperty().addListener(
